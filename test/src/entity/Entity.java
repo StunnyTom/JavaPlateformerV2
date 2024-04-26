@@ -27,8 +27,6 @@ public class Entity {
 	public Rectangle solidAir; //stocker un rectangle invisible ou abstrait avec x,y, largeur, hauteur
 	public boolean collisionOn = false;
 	
-	//les collisions d'objets
-	public int solidAirDefaultX, solidAirDefaultY;
 	
 
 }

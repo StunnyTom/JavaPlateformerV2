@@ -20,13 +20,8 @@ public class Player extends Entity {
         
         screenX = gp.screenWidth/2;
         screenY = gp.screenHeight/2;
-        
         solidAir = new Rectangle(16, -10, gp.tileSize, gp.tileSize);
         
-        //collision des objets 
-        solidAirDefaultX = solidAir.x;
-        solidAirDefaultY = solidAir.y;
-       
     }
 
     public void setDefaultValues() {
@@ -53,29 +48,18 @@ public class Player extends Entity {
     
     public void update() {
         int newX = screenX, newY = screenY;
-    
+
         // Appliquer la gravité
         ySpeed += GRAVITY;
         newY += ySpeed;
-        
-        boolean onG = !gp.verif.checkCollision(screenX, screenY+1, l, L, solidAir);
 
-		if (keyH.upPressed && !onG) {
-            //if (!gp.verif.checkCollision(screenX, newY, l, L, solidAir)) {
-                ySpeed = -2; 
-                
-             // Vérifier la collision avec les objets ici
-                int objIndex = gp.verif.checkObject(this, true);
-                if (objIndex != 999) {
-                    // Logique de traitement de la collision avec l'objet
-                    System.out.println("Collision avec l'objet à l'index : " + objIndex);
-                 
-                }
-
-            //}
+        // Vérifier les collisions avec le sol
+        boolean onG = !gp.verif.checkCollision(screenX, screenY + 1, l, L, solidAir);
+        if (keyH.upPressed && !onG) {
+            ySpeed = -2; // Saut
         }
 
-        // Collision check pour Y
+        // Collision check pour l'axe Y
         if (!gp.verif.checkCollision(screenX, newY, l, L, solidAir)) {
             screenY = newY;
         } else {
@@ -83,25 +67,32 @@ public class Player extends Entity {
             ySpeed = 0;
         }
 
-        if (keyH.leftPressed) newX -= speed;
-        if (keyH.rightPressed) newX += speed;
+        // Vérification des collisions avec des objets
+        if (gp.verif.checkCollisionObject(newX, newY, l, L, solidAir)) {
+            //System.out.println("Collision avec objet détectée");
+        }
 
-        // Collision check for X and Y independently
-        if (!gp.verif.checkCollision(newX, screenY, l,L, solidAir)) {
+        // Mouvement sur l'axe X
+        if (keyH.leftPressed) {
+            newX -= speed;
+        }
+        if (keyH.rightPressed) {
+            newX += speed;
+        }
+
+        // Collision check pour l'axe X
+        if (!gp.verif.checkCollision(newX, screenY, l, L, solidAir)) {
             screenX = newX;
         }
-        //if (!gp.verif.checkCollision(screenX, newY, l,L, solidAir)) {
-        //    screenY = newY;
-        //}
-	    
-	 
-	        // Gestion de l'animation sprite
-	       spriteCounter++;
-	        if(spriteCounter > 25) {
-	            spriteNum = spriteNum == 1 ? 2 : 1;
-	        	spriteCounter = 0;
-	        } 
+
+        // Gestion de l'animation sprite
+        spriteCounter++;
+        if (spriteCounter > 25) {
+            spriteNum = spriteNum == 1 ? 2 : 1;
+            spriteCounter = 0;
+        }
     }
+
 	
 	public void draw(Graphics2D g2) {
 		BufferedImage image = null;

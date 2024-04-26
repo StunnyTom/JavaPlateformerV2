@@ -26,7 +26,7 @@
          mapTilenum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
          getTileImage();
-         loadMap("/maps/maps2.txt");
+         loadMap("/maps/map3.txt");
              }
      
      public void getTileImage() {
@@ -90,6 +90,8 @@
              tileMap.put('k', new Tile());
              tileMap.get('k').image = ImageIO.read(getClass().getResourceAsStream("/test/coffre_test.PNG")); 
              tileMap.get('k').collision = true;
+             
+             
             
          } catch (Exception e) {
              e.printStackTrace();
@@ -160,7 +162,6 @@
     	                Tile tile = tileMap.get(tileKey);
     	                g2.drawImage(tile.image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     	            } else {
-    	                System.out.println("No corresponding tile for: " + tileKey);
     	            }
     	        }
 

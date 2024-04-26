@@ -1,9 +1,8 @@
 package test;
 
 import tiles.Tile;
+import objects.Object;
 import java.awt.Rectangle;
-
-import entity.Entity;
 
 public class CollisionVerif {
     GamePanel gp;
@@ -44,43 +43,54 @@ public class CollisionVerif {
         return collision;
     }
     
-    
-    //public int checkObject(Entity entity, boolean player) {
-    public int checkObject(Entity entity, boolean player) {
-    
-        int index = 10; // Utilisé comme valeur non trouvée / par défaut
-        for (int i = 0; i < gp.obj.length; i++) {
-            if (gp.obj[i] != null) {
-                // Calculer les positions absolues de la zone de collision de l'entité
-                int entityLeft = entity.screenX + entity.solidAir.x;
-                int entityTop = entity.screenY + entity.solidAir.y;
-                int entityRight = entityLeft + entity.solidAir.width;
-                int entityBottom = entityTop + entity.solidAir.height;
-                
-                System.out.println("entité gauche : " + entityLeft);
+    public boolean checkCollisionObject(int newX, int newY, int l, int L, Rectangle solidArea) {
+        // Calculer les positions des tuiles en fonction de newX et newY
+        int entityLeftObj = (newX + solidArea.x) / gp.ObjetSize;
+        int entityRightObj = (newX + solidArea.x + solidArea.width - L) / gp.ObjetSize;
+        int entityTopObj = (newY + solidArea.y + l) / gp.ObjetSize;
+        int entityBottomObj = (newY + solidArea.y + solidArea.height) / gp.ObjetSize;
 
-                // Calculer les positions absolues de la zone de collision de l'objet
-                int objectLeft = gp.obj[i].objectX + gp.obj[i].solidAir.x;
-                int objectTop = gp.obj[i].objectY + gp.obj[i].solidAir.y;
-                int objectRight = objectLeft + gp.obj[i].solidAir.width;
-                int objectBottom = objectTop + gp.obj[i].solidAir.height;
-                
-                System.out.println("l'objet gauche : " + objectLeft);
+        boolean collisionDetected = false;
 
-                // Vérification de la collision
-                boolean collision = entityRight > objectLeft && entityLeft < objectRight && entityBottom > objectTop && entityTop < objectBottom;                      
-                if (collision) {
-                    System.out.println("Collision détectée avec l'objet à l'indice: " + i);
-                    return i; // Retourner l'indice de l'objet en collision
-                } else {
-                    // Log si pas de collision avec cet objet spécifique
-                    System.out.println("Pas de collision avec l'objet ");
-                }
-            }
+        // Vérifier les collisions uniquement avec les objets
+        if (ObjCollision(entityLeftObj, entityTopObj) ||
+            ObjCollision(entityRightObj, entityTopObj) ||
+            ObjCollision(entityLeftObj, entityBottomObj) ||
+            ObjCollision(entityRightObj, entityBottomObj)) {
+            
+            collisionDetected = true;
+
+            // uniquement si la collision est détectée
+            System.out.println("Collision avec un objet détectée à la position");
         }
-        return index; // Retourner index si aucune collision n'est détectée
+
+        return collisionDetected; // Retourne true si une collision avec un objet a été détectée
     }
 
+    
+    private boolean ObjCollision(int col, int row) {
+        if (col < 0 || row < 0 || col >= gp.maxScreenCol || row >= gp.maxScreenRow) {
+            return false; // Hors des limites
+        }
 
+        // Obtenir le caractère de la tuile et vérifier pour la collision
+        char objChar = (char) (gp.ObjectM.mapObjetnum[col][row] + 'a');
+        Object object = gp.ObjectM.Objet_Map.get(objChar);
+
+        if (object == null) {
+            System.out.println("Aucun objet trouvé");
+            return false;
+        }
+        boolean collision = object.collision;
+        
+        return collision; // Retourne true si l'objet a une propriété de collision
+    }
+
+    
+
+    
    
+
+
+    
 }

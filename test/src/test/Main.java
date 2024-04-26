@@ -17,8 +17,6 @@ public class Main {
 	
 		fenetre.setLocationRelativeTo(null);
 		fenetre.setVisible(true);
-		
-		gamePanel.setupGame();//on appelle la methode setObjet avant que le jeu commence, ce qui permet d'afficher les objets avant 
 		gamePanel.startGameThread();
 	}
 

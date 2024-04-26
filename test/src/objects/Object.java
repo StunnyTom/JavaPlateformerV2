@@ -1,20 +1,17 @@
-package tiles;
-
+package objects;
 import java.awt.image.BufferedImage;
 
-public class Tile {
-	
-	public Tile() {
+public class Object {
+		
+	public Object() {
 		// TODO Auto-generated constructor stub
 	}
 	public BufferedImage image;
 	public boolean collision = false; //colision
 		
 	   
-	    public Tile(boolean collision) {
-	        this.collision = collision;
-	    }
-
-	}
-
+    public Object(boolean collision) {
+        this.collision = collision;
+    }
+}
 
