@@ -41,25 +41,6 @@ public class Objetc_manager {
         }
     }
     
- 
-        // Nouvelle méthode pickupObjet
-        public void pickupObjet(char objectKey) {
-            if (Objet_Map.containsKey(objectKey)) {
-                System.out.println("Clé ramassée: " + objectKey);
-                remove(objectKey); // Appeler remove pour supprimer l'objet
-            }
-        }
-
-        // Modification de la méthode remove
-        public void remove(char objectKey) {
-            if (Objet_Map.containsKey(objectKey)) {
-                Objet_Map.remove(objectKey); // Supprimer l'objet de la map
-            }
-        }
-  
-
-
-    
 
 	//pour appeler la map + lire le fichier txt et le translater 
     public void loadMap(String filePath) {

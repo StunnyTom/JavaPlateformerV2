@@ -96,6 +96,7 @@ public class Player extends Entity {
     
     public void pickupObjet() {
     	System.out.println("objet bientot ramassé");
+    	//on pourra le mettre dans l'inventaire
     }
 
     
