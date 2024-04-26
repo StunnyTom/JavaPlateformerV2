@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
 	int FPS = 30;
 	
 	Tiles_manger tileM = new Tiles_manger(this);//tuile img
-	Objetc_manager ObjectM = new Objetc_manager(this); // img object
+	public Objetc_manager ObjectM = new Objetc_manager(this); // img object
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread; //le fil du jeu, il appelle automatiquement la methode run 
 	
@@ -108,4 +108,8 @@ public class GamePanel extends JPanel implements Runnable{
 				}	
 			}
 		}
+		
+
+
+
 }

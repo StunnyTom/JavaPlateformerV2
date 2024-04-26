@@ -32,6 +32,7 @@ public class Objetc_manager {
         	Objet_Map.put('z', new Object());
         	Objet_Map.get('z').image = ImageIO.read(getClass().getResourceAsStream("/objects/cle.png"));
         	Objet_Map.get('z').collision = true;
+        	Objet_Map.get('z').id = '1'; // Ajouter un champ "id"
         	
        
 
@@ -39,6 +40,24 @@ public class Objetc_manager {
             e.printStackTrace();
         }
     }
+    
+ 
+        // Nouvelle méthode pickupObjet
+        public void pickupObjet(char objectKey) {
+            if (Objet_Map.containsKey(objectKey)) {
+                System.out.println("Clé ramassée: " + objectKey);
+                remove(objectKey); // Appeler remove pour supprimer l'objet
+            }
+        }
+
+        // Modification de la méthode remove
+        public void remove(char objectKey) {
+            if (Objet_Map.containsKey(objectKey)) {
+                Objet_Map.remove(objectKey); // Supprimer l'objet de la map
+            }
+        }
+  
+
 
     
 
@@ -102,6 +121,7 @@ public class Objetc_manager {
             }
         }
     }
+
 
 }
 

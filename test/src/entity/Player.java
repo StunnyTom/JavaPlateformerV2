@@ -70,6 +70,7 @@ public class Player extends Entity {
         // Vérification des collisions avec des objets
         if (gp.verif.checkCollisionObject(newX, newY, l, L, solidAir)) {
             //System.out.println("Collision avec objet détectée");
+        	pickupObjet();
         }
 
         // Mouvement sur l'axe X
@@ -92,7 +93,13 @@ public class Player extends Entity {
             spriteCounter = 0;
         }
     }
+    
+    public void pickupObjet() {
+    	System.out.println("objet bientot ramassé");
+    }
 
+    
+    
 	
 	public void draw(Graphics2D g2) {
 		BufferedImage image = null;

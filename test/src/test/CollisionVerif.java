@@ -61,7 +61,7 @@ public class CollisionVerif {
             collisionDetected = true;
 
             // uniquement si la collision est détectée
-            System.out.println("Collision avec un objet détectée à la position");
+            System.out.println("Collision avec un objet détectée ");
         }
 
         return collisionDetected; // Retourne true si une collision avec un objet a été détectée

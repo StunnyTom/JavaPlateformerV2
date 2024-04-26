@@ -8,6 +8,7 @@ public class Object {
 	}
 	public BufferedImage image;
 	public boolean collision = false; //colision
+	public char id;
 		
 	   
     public Object(boolean collision) {
