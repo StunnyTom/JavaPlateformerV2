@@ -28,6 +28,7 @@
          getTileImage();
          loadMap("/maps/maps2.txt");
              }
+
      
      public void getTileImage() {
          try {
@@ -98,31 +99,30 @@
 
 	//pour appeler la map + lire le fichier txt et le translater 
      public void loadMap(String filePath) {
-    	    try {
-    	        InputStream is = getClass().getResourceAsStream(filePath);
-    	        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+         try {
+             gp.currentMap = filePath; // Mettre à jour la variable currentMap
+             InputStream is = getClass().getResourceAsStream(filePath);
+             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-    	        int row = 0;
-    	        int col = 0;
+             int row = 0;
+             int col = 0;
 
-    	        String line;
-    	        while ((line = br.readLine()) != null && row < gp.maxWorldRow) {
-    	            String[] characters = line.split(" ");
-    	            col = 0;
-    	            
-    	            while (col < gp.maxWorldCol && col < characters.length) {
-    	                char tileChar = characters[col].charAt(0); // Obtient le premier caract�re de la cha�ne
-    	                int tileNum = tileChar - 'a'; 
-    	                mapTilenum[col][row] = tileNum;
-    	                col++;
-    	            }
-    	            row++;
-    	        }
-    	    } catch (Exception e) {
-    	        e.printStackTrace();
-    	    }
-    	}
-	
+             String line;
+             while ((line = br.readLine()) != null && row < gp.maxWorldRow) {
+                 String[] characters = line.split(" ");
+                 col = 0;
+                 while (col < gp.maxWorldCol && col < characters.length) {
+                     char tileChar = characters[col].charAt(0);
+                     int tileNum = tileChar - 'a';
+                     mapTilenum[col][row] = tileNum;
+                     col++;
+                 }
+                 row++;
+             }
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+     }
      public void draw(Graphics2D g2) {
     	    int worldCol = 0;
     	    int worldRow = 0;

@@ -25,8 +25,6 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        screenX = gp.tileSize *0; //position du joueur sur la carte 10
-        screenY = gp.tileSize * 2; //100
         l = 20;
         L = 25;
         speed = 1;

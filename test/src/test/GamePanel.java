@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
+import entity.PNJ_bandana;
 import entity.Player;
 import objects.Objetc_manager;
 import tiles.Tiles_manger;
@@ -12,7 +13,9 @@ import tiles.Tiles_manger;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable{
 	
-	//parametre ecran 
+    public String currentMap; // Utilisez une chaîne de caractères pour stocker le chemin de la carte
+	
+	 //parametre ecran 
 	final int originalTileSize = 16; // tuiles 16*16
 	final int scale = 3; //variable pour le mettre a la bonne echelle
 	
@@ -42,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public CollisionVerif verif = new CollisionVerif(this); // pour la collision 
  	public Player player = new Player(this, keyH);
+ 	PNJ_bandana pnj_bandana = new PNJ_bandana(this);
 
  	
 	//constructeur de panel 
@@ -70,7 +74,14 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			tileM.draw(g2); // d abord le decors 
 			ObjectM.draw(g2); // puis les objects
+			// Afficher le PNJ si la carte actuelle est "map3.txt"
+	        if (currentMap != null && currentMap.equals("/maps/maps2.txt")) {
+	            pnj_bandana.draw(g2);
+	        }
+
 			player.draw(g2);// puis apres le perso 
+			
+			
 			g2.dispose();
 			
 		}
