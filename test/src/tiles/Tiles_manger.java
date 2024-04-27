@@ -26,7 +26,7 @@
          mapTilenum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
          getTileImage();
-         loadMap("/maps/map3.txt");
+         loadMap("/maps/maps2.txt");
              }
      
      public void getTileImage() {
@@ -59,6 +59,7 @@
              
              tileMap.put('b', new Tile());
              tileMap.get('b').image = ImageIO.read(getClass().getResourceAsStream("/tiles/010.png"));
+             tileMap.get('b').collision = true;
              
              tileMap.put('c', new Tile());
              tileMap.get('c').image = ImageIO.read(getClass().getResourceAsStream("/tiles/003.png"));
@@ -80,17 +81,14 @@
              
              tileMap.put('h', new Tile());
              tileMap.get('h').image = ImageIO.read(getClass().getResourceAsStream("/tiles/012.png"));
+             tileMap.get('h').collision = true;
              
              tileMap.put('i', new Tile());
              tileMap.get('i').image = ImageIO.read(getClass().getResourceAsStream("/tiles/013.png"));
              
              tileMap.put('j', new Tile());
              tileMap.get('j').image = ImageIO.read(getClass().getResourceAsStream("/tiles/005.png"));  
-             
-             tileMap.put('k', new Tile());
-             tileMap.get('k').image = ImageIO.read(getClass().getResourceAsStream("/test/coffre_test.PNG")); 
-             tileMap.get('k').collision = true;
-             
+                  
              
             
          } catch (Exception e) {

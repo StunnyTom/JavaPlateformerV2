@@ -9,8 +9,7 @@ public class KeyHandler implements KeyListener{
 	//les 3 methodes sont obligatoires
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
@@ -19,17 +18,14 @@ public class KeyHandler implements KeyListener{
 		int code = e.getKeyCode();
 		
 		if (code ==  KeyEvent.VK_RIGHT) {
-			rightPressed = true;
-			
+			rightPressed = true;	
 		}
 		if (code ==  KeyEvent.VK_LEFT) {
-			leftPressed = true;
-					
+			leftPressed = true;			
 				}
 		if (code ==  KeyEvent.VK_UP) {
 			upPressed = true;	
 		}
-		
 		if (code ==  KeyEvent.VK_DOWN) {
 			downPressed = true;	
 		}
@@ -48,7 +44,6 @@ public class KeyHandler implements KeyListener{
 		if (code ==  KeyEvent.VK_UP) {
 			upPressed = false;
 		}
-		
 		if (code ==  KeyEvent.VK_DOWN) {
 			downPressed = false;
 		}

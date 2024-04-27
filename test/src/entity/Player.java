@@ -33,6 +33,7 @@ public class Player extends Entity {
         direction = "neutre";
     }
 
+    //les images pour le sprite
     public void getPlayerImage() {
         try {
             neutre1 = ImageIO.read(getClass().getResourceAsStream("/img_player/position_neutre.png"));
@@ -45,7 +46,6 @@ public class Player extends Entity {
         }
     }
 
-    
     public void update() {
         int newX = screenX, newY = screenY;
 
@@ -53,24 +53,23 @@ public class Player extends Entity {
         ySpeed += GRAVITY;
         newY += ySpeed;
 
-        // Vérifier les collisions avec le sol
-        boolean onG = !gp.verif.checkCollision(screenX, screenY + 1, l, L, solidAir);
-        if (keyH.upPressed && !onG) {
-            ySpeed = -2; // Saut
-        }
+        boolean onGround = gp.verif.checkCollision(screenX, screenY + 1, l, L, solidAir); // Vérifier les collisions avec le sol
 
+        // Sauter seulement si le personnage est au sol
+        if (keyH.upPressed && onGround) {
+            ySpeed = -2; // Valeur de saut
+        }
+/*
+        // Mouvement vers le bas 
+        if (keyH.downPressed) {
+            newY += speed; // Déplacement vers le bas
+        }
+*/
         // Collision check pour l'axe Y
         if (!gp.verif.checkCollision(screenX, newY, l, L, solidAir)) {
             screenY = newY;
         } else {
-            // Si collision avec le sol, arrêter le saut
-            ySpeed = 0;
-        }
-
-        // Vérification des collisions avec des objets
-        if (gp.verif.checkCollisionObject(newX, newY, l, L, solidAir)) {
-            //System.out.println("Collision avec objet détectée");
-        	pickupObjet();
+            ySpeed = 0; // Arrêter le mouvement si collision
         }
 
         // Mouvement sur l'axe X
@@ -92,11 +91,16 @@ public class Player extends Entity {
             spriteNum = spriteNum == 1 ? 2 : 1;
             spriteCounter = 0;
         }
+
+        // Vérification des collisions avec des objets
+        if (gp.verif.checkCollisionObject(newX, newY, l, L, solidAir)) {
+            pickupObjet(); // Ramasser l'objet en cas de collision
+        }
     }
-    
+
     public void pickupObjet() {
     	System.out.println("objet bientot ramassé");
-    	//on pourra le mettre dans l'inventaire
+    	//on pourra le mettre a l inventaire
     }
 
     

@@ -15,6 +15,8 @@ public class Objetc_manager {
     GamePanel gp;
     public Map<Character, Object> Objet_Map;
     public int mapObjetnum[][]; // Variable pour la map
+  
+
  
     // Constructeur
     public Objetc_manager(GamePanel gp) {
@@ -23,7 +25,7 @@ public class Objetc_manager {
         mapObjetnum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getObjetImage();
-        loadMap("/maps_object/maps3_obj.txt");
+        loadMap("/maps_object/maps1_obj.txt");
             }
     
     public void getObjetImage() {

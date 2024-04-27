@@ -53,11 +53,9 @@ public class CollisionVerif {
         boolean collisionDetected = false;
 
         // Vérifier les collisions uniquement avec les objets
-        if (ObjCollision(entityLeftObj, entityTopObj) ||
-            ObjCollision(entityRightObj, entityTopObj) ||
-            ObjCollision(entityLeftObj, entityBottomObj) ||
-            ObjCollision(entityRightObj, entityBottomObj)) {
-            
+        if (ObjCollision(entityLeftObj, entityTopObj) || ObjCollision(entityRightObj, entityTopObj) ||
+            ObjCollision(entityLeftObj, entityBottomObj) || ObjCollision(entityRightObj, entityBottomObj)) {
+ 
             collisionDetected = true;
 
             // uniquement si la collision est détectée
@@ -78,7 +76,7 @@ public class CollisionVerif {
         Object object = gp.ObjectM.Objet_Map.get(objChar);
 
         if (object == null) {
-            System.out.println("Aucun objet trouvé");
+            //System.out.println("Aucun objet trouvé");
             return false;
         }
         boolean collision = object.collision;
