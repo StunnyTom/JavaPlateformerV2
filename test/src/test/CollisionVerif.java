@@ -88,19 +88,14 @@ public class CollisionVerif {
         Rectangle playerArea = new Rectangle(newX, newY, l, L);
         for (PNJ_bandana pnj : gp.listPNJ) {
             if (pnj.solidAir.intersects(playerArea)) {
-                System.out.println("Collision");
+            	pnj.isCollisionWithPlayer = true; // Activer le flag de collision
+               // System.out.println("Collision");
                 return true;
             }
-            System.out.println("pas de collision");
+            //System.out.println("pas de collision avec un pnj");
         }
         return false;
     }
-
-
-    
-
-    
-   
 
 
     

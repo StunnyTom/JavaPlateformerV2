@@ -90,13 +90,12 @@ public class Player extends Entity {
             pickupObjet(); // Ramasser l'objet en cas de collision
         }
         
-        // Vérification des collisions avec des objets
+        // Vérification des collisions avec les pnj
         if (gp.verif.checkCollisionPNJ(newX, newY, l, L, solidAir)) {
-            System.out.println("pnj");
+            //System.out.println("collision pnj");
         }
         
-     
-        
+
         // Gestion de l'animation sprite
         spriteCounter++;
         if (spriteCounter > 25) {

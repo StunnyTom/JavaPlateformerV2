@@ -1,6 +1,6 @@
 package entity;
-
-
+import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -10,21 +10,26 @@ import test.GamePanel;
 
 public class PNJ_bandana extends Entity {
     GamePanel gp;
+    public boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
+    
+
+    private String dialogueText1 = "Bonjour, je suis un PNJ...";
+    private String dialogueText2 = "...un deuxième texte";
+
+    private boolean conversationStarted = false;
+
     
     public PNJ_bandana(GamePanel gp) {
     	super();
         this.gp = gp;
-        
         direction = "neutre";
-        // Position fixe pour le PNJ_bandana
         screenX = 955; // position horizontale
         screenY = 240; // position verticale
-		int padding = 15; // Ajouter 10 pixels de marge autour du PNJ
+		int padding = 15; // marge autour du PNJ
 
         // Définir la zone de collision
         super.solidAir = new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding);
         getImage();
-
     }
 
     public void getImage() {
@@ -33,6 +38,35 @@ public class PNJ_bandana extends Entity {
             super.neutre2 = ImageIO.read(getClass().getResourceAsStream("/img_npj/npj1_neutre.png"));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public void drawDialogue(Graphics2D g2) {
+        String text = "Bonjour, je suis Bandana ! Je te donne cette plume pour sauter plus haut.";
+        int boxWidth = 220;
+        int boxHeight = 50;
+        int boxX = screenX - boxWidth + 20  + gp.tileSize / 2; // Centre la boîte par rapport au PNJ
+        int boxY = screenY - boxHeight - 20; // Juste au-dessus du PNJ
+
+        g2.setColor(new Color(0, 0, 0, 150)); // Couleur noire semi-transparente
+        g2.fillRect(boxX, boxY, boxWidth, boxHeight); // Dessiner le rectangle
+        g2.setColor(Color.WHITE);
+
+        // Découpe et affiche le texte ligne par ligne
+        FontMetrics fm = g2.getFontMetrics();
+        int lineHeight = fm.getHeight();
+        int x = boxX + 3; // Marge interne pour le texte
+        int y = boxY + lineHeight;
+
+        for (String line : text.split(" ")) {
+            String testLine = line + " ";
+            int lineWidth = fm.stringWidth(testLine);
+            if (x + lineWidth > boxX + boxWidth - 10) {
+                // Retour à la ligne si le mot dépasse la largeur de la boîte
+                x = boxX + 10; // Réinitialise la position x pour la ligne suivante
+                y += lineHeight; // Passe à la ligne suivante
+            }
+            g2.drawString(testLine, x, y);
+            x += lineWidth;
         }
     }
 
@@ -51,5 +85,8 @@ public class PNJ_bandana extends Entity {
         
         // Dessine l'image sur le rectangle bleu
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        if (isCollisionWithPlayer) {
+            drawDialogue(g2); // Dessiner la boîte de dialogue si collision
+        }
     }  
 }

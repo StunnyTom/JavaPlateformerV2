@@ -85,12 +85,12 @@ public class GamePanel extends JPanel implements Runnable{
 			ObjectM.draw(g2); // puis les objects
 			// Afficher le PNJ si la carte actuelle est "map3.txt"
 	        if (currentMap != null && currentMap.equals("/maps/maps2.txt")) {
-	            pnj_bandana.draw(g2);
+	        	for (PNJ_bandana pnj : listPNJ) {
+	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
+	            }
 	        }
 
-			player.draw(g2);// puis apres le perso 
-			
-			
+			player.draw(g2);// puis apres le perso 	
 			g2.dispose();
 			
 		}
