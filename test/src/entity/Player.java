@@ -53,9 +53,8 @@ public class Player extends Entity {
         newY += ySpeed;
 
         boolean onGround = gp.verif.checkCollision(screenX, screenY + 1, l, L, solidAir); // Vérifier les collisions avec le sol
-
-        // Sauter seulement si le personnage est au sol
-        if (keyH.upPressed && onGround) {
+      
+        if (keyH.upPressed && onGround) {   // Sauter seulement si le personnage est au sol
             ySpeed = -2; // Valeur de saut
         }
 /*
@@ -79,12 +78,10 @@ public class Player extends Entity {
             newX += speed;
         }
 
-        // Collision check pour l'axe X
-        if (!gp.verif.checkCollision(newX, screenY, l, L, solidAir)) {
+        if (!gp.verif.checkCollision(newX, screenY, l, L, solidAir)) { // Collision check pour l'axe X
             screenX = newX;
         }
-
-   
+        
         // Vérification des collisions avec des objets
         if (gp.verif.checkCollisionObject(newX, newY, l, L, solidAir)) {
             pickupObjet(); // Ramasser l'objet en cas de collision

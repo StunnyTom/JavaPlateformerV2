@@ -36,8 +36,6 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxScreenRow;
 
-
-	
 	//nombre d image par seconde d'image
 	int FPS = 30;
 	
@@ -53,8 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
  // Liste pour stocker les PNJ
     public ArrayList<PNJ_bandana> listPNJ = new ArrayList<>();
 
-
- 	
+    
 	//constructeur de panel 
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -83,8 +80,7 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			tileM.draw(g2); // d abord le decors 
 			ObjectM.draw(g2); // puis les objects
-			// Afficher le PNJ si la carte actuelle est "map3.txt"
-	        if (currentMap != null && currentMap.equals("/maps/maps2.txt")) {
+	        if (currentMap != null && currentMap.equals("/maps/maps2.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
 	        	for (PNJ_bandana pnj : listPNJ) {
 	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
 	            }

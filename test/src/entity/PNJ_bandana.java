@@ -6,11 +6,14 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.Timer;
+
 import test.GamePanel;
 
 public class PNJ_bandana extends Entity {
     GamePanel gp;
     public boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
+    public Timer dialogueTimer; //attribut pour le temps de la boite
     
     public PNJ_bandana(GamePanel gp) {
     	super();
@@ -23,6 +26,9 @@ public class PNJ_bandana extends Entity {
         // Définir la zone de collision
         super.solidAir = new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding);
         getImage();
+        
+        dialogueTimer = new Timer(900, e -> isCollisionWithPlayer = false);
+        dialogueTimer.setRepeats(false); // Assurez-vous que le timer ne se répète pas
     }
 
     public void getImage() {
