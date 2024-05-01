@@ -51,9 +51,7 @@ public class Player extends Entity {
         // Appliquer la gravité
         ySpeed += GRAVITY;
         newY += ySpeed;
-
         boolean onGround = gp.verif.checkCollision(screenX, screenY + 1, l, L, solidAir); // Vérifier les collisions avec le sol
-      
         if (keyH.upPressed && onGround) {   // Sauter seulement si le personnage est au sol
             ySpeed = -2; // Valeur de saut
         }
@@ -127,7 +125,6 @@ public class Player extends Entity {
 				if (spriteNum == 2) {
 					image = right2;
 				}
-			
 				break;
 			case"left":
 				if(spriteNum == 1) {

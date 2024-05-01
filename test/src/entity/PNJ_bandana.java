@@ -28,7 +28,7 @@ public class PNJ_bandana extends Entity {
         getImage();
         
         dialogueTimer = new Timer(900, e -> isCollisionWithPlayer = false);
-        dialogueTimer.setRepeats(false); // Assurez-vous que le timer ne se répète pas
+        dialogueTimer.setRepeats(false); // le timer ne se répète pas
     }
 
     public void getImage() {
@@ -39,6 +39,8 @@ public class PNJ_bandana extends Entity {
             e.printStackTrace();
         }
     }
+    
+    //boite de dialogue
     public void drawDialogue(Graphics2D g2) {
         String text = "Bonjour, je suis Bandana ! Je te donne cette plume pour sauter plus haut.";
         int boxWidth = 220;
