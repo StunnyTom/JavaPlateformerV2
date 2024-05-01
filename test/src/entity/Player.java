@@ -110,8 +110,6 @@ public class Player extends Entity {
     	//on pourra le mettre a l inventaire
     }
 
-    
-
 	public void draw(Graphics2D g2) {
 		BufferedImage image = null;
 		

@@ -12,13 +12,6 @@ public class PNJ_bandana extends Entity {
     GamePanel gp;
     public boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
     
-
-    private String dialogueText1 = "Bonjour, je suis un PNJ...";
-    private String dialogueText2 = "...un deuxième texte";
-
-    private boolean conversationStarted = false;
-
-    
     public PNJ_bandana(GamePanel gp) {
     	super();
         this.gp = gp;
