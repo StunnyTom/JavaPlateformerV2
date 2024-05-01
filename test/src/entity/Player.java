@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import test.GamePanel;
 import test.KeyHandler;
 
+
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
@@ -83,6 +84,19 @@ public class Player extends Entity {
             screenX = newX;
         }
 
+   
+        // Vérification des collisions avec des objets
+        if (gp.verif.checkCollisionObject(newX, newY, l, L, solidAir)) {
+            pickupObjet(); // Ramasser l'objet en cas de collision
+        }
+        
+        // Vérification des collisions avec des objets
+        if (gp.verif.checkCollisionPNJ(newX, newY, l, L, solidAir)) {
+            System.out.println("pnj");
+        }
+        
+     
+        
         // Gestion de l'animation sprite
         spriteCounter++;
         if (spriteCounter > 25) {
@@ -90,10 +104,6 @@ public class Player extends Entity {
             spriteCounter = 0;
         }
 
-        // Vérification des collisions avec des objets
-        if (gp.verif.checkCollisionObject(newX, newY, l, L, solidAir)) {
-            pickupObjet(); // Ramasser l'objet en cas de collision
-        }
     }
 
     public void pickupObjet() {
@@ -102,8 +112,7 @@ public class Player extends Entity {
     }
 
     
-    
-	
+
 	public void draw(Graphics2D g2) {
 		BufferedImage image = null;
 		

@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 
 import entity.PNJ_bandana;
@@ -20,6 +22,9 @@ public class GamePanel extends JPanel implements Runnable{
 	final int scale = 3; //variable pour le mettre a la bonne echelle
 	
 	public final int tileSize = originalTileSize * scale; // 48*48 pour afficher les tuiles
+	public final int ObjetSize = originalTileSize * scale; // 48*48 pour afficher les objets 
+	public final int PNJSize = originalTileSize * scale; // 48*48 pour afficher les objets 
+
 	
 	public final int maxScreenCol = 21; // on choisi la taille de la hauteur 
 	public final int maxScreenRow = 10; // la taille de la hauteur
@@ -30,9 +35,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int maxWorldRow = 10;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxScreenRow;
-	
-	
-	public final int ObjetSize = originalTileSize * scale; // 48*48 pour afficher les objets 
+
 
 	
 	//nombre d image par seconde d'image
@@ -45,7 +48,11 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public CollisionVerif verif = new CollisionVerif(this); // pour la collision 
  	public Player player = new Player(this, keyH);
- 	PNJ_bandana pnj_bandana = new PNJ_bandana(this);
+ 	public PNJ_bandana pnj_bandana = new PNJ_bandana(this);
+
+ // Liste pour stocker les PNJ
+    public ArrayList<PNJ_bandana> listPNJ = new ArrayList<>();
+
 
  	
 	//constructeur de panel 
@@ -55,6 +62,8 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH); //reconaitre l'entr�e des touches 
 		this.setFocusable(true);
+		PNJ_bandana pnj1 = new PNJ_bandana(this);
+	    listPNJ.add(pnj1);
 		
 	}
 

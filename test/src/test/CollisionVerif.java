@@ -4,6 +4,8 @@ import tiles.Tile;
 import objects.Object;
 import java.awt.Rectangle;
 
+import entity.PNJ_bandana;
+
 public class CollisionVerif {
     GamePanel gp;
 
@@ -64,8 +66,7 @@ public class CollisionVerif {
 
         return collisionDetected; // Retourne true si une collision avec un objet a été détectée
     }
-
-    
+ 
     private boolean ObjCollision(int col, int row) {
         if (col < 0 || row < 0 || col >= gp.maxScreenCol || row >= gp.maxScreenRow) {
             return false; // Hors des limites
@@ -80,9 +81,21 @@ public class CollisionVerif {
             return false;
         }
         boolean collision = object.collision;
-        
         return collision; // Retourne true si l'objet a une propriété de collision
     }
+
+    public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {
+        Rectangle playerArea = new Rectangle(newX, newY, l, L);
+        for (PNJ_bandana pnj : gp.listPNJ) {
+            if (pnj.solidAir.intersects(playerArea)) {
+                System.out.println("Collision");
+                return true;
+            }
+            System.out.println("pas de collision");
+        }
+        return false;
+    }
+
 
     
 
