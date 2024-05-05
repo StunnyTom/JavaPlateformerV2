@@ -1,7 +1,8 @@
 package test;
 
 import tiles.Tile;
-import objects.Object;
+import objects.gameObject;
+
 import java.awt.Rectangle;
 
 import entity.PNJ_bandana;
@@ -45,43 +46,64 @@ public class CollisionVerif {
         return collision;
     }
     
-    public boolean checkCollisionObject(int newX, int newY, int l, int L, Rectangle solidArea) {
+    public gameObject checkCollisionObject(int newX, int newY, int l, int L, Rectangle solidArea) {
         // Calculer les positions des tuiles en fonction de newX et newY
         int entityLeftObj = (newX + solidArea.x) / gp.ObjetSize;
         int entityRightObj = (newX + solidArea.x + solidArea.width - L) / gp.ObjetSize;
         int entityTopObj = (newY + solidArea.y + l) / gp.ObjetSize;
         int entityBottomObj = (newY + solidArea.y + solidArea.height) / gp.ObjetSize;
 
-        boolean collisionDetected = false;
+        //boolean collisionDetected = false;
 
         // Vérifier les collisions uniquement avec les objets
-        if (ObjCollision(entityLeftObj, entityTopObj) || ObjCollision(entityRightObj, entityTopObj) ||
-            ObjCollision(entityLeftObj, entityBottomObj) || ObjCollision(entityRightObj, entityBottomObj)) {
- 
-            collisionDetected = true;
-
-            // uniquement si la collision est détectée
-            System.out.println("Collision avec un objet détectée ");
+        gameObject C1 = ObjCollision(entityLeftObj, entityTopObj);
+        gameObject C2 = ObjCollision(entityRightObj, entityTopObj);
+        gameObject C3 = ObjCollision(entityLeftObj, entityBottomObj);
+        gameObject C4 = ObjCollision(entityRightObj, entityBottomObj);
+        
+        if (!C1.nullObj()) {
+        	System.out.println("Collision avec un objet détectée ");
+        	return C1;
         }
-
-        return collisionDetected; // Retourne true si une collision avec un objet a été détectée
+        
+        if (!C2.nullObj()) {
+        	System.out.println("Collision avec un objet détectée ");
+        	return C2;
+        }
+        
+        if (!C3.nullObj()) {
+        	System.out.println("Collision avec un objet détectée ");
+        	return C3;
+        }
+        
+        if (!C4.nullObj()) {
+        	System.out.println("Collision avec un objet détectée ");
+        	return C4;
+        }
+        
+        return C1;
     }
  
-    private boolean ObjCollision(int col, int row) {
+    private gameObject ObjCollision(int col, int row) {
         if (col < 0 || row < 0 || col >= gp.maxScreenCol || row >= gp.maxScreenRow) {
-            return false; // Hors des limites
+        	gameObject newOb = new gameObject(false);
+        	newOb.setID("0");
+            return newOb; // Hors des limites
         }
 
         // Obtenir le caractère de la tuile et vérifier pour la collision
-        char objChar = (char) (gp.ObjectM.mapObjetnum[col][row] + 'a');
-        Object object = gp.ObjectM.Objet_Map.get(objChar);
+        char key = (char) (gp.ObjectM.mapObjetnum[col][row] + 'a');
+        String objChar = "" + key;
+        gameObject object = gp.ObjectM.Objet_Map.get(objChar);
 
         if (object == null) {
             //System.out.println("Aucun objet trouvé");
-            return false;
+        	gameObject newOb = new gameObject(false);
+        	newOb.setID(Integer.toString(0));
+            return newOb;
         }
-        boolean collision = object.collision;
-        return collision; // Retourne true si l'objet a une propriété de collision
+        //boolean collision = object.collision;
+        return object; // Retourne true si l'objet a une propriété de collision
     }
 
     public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {

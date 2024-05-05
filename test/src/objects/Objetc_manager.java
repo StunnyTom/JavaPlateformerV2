@@ -13,7 +13,7 @@ import test.GamePanel;
 
 public class Objetc_manager {
     GamePanel gp;
-    public Map<Character, Object> Objet_Map;
+    public Map<String, gameObject> Objet_Map;
     public int mapObjetnum[][]; // Variable pour la map
   
 
@@ -28,14 +28,27 @@ public class Objetc_manager {
         loadMap("/maps_object/maps1_obj.txt");
             }
     
+    public void instObjet(String c, String filePath, boolean col) {
+    	try {
+    		
+    		Objet_Map.put(c, new gameObject(true));
+    		Objet_Map.get(c).image = ImageIO.read(getClass().getResourceAsStream(filePath));
+    		Objet_Map.get(c).collision = col;
+    		Objet_Map.get(c).id = c; // Ajouter un champ "id"
+    		
+    	} catch (Exception e) {
+    		
+    		e.printStackTrace();
+    		
+    	}
+    }
+    
     public void getObjetImage() {
         try {
         	
-        	Objet_Map.put('z', new Object());
-        	Objet_Map.get('z').image = ImageIO.read(getClass().getResourceAsStream("/objects/cle.png"));
-        	Objet_Map.get('z').collision = true;
-        	Objet_Map.get('z').id = '1'; // Ajouter un champ "id"
+        	this.instObjet("z", "/objects/cle.png", true);
         	
+        	this.instObjet("y", "/objects/cle.png", true);
        
 
         } catch (Exception e) {
@@ -79,11 +92,12 @@ public class Objetc_manager {
             int Objet_testNum = mapObjetnum[worldCol][worldRow];
 
             if (Objet_testNum != 0) { // Si l'objet n'est pas vide
-                char Objet_testKey = (char) ('a' + Objet_testNum);
-
+            	char key = (char) ('a' + Objet_testNum);
+                String Objet_testKey = "" + key;
+                
                 // Vérifiez que l'objet existe dans la map
                 if (Objet_Map.containsKey(Objet_testKey)) {
-                    Object Objet_test = Objet_Map.get(Objet_testKey);
+                    gameObject Objet_test = Objet_Map.get(Objet_testKey);
                     
                     if (Objet_test != null) { // Vérifiez que ce n'est pas null
                         g2.drawImage(Objet_test.image, 
