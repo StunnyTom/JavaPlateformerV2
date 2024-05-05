@@ -97,6 +97,7 @@ public class Objetc_manager {
             	char key = (char) ('a' + Objet_testNum);
                 String Objet_testKey = "" + key;
                 
+
                 // Vérifiez que l'objet existe dans la map
                 if (Objet_Map.containsKey(Objet_testKey)) {
                     gameObject Objet_test = Objet_Map.get(Objet_testKey);
