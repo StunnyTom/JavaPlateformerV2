@@ -5,6 +5,7 @@ import objects.gameObject;
 
 import java.awt.Rectangle;
 
+import entity.PNJ_Magalor;
 import entity.PNJ_bandana;
 
 public class CollisionVerif {
@@ -66,6 +67,7 @@ public class CollisionVerif {
         	return C1;
         }
         
+<<<<<<< HEAD
         if (!C2.nullObj()) {
         	System.out.println("Collision avec un objet détectée ");
         	return C2;
@@ -80,6 +82,23 @@ public class CollisionVerif {
         	System.out.println("Collision avec un objet détectée ");
         	return C4;
         }
+=======
+        if (!C2.getID().equals("0")) {
+        	System.out.println("Collision avec un objet détectée ");
+        	return C2;
+        }
+        
+        if (!C3.getID().equals("0")) {
+        	System.out.println("Collision avec un objet détectée ");
+        	return C3;
+        }
+        
+        if (!C4.getID().equals("0")) {
+        	System.out.println("Collision avec un objet détectée ");
+        	return C4;
+        }
+        
+>>>>>>> branch 'test' of git@github.com:StunnyTom/JavaPlateformerV2.git
         
         return C1;
     }
@@ -92,8 +111,12 @@ public class CollisionVerif {
         }
 
         // Obtenir le caractère de la tuile et vérifier pour la collision
+<<<<<<< HEAD
         char key = (char) (gp.ObjectM.mapObjetnum[col][row] + 'a');
         String objChar = "" + key;
+=======
+        String objChar = (String) (gp.ObjectM.mapObjetnum[col][row] + "a");
+>>>>>>> branch 'test' of git@github.com:StunnyTom/JavaPlateformerV2.git
         gameObject object = gp.ObjectM.Objet_Map.get(objChar);
 
         if (object == null) {
@@ -113,10 +136,17 @@ public class CollisionVerif {
             	pnj.isCollisionWithPlayer = true; // Activer le flag de collision
             	 pnj.dialogueTimer.stop(); // Arrêter tout timer précédent
                  pnj.dialogueTimer.start(); // Démarrer le timer de 15 secondes
-               // System.out.println("Collision");
+                System.out.println("Collision");
                 return true;
             }
-            //System.out.println("pas de collision avec un pnj");
+        }
+            for (PNJ_Magalor pnj1 : gp.listPNJ_Magalor) {
+                if (pnj1.solidAir.intersects(playerArea)) {
+                	pnj1.isCollisionWithPlayer = true; // Activer le flag de collision
+                    System.out.println("Collision");
+                    return true;
+                }
+            System.out.println("pas de collision avec un pnj");
         }
         return false;
     }

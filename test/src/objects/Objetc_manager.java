@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import test.GamePanel;
 
 
+
 public class Objetc_manager {
     GamePanel gp;
     public Map<String, gameObject> Objet_Map;
@@ -31,7 +32,8 @@ public class Objetc_manager {
     public void instObjet(String c, String filePath, boolean col) {
     	try {
     		
-    		Objet_Map.put(c, new gameObject(true));
+
+    		Objet_Map.put(c, new gameObject());
     		Objet_Map.get(c).image = ImageIO.read(getClass().getResourceAsStream(filePath));
     		Objet_Map.get(c).collision = col;
     		Objet_Map.get(c).id = c; // Ajouter un champ "id"
@@ -121,5 +123,4 @@ public class Objetc_manager {
 
 
 }
-
 

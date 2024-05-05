@@ -2,45 +2,20 @@ package entity;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.Timer;
-
 import test.GamePanel;
 
-public class PNJ_bandana extends Entity {
-    GamePanel gp;
-    public boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
-    public Timer dialogueTimer; //attribut pour le temps de la boite
-    
-    public PNJ_bandana(GamePanel gp) {
-    	super();
-        this.gp = gp;
-        direction = "neutre";
-        screenX = 955; // position horizontale
-        screenY = 240; // position verticale
-		int padding = 15; // marge autour du PNJ
-
-        // Définir la zone de collision
-        super.solidAir = new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding);
-        getImage();
-        
+public class PNJ_bandana  extends PNJ {   
+    	public PNJ_bandana(GamePanel gp) {
+            super(gp, "/img_npj/npj1_neutre.png", 955, 240, 15);
+           
         dialogueTimer = new Timer(900, e -> isCollisionWithPlayer = false);
         dialogueTimer.setRepeats(false); // le timer ne se répète pas
     }
 
-    public void getImage() {
-        try {
-            super.neutre1 = ImageIO.read(getClass().getResourceAsStream("/img_npj/npj1_neutre.png"));
-            super.neutre2 = ImageIO.read(getClass().getResourceAsStream("/img_npj/npj1_neutre.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    //boite de dialogue
+        
+    //boite de dialogue propre a chaque
     public void drawDialogue(Graphics2D g2) {
         String text = "Bonjour, je suis Bandana ! Je te donne cette plume pour sauter plus haut.";
         int boxWidth = 220;
