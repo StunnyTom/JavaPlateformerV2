@@ -26,7 +26,7 @@ public class Objetc_manager {
         mapObjetnum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getObjetImage();
-        loadMap("/maps_object/maps1_obj.txt");
+        loadMap("/maps_object/map2objets.txt");
             }
     
     public void instObjet(String c, String filePath, boolean col) {
