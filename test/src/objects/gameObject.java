@@ -4,12 +4,16 @@ import java.awt.image.BufferedImage;
 public class gameObject {
 		
 	public BufferedImage image;
-	public boolean collision = false; //colision
+	public boolean collision = false; //collision
 	public String id;
 		
 	   
     public gameObject(boolean collision) {
         this.collision = collision;
+    }
+    
+    public BufferedImage getImage() {
+    	return this.image;
     }
     
     public void setID(String id) {

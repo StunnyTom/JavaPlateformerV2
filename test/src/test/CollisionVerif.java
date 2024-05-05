@@ -61,26 +61,25 @@ public class CollisionVerif {
         gameObject C3 = ObjCollision(entityLeftObj, entityBottomObj);
         gameObject C4 = ObjCollision(entityRightObj, entityBottomObj);
         
-        if (!C1.getID().equals("0")) {
+        if (!C1.nullObj()) {
         	System.out.println("Collision avec un objet détectée ");
         	return C1;
         }
         
-        if (!C2.getID().equals("0")) {
+        if (!C2.nullObj()) {
         	System.out.println("Collision avec un objet détectée ");
         	return C2;
         }
         
-        if (!C3.getID().equals("0")) {
+        if (!C3.nullObj()) {
         	System.out.println("Collision avec un objet détectée ");
         	return C3;
         }
         
-        if (!C4.getID().equals("0")) {
+        if (!C4.nullObj()) {
         	System.out.println("Collision avec un objet détectée ");
         	return C4;
         }
-        
         
         return C1;
     }
@@ -93,7 +92,8 @@ public class CollisionVerif {
         }
 
         // Obtenir le caractère de la tuile et vérifier pour la collision
-        String objChar = (String) (gp.ObjectM.mapObjetnum[col][row] + "a");
+        char key = (char) (gp.ObjectM.mapObjetnum[col][row] + 'a');
+        String objChar = "" + key;
         gameObject object = gp.ObjectM.Objet_Map.get(objChar);
 
         if (object == null) {

@@ -5,10 +5,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
+
+//import javax.swing.JPanel;
 
 import entity.PNJ_bandana;
 import entity.Player;
+import objects.InventoryDisplay;
 import objects.Objetc_manager;
 import tiles.Tiles_manger;
 
@@ -41,11 +45,12 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	Tiles_manger tileM = new Tiles_manger(this);//tuile img
 	public Objetc_manager ObjectM = new Objetc_manager(this); // img object
-	KeyHandler keyH = new KeyHandler();
+	public InventoryDisplay displayInv;
+	KeyHandler keyH;
 	Thread gameThread; //le fil du jeu, il appelle automatiquement la methode run 
 	
 	public CollisionVerif verif = new CollisionVerif(this); // pour la collision 
- 	public Player player = new Player(this, keyH);
+ 	public Player player;
  	public PNJ_bandana pnj_bandana = new PNJ_bandana(this);
 
  // Liste pour stocker les PNJ
@@ -57,8 +62,23 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
+		
+		player = new Player(this);
+		
+		setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.PAGE_END;
+        displayInv = new InventoryDisplay(player);
+        add(displayInv, gbc);
+        setOpaque(false);
+        
+		keyH = new KeyHandler(displayInv);
+		player.setkeyH(keyH);
 		this.addKeyListener(keyH); //reconaitre l'entr�e des touches 
 		this.setFocusable(true);
+		
 		PNJ_bandana pnj1 = new PNJ_bandana(this);
 	    listPNJ.add(pnj1);
 		
@@ -80,6 +100,7 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			tileM.draw(g2); // d abord le decors 
 			ObjectM.draw(g2); // puis les objects
+			
 	        if (currentMap != null && currentMap.equals("/maps/maps2.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
 	        	for (PNJ_bandana pnj : listPNJ) {
 	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
@@ -87,6 +108,8 @@ public class GamePanel extends JPanel implements Runnable{
 	        }
 
 			player.draw(g2);// puis apres le perso 	
+			displayInv.paint(g2);
+			
 			g2.dispose();
 			
 		}

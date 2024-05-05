@@ -17,9 +17,9 @@ public class Player extends Entity {
     KeyHandler keyH;
     
     // ou nous dessinons le joueur 
-    public Player(GamePanel gp, KeyHandler keyH) {
+    public Player(GamePanel gp) {
         this.gp = gp;
-        this.keyH = keyH;
+        this.keyH = null;
         setDefaultValues();
         getPlayerImage();
         
@@ -27,6 +27,10 @@ public class Player extends Entity {
         screenY = gp.screenHeight/2;
         solidAir = new Rectangle(16, -10, gp.tileSize, gp.tileSize);
         
+    }
+    
+    public void setkeyH(KeyHandler keyH) {
+    	this.keyH = keyH;
     }
 
     public void setDefaultValues() {
