@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import entity.PNJ_Magalor;
 import entity.PNJ_bandana;
 import entity.Player;
 import objects.Objetc_manager;
@@ -47,9 +48,12 @@ public class GamePanel extends JPanel implements Runnable{
 	public CollisionVerif verif = new CollisionVerif(this); // pour la collision 
  	public Player player = new Player(this, keyH);
  	public PNJ_bandana pnj_bandana = new PNJ_bandana(this);
+ 	public PNJ_Magalor pnj_magalor = new PNJ_Magalor(this);
+ 	
 
  // Liste pour stocker les PNJ
     public ArrayList<PNJ_bandana> listPNJ = new ArrayList<>();
+    public ArrayList<PNJ_Magalor> listPNJ_Magalor = new ArrayList<>();
 
     
 	//constructeur de panel 
@@ -59,8 +63,12 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH); //reconaitre l'entr�e des touches 
 		this.setFocusable(true);
+		
 		PNJ_bandana pnj1 = new PNJ_bandana(this);
 	    listPNJ.add(pnj1);
+	    
+	    PNJ_Magalor pnj2 = new PNJ_Magalor(this);
+	    listPNJ_Magalor.add(pnj2); // Ajouter PNJ_Magalor à sa propre liste
 		
 	}
 
@@ -82,6 +90,11 @@ public class GamePanel extends JPanel implements Runnable{
 			ObjectM.draw(g2); // puis les objects
 	        if (currentMap != null && currentMap.equals("/maps/maps2.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
 	        	for (PNJ_bandana pnj : listPNJ) {
+	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
+	            }
+	        }
+        	if (currentMap != null && currentMap.equals("/maps/map3.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
+	        	for (PNJ_Magalor pnj : listPNJ_Magalor) {
 	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
 	            }
 	        }

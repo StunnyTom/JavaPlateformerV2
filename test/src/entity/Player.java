@@ -3,7 +3,11 @@ package entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.imageio.ImageIO;
+
+import objects.gameObject;
 import test.GamePanel;
 import test.KeyHandler;
 
@@ -30,6 +34,7 @@ public class Player extends Entity {
         L = 25;
         speed = 1;
         direction = "neutre";
+        inv = new ArrayList<gameObject>();
     }
 
     //les images pour le sprite
@@ -81,8 +86,16 @@ public class Player extends Entity {
         }
         
         // Vérification des collisions avec des objets
-        if (gp.verif.checkCollisionObject(newX, newY, l, L, solidAir)) {
-            pickupObjet(); // Ramasser l'objet en cas de collision
+        gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, solidAir);
+        if (!collOb.nullObj()) {
+            addInv(collOb); // Ramasser l'objet en cas de collision
+            gp.ObjectM.Objet_Map.remove(collOb.getID());
+            
+            Iterator<gameObject> li = inv.iterator();
+            
+            while (li.hasNext())
+                System.out.println(li.next());
+            
         }
         
         // Vérification des collisions avec les pnj
