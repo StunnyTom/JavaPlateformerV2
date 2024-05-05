@@ -32,8 +32,7 @@ public class Objetc_manager {
     public void instObjet(String c, String filePath, boolean col) {
     	try {
     		
-
-    		Objet_Map.put(c, new gameObject());
+    		Objet_Map.put(c, new gameObject(true));
     		Objet_Map.get(c).image = ImageIO.read(getClass().getResourceAsStream(filePath));
     		Objet_Map.get(c).collision = col;
     		Objet_Map.get(c).id = c; // Ajouter un champ "id"
