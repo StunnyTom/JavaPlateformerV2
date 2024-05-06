@@ -1,8 +1,7 @@
 package entity;
 
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
+
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
@@ -14,6 +13,8 @@ public class PNJ extends Entity {
     public boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
     public Timer dialogueTimer; // attribut pour le temps de la boite
 
+    protected String dialogue;
+    
     public PNJ(GamePanel gp, String imageResource, int screenX, int screenY,  int padding) {
         super();
         this.gp = gp;
@@ -25,6 +26,13 @@ public class PNJ extends Entity {
         getImage(imageResource);
     }
 
+    public PNJ(String dialogue) {
+        this.dialogue = dialogue;
+    }
+
+    public String getDialogue() {
+        return dialogue;
+    }
 
     public void getImage(String imageResource) {
         try {
@@ -32,24 +40,7 @@ public class PNJ extends Entity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void draw(Graphics2D g2) {
-        BufferedImage image = null;
-
-        switch (direction) {
-            case "neutre":
-                if (spriteNum == 1) {
-                    image = neutre1;
-                } else if (spriteNum == 2) {
-                    image = neutre2;
-                }
-                break;
-        }
-
-        // Dessine l'image sur le rectangle 
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null); 
-
+    
 }
 
 }

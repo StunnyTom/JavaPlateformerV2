@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 public class gameObject {
 		
 	public BufferedImage image;
-	public boolean collision = false; //colision
+	public boolean collision = false; //collision
 	public String id;
 		
 	   
@@ -12,10 +12,9 @@ public class gameObject {
         this.collision = collision;
     }
     
- // Default constructor
- 	public gameObject() {
- 		// You can initialize variables here if needed
- 	}
+    public BufferedImage getImage() {
+    	return this.image;
+    }
     
     public void setID(String id) {
     	this.id = id;
