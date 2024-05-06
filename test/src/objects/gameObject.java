@@ -11,8 +11,8 @@ public class gameObject {
     public gameObject(boolean collision) {
         this.collision = collision;
     }
-    
-    public BufferedImage getImage() {
+
+	public BufferedImage getImage() {
     	return this.image;
     }
     

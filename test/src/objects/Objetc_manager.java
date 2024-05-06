@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
-
 import test.GamePanel;
 
 
@@ -37,25 +36,19 @@ public class Objetc_manager {
     		Objet_Map.get(c).id = c; // Ajouter un champ "id"
     		
     	} catch (Exception e) {
-    		
-    		e.printStackTrace();
-    		
+    		e.printStackTrace();	
     	}
     }
     
     public void getObjetImage() {
         try {
-        	
-        	this.instObjet("z", "/objects/cle.png", true);
-        	
-        	this.instObjet("y", "/objects/cle.png", true);
-       
-
+            this.instObjet("z", "/objects/cle.png", true); // Clé existante
+            this.instObjet("f", "/objects/coffre_test.png", false); // Ajout de la plume
+            this.instObjet("y", "/objects/cle.png", true); // Autre clé existante
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
 
 	//pour appeler la map + lire le fichier txt et le translater 
     public void loadMap(String filePath) {
@@ -118,7 +111,6 @@ public class Objetc_manager {
             }
         }
     }
-
 
 }
 

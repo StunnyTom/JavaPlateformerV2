@@ -26,7 +26,7 @@
          mapTilenum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
          getTileImage();
-         loadMap("/maps/map3.txt");
+         loadMap("/maps/maps2.txt");
              }
 
      

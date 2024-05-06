@@ -122,7 +122,6 @@ public class GamePanel extends JPanel implements Runnable{
 
 			player.draw(g2);// puis apres le perso 	
 			displayInv.paint(g2);
-			
 			g2.dispose();
 			
 		}

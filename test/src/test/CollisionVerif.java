@@ -112,9 +112,10 @@ public class CollisionVerif {
         Rectangle playerArea = new Rectangle(newX, newY, l, L);
         for (PNJ_bandana pnj : gp.listPNJ) {
             if (pnj.solidAir.intersects(playerArea)) {
-                pnj.isCollisionWithPlayer = true; // Activer le flag de collision
+            	pnj.isCollisionWithPlayer = true; // Activer le flag de collision
                 pnj.dialogueTimer.stop(); // Arrêter tout timer précédent
-                pnj.dialogueTimer.start(); // Démarrer le timer de 15 secondes
+                pnj.dialogueTimer.start(); // Démarrer le timer 
+                pnj.addItemToInventory(gp.player); // Ajoute l'objet à l'inventaire
                 //System.out.println("Collision");
                 return true;
             	}

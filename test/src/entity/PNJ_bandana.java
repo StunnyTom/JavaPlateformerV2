@@ -3,21 +3,62 @@ import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.Timer;
+
+import objects.gameObject;
 import test.GamePanel;
 
 public class PNJ_bandana  extends PNJ {   
+	private gameObject itemToGive;
+	
     	public PNJ_bandana(GamePanel gp) {
             super(gp, "/img_npj/npj1_neutre.png", 955, 240, 15);
            
         dialogueTimer = new Timer(900, e -> isCollisionWithPlayer = false);
         dialogueTimer.setRepeats(false); // le timer ne se répète pas
-    }
-
         
-    //boite de dialogue propre a chaque
+
+    	//METTRE DANS LA CLASSE INVENTAIRE
+        // Initialisation de l'objet à donner
+        this.itemToGive = new gameObject(false);
+        try {
+            BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/coffre_test.png"));
+            itemToGive.image = itemImage;
+            itemToGive.setID("1"); // Un identifiant unique pour cet objet
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    	//METTRE DANS LA CLASSE INVENTAIRE
+    	public void addItemToInventory(Player player) {
+    	    gameObject item = this.itemToGive;
+    	    if (item != null && item.image != null) {
+    	        // Vérifier si l'inventaire contient déjà cet objet
+    	        boolean alreadyInInventory = false;
+    	        for (gameObject invItem : player.inv) {
+    	            if (invItem.getID().equals(item.getID())) {
+    	                alreadyInInventory = true;
+    	                break;
+    	            }
+    	        }
+
+    	        // Ajouter l'objet seulement s'il n'est pas déjà dans l'inventaire
+    	        if (!alreadyInInventory) {
+    	            player.inv.add(item);
+    	           System.out.println("Objet ajouté à l'inventaire : " + item.getID());
+    	        } else {
+    	           // System.out.println("L'objet existe déjà dans l'inventaire.");
+    	        }
+    	    } 
+    	}
+
+    	//boite de dialogue propre a chaque
     public void drawDialogue(Graphics2D g2) {
-        String text = "Bonjour, je suis Bandana ! Je te donne cette plume pour sauter plus haut.";
+        String text = "Bonjour, je suis Bandana ! Je te donne cette clé.";
         int boxWidth = 220;
         int boxHeight = 50;
         int boxX = screenX - boxWidth + 20  + gp.tileSize / 2; // Centre la boîte par rapport au PNJ
