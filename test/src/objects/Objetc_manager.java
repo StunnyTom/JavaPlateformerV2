@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
-import test.GamePanel;
 
+import test.GamePanel;
 
 public class Objetc_manager {
     GamePanel gp;
@@ -36,19 +36,25 @@ public class Objetc_manager {
     		Objet_Map.get(c).id = c; // Ajouter un champ "id"
     		
     	} catch (Exception e) {
-    		e.printStackTrace();	
+    		
+    		e.printStackTrace();
+    		
     	}
     }
     
     public void getObjetImage() {
         try {
-            this.instObjet("z", "/objects/cle.png", true); // Clé existante
-            this.instObjet("f", "/objects/coffre_test.png", false); // Ajout de la plume
-            this.instObjet("y", "/objects/cle.png", true); // Autre clé existante
+        	
+        	this.instObjet("z", "/objects/cle.png", true);
+        	
+        	this.instObjet("y", "/objects/cle.png", true);
+       
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
 
 	//pour appeler la map + lire le fichier txt et le translater 
     public void loadMap(String filePath) {
@@ -64,7 +70,7 @@ public class Objetc_manager {
    	            String[] characters = line.split(" ");
    	            col = 0;
    	            
-   	            while (col < gp.maxWorldCol && col < characters.length) {
+   	            while (col < gp.maxScreenCol && col < characters.length) {
    	                char Objet_testChar = characters[col].charAt(0); // Obtient le premier caract�re de la cha�ne
    	                int Objet_testNum = Objet_testChar - 'a'; 
    	                mapObjetnum[col][row] = Objet_testNum;
@@ -88,6 +94,7 @@ public class Objetc_manager {
             	char key = (char) ('a' + Objet_testNum);
                 String Objet_testKey = "" + key;
                 
+
                 // Vérifiez que l'objet existe dans la map
                 if (Objet_Map.containsKey(Objet_testKey)) {
                     gameObject Objet_test = Objet_Map.get(Objet_testKey);
@@ -112,5 +119,5 @@ public class Objetc_manager {
         }
     }
 
-}
 
+}

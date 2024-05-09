@@ -8,10 +8,9 @@ import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 
-import entity.PNJ_Magalor;
-
 //import javax.swing.JPanel;
 
+import entity.PNJ_Magalor;
 import entity.PNJ_bandana;
 import entity.Player;
 import objects.InventoryDisplay;
@@ -37,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int screenWidth = tileSize * maxScreenCol; // 960 pixel
 	public final int screenHeight = tileSize * maxScreenRow; // 480 pixel
 
-	public final int maxWorldCol = 42;
+	public final int maxWorldCol = 22;
 	public final int maxWorldRow = 10;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxScreenRow;
@@ -55,10 +54,13 @@ public class GamePanel extends JPanel implements Runnable{
  	public Player player;
  	public PNJ_bandana pnj_bandana = new PNJ_bandana(this);
  	public PNJ_Magalor pnj_magalor = new PNJ_Magalor(this);
+ 	
 
  // Liste pour stocker les PNJ
     public ArrayList<PNJ_bandana> listPNJ = new ArrayList<>();
     public ArrayList<PNJ_Magalor> listPNJ_Magalor = new ArrayList<>();
+    
+    GameState gameState; // Ajout de l'attribut gameState
 
     
 	//constructeur de panel 
@@ -68,6 +70,7 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setDoubleBuffered(true);
 		
 		player = new Player(this);
+		gameState = new GameState(this); // Initialisation de gameState
 		
 		setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -78,7 +81,8 @@ public class GamePanel extends JPanel implements Runnable{
         add(displayInv, gbc);
         setOpaque(false);
         
-		keyH = new KeyHandler(displayInv);
+        keyH = new KeyHandler(displayInv, this);  // Passer 'this' pour référencer GamePanel
+
 		player.setkeyH(keyH);
 		this.addKeyListener(keyH); //reconaitre l'entr�e des touches 
 		this.setFocusable(true);
@@ -87,24 +91,45 @@ public class GamePanel extends JPanel implements Runnable{
 	    listPNJ.add(pnj1);
 	    
 	    PNJ_Magalor pnj2 = new PNJ_Magalor(this);
-	    listPNJ_Magalor.add(pnj2);
-
+	    listPNJ_Magalor.add(pnj2); // Ajouter PNJ_Magalor à sa propre liste
 		
 	}
-
+	
+	
 	public void startGameThread() {
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
 	
-		//Mis a jour de la position 
-		public void update() {
-			player.update();
-		}
+	public void stopGameThread() {
+	    if (gameThread != null) {
+	        gameThread.interrupt();
+	        gameThread = null;
+	    }
+	}
+
+	public void update() {
+	    // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
+	    int playerTileX = player.L / tileSize;
+	    int playerTileY = player.l / tileSize;
+
+	    if (verif.tileCollision(playerTileX, playerTileY)) {
+	        gameState.afficheGameOver();
+	    }
+
+	    if (!gameState.isGameOver()) {
+	        player.update();
+	    }
+	}
+
 		
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D)g;
+			
+			if (gameState.isGameOver()) {
+		        gameState.drawGameOverScreen(g2);
+		    } else {
 			
 			tileM.draw(g2); // d abord le decors 
 			ObjectM.draw(g2); // puis les objects
@@ -114,7 +139,7 @@ public class GamePanel extends JPanel implements Runnable{
 	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
 	            }
 	        }
-	        if (currentMap != null && currentMap.equals("/maps/map3.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
+        	if (currentMap != null && currentMap.equals("/maps/map3.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
 	        	for (PNJ_Magalor pnj : listPNJ_Magalor) {
 	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
 	            }
@@ -122,41 +147,40 @@ public class GamePanel extends JPanel implements Runnable{
 
 			player.draw(g2);// puis apres le perso 	
 			displayInv.paint(g2);
+			
 			g2.dispose();
 			
+		}
 		}
 
 		//genere automatiquement cette classe, permet de faire bouger le joueur
 		@Override
 		public void run() {
-			//methode du sommeil 
-			double drawInterval = 100000000/FPS;
-			double nextDrawInterval = System.nanoTime() + drawInterval; // quand le temps de mon programme est atteint il faut dessiner
-			
-			//boucle du jeu ==> le <3 de notre jeu
-			while(gameThread != null) { 
-				//1. update la position du joueur 	2. redessiner le perso
-				update();
-				repaint();
-				
-				//le slepp mets en pause le jeu et ne fera rien 	
-				try {
-					double remainingTime = nextDrawInterval - System.nanoTime();
-					//convertir en miliseconde
-					remainingTime = remainingTime/1000000;
-					
-					if(remainingTime <0) {
-						remainingTime = 0;
-					}
-					Thread.sleep((long) remainingTime); 
-					
-					nextDrawInterval += drawInterval;
-					
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-			}
+		    double drawInterval = 100000000.0 / FPS;
+		    double nextDrawInterval = System.nanoTime() + drawInterval; 
+
+		    while (gameThread != null && !Thread.currentThread().isInterrupted()) {
+		        update();
+		        repaint();
+
+		        try {
+		            double remainingTime = nextDrawInterval - System.nanoTime();
+		            remainingTime /= 1000000.0; // convertir en millisecondes
+
+		            if (remainingTime < 0) {
+		                remainingTime = 0;
+		            }
+
+		            Thread.sleep((long) remainingTime);
+
+		            nextDrawInterval += drawInterval;
+
+		        } catch (InterruptedException e) {
+		            Thread.currentThread().interrupt(); // Ré-interrompt le thread pour préserver le statut de l'interruption
+		            break; // Sort de la boucle
+		        }
+		    }
 		}
 
+		
 }

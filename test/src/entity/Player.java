@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
+
 import objects.gameObject;
 import test.GamePanel;
 import test.KeyHandler;
@@ -39,6 +40,7 @@ public class Player extends Entity {
         direction = "neutre";
         inv = new ArrayList<gameObject>();
     }
+    
 
     //les images pour le sprite
     public void getPlayerImage() {

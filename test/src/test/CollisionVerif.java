@@ -14,6 +14,7 @@ public class CollisionVerif {
     public CollisionVerif(GamePanel gp) {
         this.gp = gp;
     }
+    
 
     public boolean checkCollision(int newX, int newY, int l, int L, Rectangle solidArea) {
         // Calculer les positions des tuiles en fonction de newX et newY
@@ -33,10 +34,13 @@ public class CollisionVerif {
     }
 
     //verif si le perso est en dehors des limites
-    private boolean tileCollision(int col, int row) {
-        if (col < 0 || row < 0 || col >= gp.maxScreenCol || row >= gp.maxScreenRow) {
-            //System.out.println("Position de tuile hors limites");
+    boolean tileCollision(int col, int row) {
+        if (col < 0 || row < 0 || col >= gp.maxWorldCol || row >= gp.maxWorldRow) {
+        	//System.out.println("Position de tuile hors limites: col=" + col + ", row=" + row);
+            gp.gameState.afficheGameOver();
+            
             return false;
+            
         }
 
         // Obtenir le caract�re de la tuile et v�rifier pour la collision
@@ -107,30 +111,29 @@ public class CollisionVerif {
         return object; // Retourne true si l'objet a une propriété de collision
     }
 
-
     public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {
         Rectangle playerArea = new Rectangle(newX, newY, l, L);
         for (PNJ_bandana pnj : gp.listPNJ) {
             if (pnj.solidAir.intersects(playerArea)) {
             	pnj.isCollisionWithPlayer = true; // Activer le flag de collision
-                pnj.dialogueTimer.stop(); // Arrêter tout timer précédent
-                pnj.dialogueTimer.start(); // Démarrer le timer 
-                pnj.addItemToInventory(gp.player); // Ajoute l'objet à l'inventaire
+            	 pnj.dialogueTimer.stop(); // Arrêter tout timer précédent
+                 pnj.dialogueTimer.start(); // Démarrer le timer de 15 secondes
+                 pnj.addItemToInventory(gp.player); // Ajouter l'objet au joueur
                 //System.out.println("Collision");
-                return true;
-            	}
-        }
-        for (PNJ_Magalor pnj1 : gp.listPNJ_Magalor) {
-            if (pnj1.solidAir.intersects(playerArea)) {
-                pnj1.isCollisionWithPlayer = true; // Activer le flag de collision
-               //System.out.println("Collision");
-               // System.out.println(pnj1.getDialogue()); // Afficher le dialogue du PNJ
                 return true;
             }
         }
-       // System.out.println("pas de collision avec un pnj");
+            for (PNJ_Magalor pnj1 : gp.listPNJ_Magalor) {
+                if (pnj1.solidAir.intersects(playerArea)) {
+                	pnj1.isCollisionWithPlayer = true; // Activer le flag de collision
+                    //System.out.println("Collision");
+                    return true;
+                }
+            //System.out.println("pas de collision avec un pnj");
+        }
         return false;
     }
+
 
     
 }

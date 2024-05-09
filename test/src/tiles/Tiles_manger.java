@@ -108,10 +108,10 @@
              int col = 0;
 
              String line;
-             while ((line = br.readLine()) != null && row < gp.maxWorldRow) {
+             while ((line = br.readLine()) != null && row < gp.maxScreenCol) {
                  String[] characters = line.split(" ");
                  col = 0;
-                 while (col < gp.maxWorldCol && col < characters.length) {
+                 while (col < gp.maxScreenCol && col < characters.length) {
                      char tileChar = characters[col].charAt(0);
                      int tileNum = tileChar - 'a';
                      mapTilenum[col][row] = tileNum;
@@ -123,6 +123,28 @@
              e.printStackTrace();
          }
      }
+     
+     /*
+      * 
+      * 
+      *      public void loadMap(String filePath) {
+    	    if (filePath == null) {
+    	        System.out.println("Attempted to load a null map path.");
+    	        return;
+    	    }
+    	    try {
+    	        gp.currentMap = filePath; // Update the currentMap variable
+    	        InputStream is = getClass().getResourceAsStream(filePath);
+    	        if (is == null) {
+    	            throw new IOException("Resource not found: " + filePath);
+    	        }
+    	        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+    	        // Existing code to process the file
+    	    } catch (IOException e) {
+    	        e.printStackTrace();
+    	    }
+    	}
+    */
      public void draw(Graphics2D g2) {
     	    int worldCol = 0;
     	    int worldRow = 0;
