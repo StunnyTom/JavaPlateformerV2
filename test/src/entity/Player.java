@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import objects.gameObject;
 import test.GamePanel;
 import test.KeyHandler;
+import java.io.File;
 
 
 public class Player extends Entity {
@@ -23,8 +24,17 @@ public class Player extends Entity {
         setDefaultValues();
         getPlayerImage();
         
-        screenX = gp.screenWidth/2;
-        screenY = gp.screenHeight/2;
+        File nameMap = new File(gp.currentMap);
+        Point x;
+		try {
+			x = Entity.findSpawnPoint('z', nameMap.getName());
+			screenX = (int) (gp.tileSize * x.getX());
+	        screenY = (int) (gp.tileSize * x.getY());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         solidAir = new Rectangle(16, -10, gp.tileSize, gp.tileSize);
         
     }
@@ -53,6 +63,7 @@ public class Player extends Entity {
             e.printStackTrace();
         }
     }
+    
 
     public void update() {
         int newX = screenX, newY = screenY;
