@@ -23,6 +23,8 @@ public class CollisionVerif {
         int entityTopTile = (newY + solidArea.y + l) / gp.tileSize;
         int entityBottomTile = (newY + solidArea.y + solidArea.height) / gp.tileSize;
 
+       
+        
         // V�rifier les collisions par rapport a mon perso chaque coin de tuile
         if (tileCollision(entityLeftTile, entityTopTile) || tileCollision(entityRightTile, entityTopTile) ||
             tileCollision(entityLeftTile, entityBottomTile) || tileCollision(entityRightTile, entityBottomTile)) {
@@ -36,8 +38,8 @@ public class CollisionVerif {
     //verif si le perso est en dehors des limites
     boolean tileCollision(int col, int row) {
         if (col < 0 || row < 0 || col >= gp.maxWorldCol || row >= gp.maxWorldRow) {
-        	//System.out.println("Position de tuile hors limites: col=" + col + ", row=" + row);
-            gp.gameState.afficheGameOver();
+        	System.out.println("Position de tuile hors limites: col=" + col + ", row=" + row);
+            //gp.gameState.afficheGameOver();
             
             return false;
             
@@ -113,6 +115,8 @@ public class CollisionVerif {
 
     public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {
         Rectangle playerArea = new Rectangle(newX, newY, l, L);
+        // Vérifiez si la carte courante est "map2.txt"
+        if (gp.currentMap.equals("/maps/map2.txt")) {
         for (PNJ_bandana pnj : gp.listPNJ) {
             if (pnj.solidAir.intersects(playerArea)) {
             	pnj.isCollisionWithPlayer = true; // Activer le flag de collision
@@ -122,6 +126,7 @@ public class CollisionVerif {
                 //System.out.println("Collision");
                 return true;
             }
+        }
         }
             for (PNJ_Magalor pnj1 : gp.listPNJ_Magalor) {
                 if (pnj1.solidAir.intersects(playerArea)) {

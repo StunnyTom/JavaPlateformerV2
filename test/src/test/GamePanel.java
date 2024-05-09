@@ -108,19 +108,28 @@ public class GamePanel extends JPanel implements Runnable{
 	    }
 	}
 
-	public void update() {
-	    // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
-	    int playerTileX = player.L / tileSize;
-	    int playerTileY = player.l / tileSize;
 
-	    if (verif.tileCollision(playerTileX, playerTileY)) {
-	        gameState.afficheGameOver();
-	    }
+		public void update() {
+		    // Mettre à jour le joueur en premier pour prendre en compte les nouvelles positions
+		    if (!gameState.isGameOver()) {
+		        player.update();
+		    }
 
-	    if (!gameState.isGameOver()) {
-	        player.update();
-	    }
-	}
+		    // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
+		    int playerTileX = player.screenX / tileSize;  // Utilisation de screenX pour la position en X
+		    int playerTileY = player.screenY / tileSize;  // Utilisation de screenY pour la position en Y
+
+		    
+		    System.out.println("x = " + playerTileX);
+		    System.out.println("y = "+ playerTileY);
+		    // Vérifier la collision avec les tuiles et afficher le game over si nécessaire
+		   
+
+		    // Si le jeu continue, vérifier le changement de carte
+		    if (!gameState.isGameOver()) {
+		    	tileM.checkAndChangeMapOnPosition(); // Vérifie si le joueur a atteint la position spécifique pour le changement de carte
+		    }
+		}
 
 		
 		public void paintComponent(Graphics g) {

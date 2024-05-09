@@ -7,29 +7,25 @@
  import java.util.HashMap;
  import java.util.Map;
  import javax.imageio.ImageIO;
-
- import test.GamePanel;
+import test.GamePanel;
 
  public class Tiles_manger {
-     GamePanel gp;
-     public Map<Character, Tile> tileMap;
-     public int mapTilenum[][]; // Variable pour la map
-     Tile backgroundTile; // Variable membre pour l'image de fond
-     Tile Background2Tile; // Variable pour le second background
-     Tile Background3Tile; // Variable pour le troisieme background
+	    GamePanel gp;
+	    public Map<Character, Tile> tileMap;
+	    public int mapTilenum[][];
+	    Tile backgroundTile;
+	    Tile Background2Tile;
+	    Tile Background3Tile;
 
+	    public Tiles_manger(GamePanel gp) {
+	        this.gp = gp;
+	        tileMap = new HashMap<>();
+	        mapTilenum = new int[gp.maxWorldCol][gp.maxWorldRow];
+	        getTileImage();
+	        loadMap("/maps/maps1.txt");  // Charge la première carte au démarrage
+	        System.out.println("Initial map loaded: /maps/maps1.txt");
+	    }
 
-     // Constructeur
-     public Tiles_manger(GamePanel gp) {
-         this.gp = gp;
-         tileMap = new HashMap<>();
-         mapTilenum = new int[gp.maxWorldCol][gp.maxWorldRow];
-
-         getTileImage();
-         loadMap("/maps/maps2.txt");
-             }
-
-     
      public void getTileImage() {
          try {
         	 
@@ -89,29 +85,84 @@
              
              tileMap.put('j', new Tile());
              tileMap.get('j').image = ImageIO.read(getClass().getResourceAsStream("/tiles/005.png"));  
-                  
-             
             
          } catch (Exception e) {
              e.printStackTrace();
          }
      }
+     
+     //A CHANGER
+     public void checkAndChangeMapOnPosition() {
+         // Convertir les coordonnées du joueur en indices de tuile
+         int playerTileX = gp.player.screenX / gp.tileSize;
+         int playerTileY = gp.player.screenY / gp.tileSize;
 
+         // Spécifier la position de changement de carte map 1 => 2
+         if (playerTileX == 20 && playerTileY == 6) {
+             String nextMap = "/maps/maps2.txt"; // Chemin de la nouvelle carte
+             System.out.println("Changement de carte à " + nextMap);
+             loadMap(nextMap);  // Charger la nouvelle carte
+             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
+             gp.player.screenX = 1 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
+             gp.player.screenY = 0 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
+             System.out.println("La carte a été changée avec succès à: " + nextMap);
+         }
+         //maps 2 => 1 
+         if (playerTileX == 0 && playerTileY == 1) {
+             String nextMap = "/maps/maps1.txt"; // Chemin de la nouvelle carte
+             System.out.println("Changement de carte à " + nextMap);
+             loadMap(nextMap);  // Charger la nouvelle carte
+             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
+             gp.player.screenX = 20 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
+             gp.player.screenY = 6 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
+             System.out.println("La carte a été changée avec succès à: " + nextMap);
+             }
+
+         //maps 2 => 3
+         if (playerTileX == 20 && playerTileY == 7) {
+             String nextMap = "/maps/map3.txt"; // Chemin de la nouvelle carte
+             System.out.println("Changement de carte à " + nextMap);
+             loadMap(nextMap);  // Charger la nouvelle carte
+             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
+             gp.player.screenX = 0 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
+             gp.player.screenY = 6 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
+             System.out.println("La carte a été changée avec succès à: " + nextMap);
+         }
+         
+         //map 3 => 2
+         if (playerTileX == 0 && playerTileY == 7) {
+             String nextMap = "/maps/maps2.txt"; // Chemin de la nouvelle carte
+             System.out.println("Changement de carte à " + nextMap);
+             loadMap(nextMap);  // Charger la nouvelle carte
+             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
+             gp.player.screenX = 19 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
+             gp.player.screenY = 7 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
+             System.out.println("La carte a été changée avec succès à: " + nextMap);
+         }
+         
+         
+        
+         
+     }
+ 
+
+    
+     
+     
 	//pour appeler la map + lire le fichier txt et le translater 
      public void loadMap(String filePath) {
          try {
-             gp.currentMap = filePath; // Mettre à jour la variable currentMap
+        	 System.out.println("Loading map: " + filePath);
+             gp.currentMap = filePath;
              InputStream is = getClass().getResourceAsStream(filePath);
              BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
              int row = 0;
              int col = 0;
-
              String line;
-             while ((line = br.readLine()) != null && row < gp.maxScreenCol) {
+             while ((line = br.readLine()) != null && row < gp.maxWorldRow) {
                  String[] characters = line.split(" ");
                  col = 0;
-                 while (col < gp.maxScreenCol && col < characters.length) {
+                 while (col < gp.maxWorldCol && col < characters.length) {
                      char tileChar = characters[col].charAt(0);
                      int tileNum = tileChar - 'a';
                      mapTilenum[col][row] = tileNum;
@@ -119,53 +170,27 @@
                  }
                  row++;
              }
+             System.out.println("Map loaded successfully.");
          } catch (Exception e) {
              e.printStackTrace();
+             System.out.println("Error loading map: " + filePath);
          }
      }
      
-     /*
-      * 
-      * 
-      *      public void loadMap(String filePath) {
-    	    if (filePath == null) {
-    	        System.out.println("Attempted to load a null map path.");
-    	        return;
-    	    }
-    	    try {
-    	        gp.currentMap = filePath; // Update the currentMap variable
-    	        InputStream is = getClass().getResourceAsStream(filePath);
-    	        if (is == null) {
-    	            throw new IOException("Resource not found: " + filePath);
-    	        }
-    	        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-    	        // Existing code to process the file
-    	    } catch (IOException e) {
-    	        e.printStackTrace();
-    	    }
-    	}
-    */
      public void draw(Graphics2D g2) {
     	    int worldCol = 0;
     	    int worldRow = 0;
-    	   
-    	    
-    	 // Draw the 1er background
-    	    if (backgroundTile != null) {
+    
+    	    if (backgroundTile != null) { // Draw the 1er background
     	        g2.drawImage(backgroundTile.image, 0, 0, gp.screenWidth, gp.screenHeight, null);
     	    }
-
-    	    // Draw the 2eme overlay background
-    	    if (Background2Tile != null) {
+    	    if (Background2Tile != null) { // Draw the 2eme overlay background
     	        g2.drawImage(Background2Tile.image, 0, 0, gp.screenWidth, gp.screenHeight, null);
     	    }
-    	    
-    	    //Draw the 3eme overlay background
-    	    if (Background3Tile != null) {
+    	    if (Background3Tile != null) { //Draw the 3eme overlay background
     	        g2.drawImage(Background3Tile.image, 0, 0, gp.screenWidth, gp.screenHeight, null);
     	    }
-    	    
-    	    
+    	  
     	    // Draw the tiles
     	    while(worldCol < gp.maxScreenCol && worldRow < gp.maxScreenRow) {
     	        int tileNum = mapTilenum[worldCol][worldRow];
@@ -184,17 +209,13 @@
     	            } else {
     	            }
     	        }
-
     	        worldCol++;
    
     	        if(worldCol == gp.maxScreenCol) {
     	            worldCol = 0;
-    	           
     	            worldRow++;
-    	          
     	        }
     	    }
     	}
-
  }
  
