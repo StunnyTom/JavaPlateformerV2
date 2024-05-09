@@ -23,8 +23,6 @@ public class CollisionVerif {
         int entityTopTile = (newY + solidArea.y + l) / gp.tileSize;
         int entityBottomTile = (newY + solidArea.y + solidArea.height) / gp.tileSize;
 
-       
-        
         // V�rifier les collisions par rapport a mon perso chaque coin de tuile
         if (tileCollision(entityLeftTile, entityTopTile) || tileCollision(entityRightTile, entityTopTile) ||
             tileCollision(entityLeftTile, entityBottomTile) || tileCollision(entityRightTile, entityBottomTile)) {
@@ -39,16 +37,13 @@ public class CollisionVerif {
     boolean tileCollision(int col, int row) {
         if (col < 0 || row < 0 || col >= gp.maxWorldCol || row >= gp.maxWorldRow) {
         	System.out.println("Position de tuile hors limites: col=" + col + ", row=" + row);
-            //gp.gameState.afficheGameOver();
-            
+            gp.gameState.afficheGameOver();
             return false;
-            
         }
 
         // Obtenir le caract�re de la tuile et v�rifier pour la collision
         char tileChar = (char) (gp.tileM.mapTilenum[col][row] + 'a');
         Tile tile = gp.tileM.tileMap.get(tileChar);
-
         boolean collision = tile != null && tile.collision;
         return collision;
     }
