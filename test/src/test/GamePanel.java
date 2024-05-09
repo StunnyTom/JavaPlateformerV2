@@ -95,7 +95,7 @@ public class GamePanel extends JPanel implements Runnable{
 	    PNJ_Magalor pnj2 = new PNJ_Magalor(this);
 	    listPNJ_Magalor.add(pnj2); // Ajouter PNJ_Magalor à sa propre liste
 	    
-	    bomb = new Monster(this);
+	    //bomb = new Monster(this);
 		
 	}
 
@@ -117,7 +117,7 @@ public class GamePanel extends JPanel implements Runnable{
 		    // Mettre à jour le joueur en premier pour prendre en compte les nouvelles positions
 		    if (!gameState.isGameOver()) {
 		        player.update();
-		        bomb.update();
+		        //bomb.update();
 		    }
 
 		    // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
@@ -164,7 +164,7 @@ public class GamePanel extends JPanel implements Runnable{
 			player.draw(g2);// puis apres le perso 	
 			displayInv.paint(g2);
 			
-			bomb.draw(g2);
+			//bomb.draw(g2);
 			
 			g2.dispose();
 			
