@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import objects.gameObject;
 import test.GamePanel;
 import test.KeyHandler;
+import java.io.File;
 
 
 public class Player extends Entity {
@@ -23,8 +24,21 @@ public class Player extends Entity {
         setDefaultValues();
         getPlayerImage();
         
-        screenX = gp.screenWidth/2;
-        screenY = gp.screenHeight/2;
+        File nameMap = new File(gp.currentMap);
+        Point x;
+		try {
+			x = Entity.findSpawnPoints('z', nameMap.getName())[0];
+			screenX = (int) (gp.tileSize * x.getY());
+	        screenY = (int) (gp.tileSize * x.getX());
+			//screenX=400;
+			//screenY=400;
+	        System.out.println(screenX);
+	        System.out.println(screenY);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         solidAir = new Rectangle(16, -10, gp.tileSize, gp.tileSize);
         
     }
@@ -36,7 +50,7 @@ public class Player extends Entity {
     public void setDefaultValues() {
         l = 20;
         L = 25;
-        speed = 1;
+        speed = 2;
         direction = "neutre";
         inv = new ArrayList<gameObject>();
     }
@@ -54,6 +68,7 @@ public class Player extends Entity {
             e.printStackTrace();
         }
     }
+    
 
     public void update() {
         int newX = screenX, newY = screenY;
@@ -63,7 +78,7 @@ public class Player extends Entity {
         newY += ySpeed;
         boolean onGround = gp.verif.checkCollision(screenX, screenY + 1, l, L, solidAir); // Vérifier les collisions avec le sol
         if (keyH.upPressed && onGround) {   // Sauter seulement si le personnage est au sol
-            ySpeed = -2; // Valeur de saut
+            ySpeed = -3; // Valeur de saut
         }
 /*
         // Mouvement vers le bas 

@@ -14,7 +14,6 @@ public class CollisionVerif {
     public CollisionVerif(GamePanel gp) {
         this.gp = gp;
     }
-    
 
     public boolean checkCollision(int newX, int newY, int l, int L, Rectangle solidArea) {
         // Calculer les positions des tuiles en fonction de newX et newY

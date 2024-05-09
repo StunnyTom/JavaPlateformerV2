@@ -12,11 +12,13 @@ public class KeyHandler implements KeyListener{
 	public boolean onePressed, twoPressed;
 	public GamePanel gp;
 
+
+
 	public KeyHandler(InventoryDisplay inventoryDisplay, GamePanel gp) {
         this.inventoryDisplay = inventoryDisplay;
         this.gp = gp;  // Initialiser gp avec la référence passée
     }
-	
+
 	//les 3 methodes sont obligatoires
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -24,6 +26,7 @@ public class KeyHandler implements KeyListener{
 	}
 
 	public void keyPressed(KeyEvent e) {
+
 	    int code = e.getKeyCode();
 
 	    if (code == KeyEvent.VK_ENTER && gp.gameState.isGameOver()) {
@@ -46,6 +49,7 @@ public class KeyHandler implements KeyListener{
 	
 	        }
 	    }
+
 		// Sélection des objets de l'inventaire avec les touches numériques (0 à 9)
         if (code >= KeyEvent.VK_0 && code <= KeyEvent.VK_9) {
             selectedObjectIndex = code - KeyEvent.VK_0 - 1; // Soustraire le code de la touche numérique pour obtenir l'index (0-9)

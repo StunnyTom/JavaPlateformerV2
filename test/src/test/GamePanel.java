@@ -14,6 +14,7 @@ import entity.PNJ_Magalor;
 import entity.PNJ_bandana;
 import entity.Player;
 import objects.InventoryDisplay;
+import entity.Monster;
 import objects.Objetc_manager;
 import tiles.Tiles_manger;
 
@@ -42,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int worldHeight = tileSize * maxScreenRow;
 
 	//nombre d image par seconde d'image
-	int FPS = 30;
+	int FPS = 15;
 	
 	Tiles_manger tileM = new Tiles_manger(this);//tuile img
 	public Objetc_manager ObjectM = new Objetc_manager(this); // img object
@@ -55,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
  	public PNJ_bandana pnj_bandana = new PNJ_bandana(this);
  	public PNJ_Magalor pnj_magalor = new PNJ_Magalor(this);
  	
+ 	public Monster bomb;
 
  // Liste pour stocker les PNJ
     public ArrayList<PNJ_bandana> listPNJ = new ArrayList<>();
@@ -92,10 +94,11 @@ public class GamePanel extends JPanel implements Runnable{
 	    
 	    PNJ_Magalor pnj2 = new PNJ_Magalor(this);
 	    listPNJ_Magalor.add(pnj2); // Ajouter PNJ_Magalor à sa propre liste
+	    
+	    bomb = new Monster(this);
 		
 	}
-	
-	
+
 	public void startGameThread() {
 		gameThread = new Thread(this);
 		gameThread.start();
@@ -114,6 +117,7 @@ public class GamePanel extends JPanel implements Runnable{
 		    // Mettre à jour le joueur en premier pour prendre en compte les nouvelles positions
 		    if (!gameState.isGameOver()) {
 		        player.update();
+		        bomb.update();
 		    }
 
 		    // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
@@ -131,6 +135,7 @@ public class GamePanel extends JPanel implements Runnable{
 		    if (!gameState.isGameOver()) {
 		    	tileM.checkAndChangeMapOnPosition(); // Vérifie si le joueur a atteint la position spécifique pour le changement de carte
 		    }
+			
 		}
 
 		
@@ -158,6 +163,8 @@ public class GamePanel extends JPanel implements Runnable{
 
 			player.draw(g2);// puis apres le perso 	
 			displayInv.paint(g2);
+			
+			bomb.draw(g2);
 			
 			g2.dispose();
 			
