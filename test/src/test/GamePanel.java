@@ -109,6 +109,7 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 
 
+		@SuppressWarnings("unused")
 		public void update() {
 		    // Mettre à jour le joueur en premier pour prendre en compte les nouvelles positions
 		    if (!gameState.isGameOver()) {
@@ -116,12 +117,13 @@ public class GamePanel extends JPanel implements Runnable{
 		    }
 
 		    // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
-		    int playerTileX = player.screenX / tileSize;  // Utilisation de screenX pour la position en X
+		    @SuppressWarnings("unused")
+			int playerTileX = player.screenX / tileSize;  // Utilisation de screenX pour la position en X
 		    int playerTileY = player.screenY / tileSize;  // Utilisation de screenY pour la position en Y
 
 		    
-		    System.out.println("x = " + playerTileX);
-		    System.out.println("y = "+ playerTileY);
+		    //System.out.println("x = " + playerTileX);
+		    //System.out.println("y = "+ playerTileY);
 		    // Vérifier la collision avec les tuiles et afficher le game over si nécessaire
 		   
 

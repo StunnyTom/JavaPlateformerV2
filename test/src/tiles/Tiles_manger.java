@@ -144,10 +144,7 @@ import test.GamePanel;
         
          
      }
- 
 
-    
-     
      
 	//pour appeler la map + lire le fichier txt et le translater 
      public void loadMap(String filePath) {

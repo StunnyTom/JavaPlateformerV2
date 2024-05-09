@@ -11,16 +11,14 @@ import javax.swing.Timer;
 import objects.gameObject;
 import test.GamePanel;
 
-public class PNJ_bandana  extends PNJ {   
+public class PNJ_bandana  extends PNJ { 
 	private gameObject itemToGive;
-	
     	public PNJ_bandana(GamePanel gp) {
             super(gp, "/img_npj/npj1_neutre.png", 955, 240, 15);
            
         dialogueTimer = new Timer(900, e -> isCollisionWithPlayer = false);
         dialogueTimer.setRepeats(false); // le timer ne se répète pas
-        
-
+    
     	//METTRE DANS LA CLASSE INVENTAIRE
         // Initialisation de l'objet à donner
         this.itemToGive = new gameObject(false);
@@ -56,9 +54,10 @@ public class PNJ_bandana  extends PNJ {
     	    } 
     	}
 
-    	//boite de dialogue propre a chaque
+        
+    //boite de dialogue propre a chaque
     public void drawDialogue(Graphics2D g2) {
-        String text = "Bonjour, je suis Bandana ! Je te donne ce coffre.";
+        String text = "Bonjour, je suis Bandana ! Je te donne cette plume pour sauter plus haut.";
         int boxWidth = 220;
         int boxHeight = 50;
         int boxX = screenX - boxWidth + 20  + gp.tileSize / 2; // Centre la boîte par rapport au PNJ
