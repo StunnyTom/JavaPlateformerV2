@@ -46,7 +46,6 @@ public class Objetc_manager {
         try {
         	
         	this.instObjet("z", "/objects/cle.png", true);
-        	
         	this.instObjet("y", "/objects/cle.png", true);
        
 

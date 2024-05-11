@@ -109,29 +109,37 @@ public class CollisionVerif {
 
     public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {
         Rectangle playerArea = new Rectangle(newX, newY, l, L);
-        // Vérifiez si la carte courante est "map2.txt"
-        //if (gp.currentMap.equals("/maps/map2.txt")) {
-        for (PNJ_bandana pnj : gp.listPNJ) {
-            if (pnj.solidAir.intersects(playerArea)) {
-            	pnj.isCollisionWithPlayer = true; // Activer le flag de collision
-            	 pnj.dialogueTimer.stop(); // Arrêter tout timer précédent
-                 pnj.dialogueTimer.start(); // Démarrer le timer de 15 secondes
-                 pnj.addItemToInventory(gp.player); // Ajouter l'objet au joueur
-                System.out.println("Collision");
-                return true;
-            }
-        }
-        
-            for (PNJ_Magalor pnj1 : gp.listPNJ_Magalor) {
-                if (pnj1.solidAir.intersects(playerArea)) {
-                	pnj1.isCollisionWithPlayer = true; // Activer le flag de collision
-                    System.out.println("Collision");
+
+        // Vérifier la collision pour PNJ_bandana sur "map2.txt"
+        if (gp.currentMap.equals("/maps/maps2.txt")) {
+            for (PNJ_bandana pnj : gp.listPNJ) {
+                if (pnj.solidAir.intersects(playerArea)) {
+                    pnj.isCollisionWithPlayer = true;
+                    pnj.dialogueTimer.stop();
+                    pnj.dialogueTimer.start();
+                    pnj.addItemToInventory(gp.player);
+                    //System.out.println("Collision avec PNJ_bandana");
                     return true;
                 }
-            //System.out.println("pas de collision avec un pnj");
+            }
         }
+
+        // Vérifier la collision pour PNJ_Magalor sur "map3.txt"
+        if (gp.currentMap.equals("/maps/map3.txt")) {
+            for (PNJ_Magalor pnj1 : gp.listPNJ_Magalor) {
+                if (pnj1.solidAir.intersects(playerArea)) {
+                    pnj1.isCollisionWithPlayer = true;
+                    pnj1.triggerDialogue();
+                   // System.out.println("Collision avec PNJ_Magalor");
+                    return true;
+                }
+            }
+        }
+
+        // Aucune collision avec les PNJ car ils ne sont pas sur la carte actuelle
         return false;
     }
+
 
 
     

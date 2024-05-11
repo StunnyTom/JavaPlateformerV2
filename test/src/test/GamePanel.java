@@ -1,15 +1,12 @@
 package test;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-
 import javax.swing.*;
 import java.awt.*;
-
-//import javax.swing.JPanel;
-
 import entity.PNJ_Magalor;
 import entity.PNJ_bandana;
 import entity.Player;
@@ -22,7 +19,6 @@ import tiles.Tiles_manger;
 public class GamePanel extends JPanel implements Runnable{
 	
     public String currentMap; // Utilisez une chaîne de caractères pour stocker le chemin de la carte
-	
 	 //parametre ecran 
 	final int originalTileSize = 16; // tuiles 16*16
 	final int scale = 3; //variable pour le mettre a la bonne echelle
@@ -31,7 +27,6 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int ObjetSize = originalTileSize * scale; // 48*48 pour afficher les objets 
 	public final int PNJSize = originalTileSize * scale; // 48*48 pour afficher les objets 
 
-	
 	public final int maxScreenCol = 21; // on choisi la taille de la hauteur 
 	public final int maxScreenRow = 10; // la taille de la hauteur
 	public final int screenWidth = tileSize * maxScreenCol; // 960 pixel
@@ -43,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int worldHeight = tileSize * maxScreenRow;
 
 	//nombre d image par seconde d'image
-	int FPS = 15;
+	int FPS = 20;
 	
 	Tiles_manger tileM = new Tiles_manger(this);//tuile img
 	public Objetc_manager ObjectM = new Objetc_manager(this); // img object
@@ -63,7 +58,6 @@ public class GamePanel extends JPanel implements Runnable{
     public ArrayList<PNJ_Magalor> listPNJ_Magalor = new ArrayList<>();
     
     GameState gameState; // Ajout de l'attribut gameState
-
     
 	//constructeur de panel 
 	public GamePanel() {
@@ -95,8 +89,7 @@ public class GamePanel extends JPanel implements Runnable{
 	    PNJ_Magalor pnj2 = new PNJ_Magalor(this);
 	    listPNJ_Magalor.add(pnj2); // Ajouter PNJ_Magalor à sa propre liste
 	    
-	    //bomb = new Monster(this);
-		
+	    //bomb = new Monster(this);	
 	}
 
 	public void startGameThread() {
@@ -111,7 +104,6 @@ public class GamePanel extends JPanel implements Runnable{
 	    }
 	}
 
-
 		@SuppressWarnings("unused")
 		public void update() {
 		    // Mettre à jour le joueur en premier pour prendre en compte les nouvelles positions
@@ -121,35 +113,28 @@ public class GamePanel extends JPanel implements Runnable{
 		    }
 
 		    // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
-		    @SuppressWarnings("unused")
 			int playerTileX = player.screenX / tileSize;  // Utilisation de screenX pour la position en X
 		    int playerTileY = player.screenY / tileSize;  // Utilisation de screenY pour la position en Y
-
-		    
 		    //System.out.println("x = " + playerTileX);
 		    //System.out.println("y = "+ playerTileY);
-		    // Vérifier la collision avec les tuiles et afficher le game over si nécessaire
-		   
-
+		
 		    // Si le jeu continue, vérifier le changement de carte
 		    if (!gameState.isGameOver()) {
 		    	tileM.checkAndChangeMapOnPosition(); // Vérifie si le joueur a atteint la position spécifique pour le changement de carte
-		    }
-			
+		    }	
 		}
 
-		
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D)g;
 			
 			if (gameState.isGameOver()) {
 		        gameState.drawGameOverScreen(g2);
-		    } else {
-			
-			tileM.draw(g2); // d abord le decors 
-			ObjectM.draw(g2); // puis les objects
-			
+		    } 
+			else {
+				tileM.draw(g2); // d abord le decors 
+				ObjectM.draw(g2); // puis les objects
+				
 	        if (currentMap != null && currentMap.equals("/maps/maps2.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
 	        	for (PNJ_bandana pnj : listPNJ) {
 	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
@@ -160,16 +145,13 @@ public class GamePanel extends JPanel implements Runnable{
 	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
 	            }
 	        }
-
 			player.draw(g2);// puis apres le perso 	
 			displayInv.paint(g2);
 			
 			//bomb.draw(g2);
-			
 			g2.dispose();
-			
 		}
-		}
+	}
 
 		//genere automatiquement cette classe, permet de faire bouger le joueur
 		@Override
@@ -198,7 +180,5 @@ public class GamePanel extends JPanel implements Runnable{
 		            break; // Sort de la boucle
 		        }
 		    }
-		}
-
-		
+		}	
 }
