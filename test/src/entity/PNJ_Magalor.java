@@ -24,7 +24,7 @@ public class PNJ_Magalor extends PNJ {
                 JOptionPane.showMessageDialog(null, "Incorrect. Il vous reste " + attemptsLeft + " tentatives.");
             }
             
-            if (attemptsLeft <= 0) {
+            if (attemptsLeft == 0) {
                 JOptionPane.showMessageDialog(null, "Plus de tentatives restantes. La collision avec ce PNJ sera désactivée.");
                 deactivateCollision(); // Méthode pour désactiver la collision
             }
@@ -32,7 +32,6 @@ public class PNJ_Magalor extends PNJ {
                 JOptionPane.showMessageDialog(null, "Voici un cadeau pour vous :)");
                 deactivateCollision(); // Méthode pour désactiver la collision
             }
-
             hasDialogStarted = false;  // Réinitialiser pour permettre une nouvelle tentative si encore possible
         }
     }

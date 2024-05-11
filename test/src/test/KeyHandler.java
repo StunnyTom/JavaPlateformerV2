@@ -9,7 +9,6 @@ public class KeyHandler implements KeyListener{
 	public boolean upPressed, leftPressed, rightPressed, downPressed; //creation de boolean pour verifier
 	public int selectedObjectIndex = -1; // Index de l'objet sélectionné dans l'inventaire (-1 signifie aucun objet sélectionné)
 	private InventoryDisplay inventoryDisplay; // Référence à l'InventoryDisplay pour appeler la méthode setSelectedObjectIndex
-	public boolean onePressed, twoPressed;
 	public GamePanel gp;
 
 

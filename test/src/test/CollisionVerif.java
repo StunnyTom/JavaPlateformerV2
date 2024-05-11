@@ -39,7 +39,6 @@ public class CollisionVerif {
             gp.gameState.afficheGameOver();
             return false;
         }
-
         // Obtenir le caract�re de la tuile et v�rifier pour la collision
         char tileChar = (char) (gp.tileM.mapTilenum[col][row] + 'a');
         Tile tile = gp.tileM.tileMap.get(tileChar);
@@ -138,9 +137,5 @@ public class CollisionVerif {
 
         // Aucune collision avec les PNJ car ils ne sont pas sur la carte actuelle
         return false;
-    }
-
-
-
-    
+    }   
 }

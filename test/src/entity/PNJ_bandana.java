@@ -23,7 +23,7 @@ public class PNJ_bandana  extends PNJ {
         // Initialisation de l'objet à donner
         this.itemToGive = new gameObject(false);
         try {
-            BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/coffre_test.png"));
+            BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/epe.png"));
             itemToGive.image = itemImage;
             itemToGive.setID("1"); // Un identifiant unique pour cet objet
         } catch (IOException e) {
@@ -43,7 +43,6 @@ public class PNJ_bandana  extends PNJ {
     	                break;
     	            }
     	        }
-
     	        // Ajouter l'objet seulement s'il n'est pas déjà dans l'inventaire
     	        if (!alreadyInInventory) {
     	            player.inv.add(item);
@@ -57,7 +56,7 @@ public class PNJ_bandana  extends PNJ {
         
     //boite de dialogue propre a chaque
     public void drawDialogue(Graphics2D g2) {
-        String text = "Bonjour, je suis Bandana ! Je te donne cette plume pour sauter plus haut.";
+        String text = "Bonjour, je suis Bandana ! Je te donne cette épé pour vainqre le monstre.";
         int boxWidth = 220;
         int boxHeight = 50;
         int boxX = screenX - boxWidth + 20  + gp.tileSize / 2; // Centre la boîte par rapport au PNJ

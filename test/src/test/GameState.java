@@ -49,7 +49,6 @@ public class GameState {
         g2.drawString(retryText, x, y);
     }
 
-
     public int getXForCenteredText(String text, Graphics2D g2) {
         int stringWidth = g2.getFontMetrics().stringWidth(text);
         return (gp.screenWidth - stringWidth) / 2;
