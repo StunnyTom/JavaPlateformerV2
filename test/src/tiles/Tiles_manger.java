@@ -109,8 +109,12 @@ import test.GamePanel;
              tileMap.get('i').image = ImageIO.read(getClass().getResourceAsStream("/tiles/013.png"));
              
              tileMap.put('j', new Tile());
-             tileMap.get('j').image = ImageIO.read(getClass().getResourceAsStream("/tiles/005.png"));  
-            
+             tileMap.get('j').image = ImageIO.read(getClass().getResourceAsStream("/tiles/005.png")); 
+             
+             tileMap.put('q', new Tile());
+             tileMap.get('q').image = ImageIO.read(getClass().getResourceAsStream("/tiles/castel.png")); 
+             
+      
          } catch (Exception e) {
              e.printStackTrace();
          }

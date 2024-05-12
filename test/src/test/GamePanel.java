@@ -61,7 +61,7 @@ public class GamePanel extends JPanel implements Runnable{
     public ArrayList<PNJ_Susie> listPNJ_Susie = new ArrayList<>();
     
     GameState gameState; // Ajout de l'attribut gameState
-    
+	
 	//constructeur de panel 
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));

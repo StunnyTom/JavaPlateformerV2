@@ -63,7 +63,7 @@ public class CollisionVerif {
         gameObject C4 = ObjCollision(entityRightObj, entityBottomObj);
         
         if (!C1.nullObj()) {
-        	System.out.println("Collision avec un objet détectée ");
+        	System.out.println("Collision avec un objet détectée zertyuifghj ");
         	return C1;
         }
         
@@ -109,7 +109,6 @@ public class CollisionVerif {
 
     public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {
         Rectangle playerArea = new Rectangle(newX, newY, l, L);
-
         // Vérifier la collision pour PNJ_bandana sur "map2.txt"
         if (gp.currentMap.equals("/maps/maps2.txt")) {
             for (PNJ_bandana pnj : gp.listPNJ) {
