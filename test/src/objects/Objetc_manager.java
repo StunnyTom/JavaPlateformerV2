@@ -34,11 +34,8 @@ public class Objetc_manager {
     		Objet_Map.get(c).image = ImageIO.read(getClass().getResourceAsStream(filePath));
     		Objet_Map.get(c).collision = col;
     		Objet_Map.get(c).id = c; // Ajouter un champ "id"
-    		
     	} catch (Exception e) {
-    		
     		e.printStackTrace();
-    		
     	}
     }
     
@@ -48,7 +45,6 @@ public class Objetc_manager {
         	this.instObjet("z", "/objects/cle.png", true);
         	this.instObjet("y", "/objects/cle.png", true);
        
-
         } catch (Exception e) {
             e.printStackTrace();
         }

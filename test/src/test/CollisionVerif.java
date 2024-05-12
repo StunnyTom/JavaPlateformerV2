@@ -6,6 +6,7 @@ import objects.gameObject;
 import java.awt.Rectangle;
 
 import entity.PNJ_Magalor;
+import entity.PNJ_Susie;
 import entity.PNJ_bandana;
 
 public class CollisionVerif {
@@ -133,6 +134,16 @@ public class CollisionVerif {
                 }
             }
         }
+        
+        if (gp.currentMap.equals("/maps/maps1.txt")) {
+            for (PNJ_Susie pnj2 : gp.listPNJ_Susie) {
+                if (pnj2.solidAir.intersects(playerArea)) {
+                    pnj2.isCollisionWithPlayer = true;
+                    System.out.println("collision avc susie");
+                }
+            }
+        }
+        
 
         // Aucune collision avec les PNJ car ils ne sont pas sur la carte actuelle
         return false;

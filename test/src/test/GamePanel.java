@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 import entity.PNJ_Magalor;
+import entity.PNJ_Susie;
 import entity.PNJ_bandana;
 import entity.Player;
 import objects.InventoryDisplay;
@@ -56,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable{
  // Liste pour stocker les PNJ
     public ArrayList<PNJ_bandana> listPNJ = new ArrayList<>();
     public ArrayList<PNJ_Magalor> listPNJ_Magalor = new ArrayList<>();
+    public ArrayList<PNJ_Susie> listPNJ_Susie = new ArrayList<>();
     
     GameState gameState; // Ajout de l'attribut gameState
     
@@ -85,9 +87,10 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		PNJ_bandana pnj1 = new PNJ_bandana(this);
 	    listPNJ.add(pnj1);
-	    
 	    PNJ_Magalor pnj2 = new PNJ_Magalor(this);
 	    listPNJ_Magalor.add(pnj2); // Ajouter PNJ_Magalor à sa propre liste
+	    PNJ_Susie pnj3 = new PNJ_Susie(this);
+	    listPNJ_Susie.add(pnj3);
 	    
 	    //bomb = new Monster(this);	
 	}
@@ -142,6 +145,11 @@ public class GamePanel extends JPanel implements Runnable{
 	        }
         	if (currentMap != null && currentMap.equals("/maps/map3.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
 	        	for (PNJ_Magalor pnj : listPNJ_Magalor) {
+	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
+	            }
+	        }
+        	if (currentMap != null && currentMap.equals("/maps/maps1.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
+	        	for (PNJ_Susie pnj : listPNJ_Susie) {
 	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
 	            }
 	        }

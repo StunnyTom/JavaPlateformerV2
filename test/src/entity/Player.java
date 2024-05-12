@@ -114,8 +114,7 @@ public class Player extends Entity {
             Iterator<gameObject> li = inv.iterator();
             
             while (li.hasNext())
-                System.out.println(li.next());
-            
+                System.out.println(li.next()); 
         }
         
         // Vérification des collisions avec les pnj

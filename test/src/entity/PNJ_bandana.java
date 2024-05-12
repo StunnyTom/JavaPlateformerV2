@@ -11,7 +11,7 @@ import javax.swing.Timer;
 import objects.gameObject;
 import test.GamePanel;
 
-public class PNJ_bandana  extends PNJ { 
+public class PNJ_bandana extends PNJ { 
 	
     	public PNJ_bandana(GamePanel gp) {
         super(gp, "/img_npj/npj1_neutre.png", 955, 240, 15); //image position du joueur et padding
