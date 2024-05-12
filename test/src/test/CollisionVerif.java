@@ -136,15 +136,14 @@ public class CollisionVerif {
         }
         
         if (gp.currentMap.equals("/maps/maps1.txt")) {
-            for (PNJ_Susie pnj2 : gp.listPNJ_Susie) {
-                if (pnj2.solidAir.intersects(playerArea)) {
+        	for (PNJ_Susie pnj2 : gp.listPNJ_Susie) {
+                if (pnj2.solidAir.intersects(playerArea) && System.currentTimeMillis() - pnj2.lastCollisionTime > PNJ_Susie.COLLISION_COOLDOWN) {
                     pnj2.isCollisionWithPlayer = true;
-                    System.out.println("collision avc susie");
+                    pnj2.showInventoryDialog(); // Affiche la boîte de dialogue si la période de cooldown est passée
+                    return true;
                 }
             }
         }
-        
-
         // Aucune collision avec les PNJ car ils ne sont pas sur la carte actuelle
         return false;
     }   

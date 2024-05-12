@@ -31,7 +31,7 @@ public class PNJ_bandana extends PNJ {
     
     //boite de dialogue propre a chaque
     public void drawDialogue(Graphics2D g2) {
-        String text = "Bonjour, je suis Bandana ! Je te donne cette épé pour vainqre le monstre.";
+        String text = "Bonjour, je suis Bandana ! Je te donne cette épé pour vaincre le monstre.";
         int boxWidth = 220;
         int boxHeight = 50;
         int boxX = screenX - boxWidth + 20  + gp.tileSize / 2; // Centre la boîte par rapport au PNJ

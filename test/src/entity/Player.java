@@ -80,12 +80,7 @@ public class Player extends Entity {
         if (keyH.upPressed && onGround) {   // Sauter seulement si le personnage est au sol
             ySpeed = -3; // Valeur de saut
         }
-/*
-        // Mouvement vers le bas 
-        if (keyH.downPressed) {
-            newY += speed; // Déplacement vers le bas
-        }
-*/
+
         // Collision check pour l'axe Y
         if (!gp.verif.checkCollision(screenX, newY, l, L, solidAir)) {
             screenY = newY;
@@ -130,11 +125,6 @@ public class Player extends Entity {
             spriteCounter = 0;
         }
 
-    }
-
-    public void pickupObjet() {
-    	System.out.println("objet bientot ramassé");
-    	//on pourra le mettre a l inventaire
     }
 
 	public void draw(Graphics2D g2) {

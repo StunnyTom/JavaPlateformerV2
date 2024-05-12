@@ -51,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
  	public Player player;
  	public PNJ_bandana pnj_bandana = new PNJ_bandana(this);
  	public PNJ_Magalor pnj_magalor = new PNJ_Magalor(this);
+ 	public PNJ_Susie pnj_susie = new PNJ_Susie(this, player);
  	
  	public Monster bomb;
 
@@ -89,7 +90,7 @@ public class GamePanel extends JPanel implements Runnable{
 	    listPNJ.add(pnj1);
 	    PNJ_Magalor pnj2 = new PNJ_Magalor(this);
 	    listPNJ_Magalor.add(pnj2); // Ajouter PNJ_Magalor à sa propre liste
-	    PNJ_Susie pnj3 = new PNJ_Susie(this);
+	    PNJ_Susie pnj3 = new PNJ_Susie(this, player);
 	    listPNJ_Susie.add(pnj3);
 	    
 	    //bomb = new Monster(this);	

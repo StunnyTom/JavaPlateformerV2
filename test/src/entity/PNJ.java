@@ -53,8 +53,8 @@ public class PNJ extends Entity {
                 System.out.println("L'objet existe déjà dans l'inventaire.");
             }
         } 
-    }
-
+  
+	}
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
         switch (direction) {
@@ -69,4 +69,6 @@ public class PNJ extends Entity {
 
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     }
+
+
 }

@@ -41,11 +41,10 @@ public class PNJ_Magalor extends PNJ {
             String playerResponse = JOptionPane.showInputDialog(null, question, "Question Mathématique", JOptionPane.QUESTION_MESSAGE);
 
             if (playerResponse != null && playerResponse.equals(correctAnswer)) {
-                JOptionPane.showMessageDialog(null, "Correct! Vous avez réussi.");
+                JOptionPane.showMessageDialog(null, "Correct! Vous avez réussi. Question suivantes : ");
                 if (currentQuestion < 3) {
                     currentQuestion++;
                     attemptsLeft = 3;
-                    JOptionPane.showMessageDialog(null, "Passons à la prochaine question.");
                 } else {
                     if (!hasMadeMistake) {
                         initializeItemToGive();
@@ -53,7 +52,7 @@ public class PNJ_Magalor extends PNJ {
                         JOptionPane.showMessageDialog(null, "Voici un cadeau pour vous :)");
                     }
                     deactivateCollision(); //desactive la collision
-                    attemptsLeft = 0;
+                    attemptsLeft = -1;
                 }
             } else {
                 hasMadeMistake = true;
