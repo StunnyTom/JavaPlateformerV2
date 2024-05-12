@@ -11,8 +11,6 @@ public class KeyHandler implements KeyListener{
 	private InventoryDisplay inventoryDisplay; // Référence à l'InventoryDisplay pour appeler la méthode setSelectedObjectIndex
 	public GamePanel gp;
 
-
-
 	public KeyHandler(InventoryDisplay inventoryDisplay, GamePanel gp) {
         this.inventoryDisplay = inventoryDisplay;
         this.gp = gp;  // Initialiser gp avec la référence passée
@@ -45,7 +43,6 @@ public class KeyHandler implements KeyListener{
 	            case KeyEvent.VK_DOWN:
 	                downPressed = true;
 	                break;
-	
 	        }
 	    }
 
@@ -56,7 +53,6 @@ public class KeyHandler implements KeyListener{
             inventoryDisplay.setSelectedObjectIndex(selectedObjectIndex);
         }
 	}
-	
 
 	@Override
 	public void keyReleased(KeyEvent e) { //quand la touche est relaché 
