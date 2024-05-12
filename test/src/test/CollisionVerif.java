@@ -122,7 +122,6 @@ public class CollisionVerif {
                 }
             }
         }
-
         // Vérifier la collision pour PNJ_Magalor sur "map3.txt"
         if (gp.currentMap.equals("/maps/map3.txt")) {
             for (PNJ_Magalor pnj1 : gp.listPNJ_Magalor) {

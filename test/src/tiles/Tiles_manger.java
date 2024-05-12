@@ -33,11 +33,9 @@ import test.GamePanel;
              backgroundTile = new Tile();
              try {
                  backgroundTile.image = ImageIO.read(getClass().getResourceAsStream("/background_img/BG1.png"));
-                 
              } catch (Exception e) {
                  e.printStackTrace();
              }
-             
              // Chargement the 2eme background
              Background2Tile = new Tile();
              try {
@@ -45,7 +43,6 @@ import test.GamePanel;
              } catch (Exception e) {
                  e.printStackTrace();
              }
-             
              //Chargement the 3em background
              Background3Tile = new Tile();
              try {
@@ -54,6 +51,7 @@ import test.GamePanel;
                  e.printStackTrace();
              }    
              
+             //appeler les tuiles
              tileMap.put('b', new Tile());
              tileMap.get('b').image = ImageIO.read(getClass().getResourceAsStream("/tiles/010.png"));
              tileMap.get('b').collision = true;
@@ -68,7 +66,6 @@ import test.GamePanel;
              tileMap.put('e', new Tile());
              tileMap.get('e').image = ImageIO.read(getClass().getResourceAsStream("/tiles/011.png"));
              tileMap.get('e').collision = true;
-            
              
              tileMap.put('f', new Tile());
              tileMap.get('f').image = ImageIO.read(getClass().getResourceAsStream("/tiles/015.png"));
@@ -139,8 +136,27 @@ import test.GamePanel;
              gp.player.screenY = 7 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
              System.out.println("La carte a été changée avec succès à: " + nextMap);
          }
+       //map 3 => 4 
+         if (playerTileX == 19 && playerTileY == 1) {
+             String nextMap = "/maps/maps4.txt"; // Chemin de la nouvelle carte
+             System.out.println("Changement de carte à " + nextMap);
+             loadMap(nextMap);  // Charger la nouvelle carte
+             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
+             gp.player.screenX = 1 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
+             gp.player.screenY = 3 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
+             System.out.println("La carte a été changée avec succès à: " + nextMap);
+         }
          
-         
+         if (playerTileX == 20 && playerTileY == 3) {
+             String nextMap = "/maps/maps1.txt"; // Chemin de la nouvelle carte
+             System.out.println("Changement de carte à " + nextMap);
+             loadMap(nextMap);  // Charger la nouvelle carte
+             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
+             gp.player.screenX = 1 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
+             gp.player.screenY = 2 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
+             System.out.println("La carte a été changée avec succès à: " + nextMap);
+         }
+            
         
          
      }

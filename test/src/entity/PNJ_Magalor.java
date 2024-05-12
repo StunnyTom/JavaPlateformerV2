@@ -17,7 +17,6 @@ public class PNJ_Magalor extends PNJ {
         super(gp, "/img_npj/PNJ_Magalor.png", 755, 335, 50);
     }
 
-    //le pnj va lui poser plusieurs question
     public void triggerDialogue() {
         if (!hasDialogStarted && attemptsLeft > 0) {
             hasDialogStarted = true;
@@ -42,17 +41,18 @@ public class PNJ_Magalor extends PNJ {
             String playerResponse = JOptionPane.showInputDialog(null, question, "Question Mathématique", JOptionPane.QUESTION_MESSAGE);
 
             if (playerResponse != null && playerResponse.equals(correctAnswer)) {
-                JOptionPane.showMessageDialog(null, "Correct! Vous avez réussi. Passons à la prochaine question.");
+                JOptionPane.showMessageDialog(null, "Correct! Vous avez réussi.");
                 if (currentQuestion < 3) {
                     currentQuestion++;
                     attemptsLeft = 3;
+                    JOptionPane.showMessageDialog(null, "Passons à la prochaine question.");
                 } else {
                     if (!hasMadeMistake) {
-                        initializeItemToGive(); // initialisation de l'item que je veux donner
-                        addItemToInventory(gp.player); // ajout dans l'inventaire
+                        initializeItemToGive();
+                        addItemToInventory(gp.player);
                         JOptionPane.showMessageDialog(null, "Voici un cadeau pour vous :)");
                     }
-                    deactivateCollision(); // on enleve la collision avec le joueur pour eviter une boucle 
+                    deactivateCollision(); //desactive la collision
                     attemptsLeft = 0;
                 }
             } else {
@@ -63,7 +63,7 @@ public class PNJ_Magalor extends PNJ {
 
             if (attemptsLeft == 0) {
                 JOptionPane.showMessageDialog(null, "Plus de tentatives restantes.");
-                deactivateCollision(); 
+                deactivateCollision(); //desactive la collision
                 currentQuestion = 1; 
             }
 
@@ -82,9 +82,8 @@ public class PNJ_Magalor extends PNJ {
         }
     }
 
-    //A MODIFIER : je veux que la collision avec le pnj dure que 10 secondes
     private void deactivateCollision() {
         isCollisionWithPlayer = false;
-       
+
     }
 }
