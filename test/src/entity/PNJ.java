@@ -1,74 +1,74 @@
 package entity;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.imageio.ImageIO;
-import javax.swing.Timer;
 import objects.gameObject;
 import test.GamePanel;
 
-public class PNJ extends Entity {
+public abstract class PNJ extends Entity {
     GamePanel gp;
-    public boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
-    public Timer dialogueTimer; // Attribut pour le temps de la boîte de dialogue
+    String direction;
+    BufferedImage spriteImage;
+    int screenX, screenY;
+    int padding; // Ajout du padding comme attribut de la classe
     protected gameObject itemToGive; // Objet à donner utilisé dans les sous-classes
+    public boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
 
-    public PNJ(GamePanel gp, String imageResource, int screenX, int screenY, int padding) {
+    public PNJ(GamePanel gp, String imagePath, int padding) {
         super();
         this.gp = gp;
-        this.screenX = screenX;
-        this.screenY = screenY;
-        this.direction = "neutre"; // Définir une valeur par défaut pour la direction
-     
-        super.solidAir = new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding); // Définir la zone de collision
-        getImage(imageResource);
-    }
+        this.direction = "neutre"; // Valeur par défaut de la direction
+        this.padding = padding; // Initialisation du padding
 
-    //Cette méthode charge une image à partir du chemin de ressource spécifié 
-    public void getImage(String imageResource) {
         try {
-            super.neutre1 = ImageIO.read(getClass().getResourceAsStream(imageResource));
+            InputStream is = getClass().getResourceAsStream(imagePath);
+            if (is == null) {
+                throw new RuntimeException("Pas accès au lieu du pnj: " + imagePath);
+            }
+            this.spriteImage = ImageIO.read(is);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
+    
     //ajouter un objet dans l'inventaire
     public void addItemToInventory(Player player) {
         if (itemToGive != null && itemToGive.image != null) {
-            boolean alreadyInInventory = false;
-            for (gameObject invItem : player.inv) {
-                if (invItem.getID().equals(itemToGive.getID())) {
-                    alreadyInInventory = true;
-                    break;
-                }
-            }
-            // Si l'objet est deja present, message 
-            if (!alreadyInInventory) {
+            if (!player.inv.contains(itemToGive)) {
                 player.inv.add(itemToGive);
                 System.out.println("Objet ajouté à l'inventaire : " + itemToGive.getID());
+                itemToGive = null;  // Assurez-vous que l'objet ne peut être donné qu'une fois
             } else {
                 System.out.println("L'objet existe déjà dans l'inventaire.");
             }
-        } 
-  
-	}
-    public void draw(Graphics2D g2) {
-        BufferedImage image = null;
-        switch (direction) {
-            case "neutre":
-                if (spriteNum == 1) {
-                    image = neutre1;
-                } else if (spriteNum == 2) {
-                    image = neutre2;
-                }
-                break;
+        } else {
+            System.out.println("Aucun objet à donner ou image manquante.");
         }
-
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     }
 
 
+
+    protected void initializePosition(char identifier) {
+        File nameMap = new File(gp.currentMap);
+        try {
+            Point x = Entity.findSpawnPoints(identifier, nameMap.getName())[0];
+            screenX = (int) (gp.tileSize * x.getY());
+            screenY = (int) (gp.tileSize * x.getX());
+            this.solidAir = new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void draw(Graphics2D g2) {
+        if (spriteImage != null) {
+            g2.drawImage(spriteImage, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        }
+       
+    }
 }

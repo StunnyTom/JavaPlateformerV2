@@ -114,7 +114,7 @@ public class Player extends Entity {
         
         // Vérification des collisions avec les pnj
         if (gp.verif.checkCollisionPNJ(newX, newY, l, L, solidAir)) {
-            System.out.println("collision pnj");
+            //System.out.println("collision pnj");
         }
         
 

@@ -4,15 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
-import entity.PNJ_Magalor;
-import entity.PNJ_Susie;
-import entity.PNJ_bandana;
+
 import entity.Player;
 import objects.InventoryDisplay;
 import entity.Monster;
+import entity.PNJ_Magalor;
+import entity.PNJ_Susie;
+import entity.PNJ_bandana;
 import objects.Objetc_manager;
 import tiles.Tiles_manger;
 
@@ -49,17 +49,15 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public CollisionVerif verif = new CollisionVerif(this); // pour la collision 
  	public Player player;
- 	public PNJ_bandana pnj_bandana = new PNJ_bandana(this);
- 	public PNJ_Magalor pnj_magalor = new PNJ_Magalor(this);
- 	public PNJ_Susie pnj_susie = new PNJ_Susie(this, player);
+
+ 	public PNJ_bandana pnj_bandana;
+ 	public PNJ_Magalor pnj_magalor;
+ 	public PNJ_Susie pnj_susie;
+ 	
  	
  	public Monster bomb;
 
- // Liste pour stocker les PNJ
-    public ArrayList<PNJ_bandana> listPNJ = new ArrayList<>();
-    public ArrayList<PNJ_Magalor> listPNJ_Magalor = new ArrayList<>();
-    public ArrayList<PNJ_Susie> listPNJ_Susie = new ArrayList<>();
-    
+
     GameState gameState; // Ajout de l'attribut gameState
 	
 	//constructeur de panel 
@@ -85,15 +83,11 @@ public class GamePanel extends JPanel implements Runnable{
 		player.setkeyH(keyH);
 		this.addKeyListener(keyH); //reconaitre l'entr�e des touches 
 		this.setFocusable(true);
-		
-		PNJ_bandana pnj1 = new PNJ_bandana(this);
-	    listPNJ.add(pnj1);
-	    PNJ_Magalor pnj2 = new PNJ_Magalor(this);
-	    listPNJ_Magalor.add(pnj2); // Ajouter PNJ_Magalor à sa propre liste
-	    PNJ_Susie pnj3 = new PNJ_Susie(this, player);
-	    listPNJ_Susie.add(pnj3);
 	    
 	    //bomb = new Monster(this);	
+	    pnj_bandana = new PNJ_bandana(this);
+	    pnj_magalor = new PNJ_Magalor(this);
+	    pnj_susie = new PNJ_Susie(this, player);
 	}
 
 	public void startGameThread() {
@@ -140,22 +134,21 @@ public class GamePanel extends JPanel implements Runnable{
 				ObjectM.draw(g2); // puis les objects
 				
 	        if (currentMap != null && currentMap.equals("/maps/maps2.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
-	        	for (PNJ_bandana pnj : listPNJ) {
-	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
-	            }
+	        	
 	        }
         	if (currentMap != null && currentMap.equals("/maps/map3.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
-	        	for (PNJ_Magalor pnj : listPNJ_Magalor) {
-	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
-	            }
+	        	
 	        }
         	if (currentMap != null && currentMap.equals("/maps/maps1.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
-	        	for (PNJ_Susie pnj : listPNJ_Susie) {
-	                pnj.draw(g2);  // Dessiner chaque PNJ, inclura la boîte de dialogue si collision
-	            }
+	            	pnj_bandana.draw(g2);
+	            	pnj_magalor.draw(g2);
+	            	pnj_susie.draw(g2);
+	            	
+	            
 	        }
 			player.draw(g2);// puis apres le perso 	
 			displayInv.paint(g2);
+			
 			
 			//bomb.draw(g2);
 			g2.dispose();

@@ -18,7 +18,8 @@ public class PNJ_Susie extends PNJ {
     public static final long COLLISION_COOLDOWN = 10000; // Délai de 10 secondes
 
     public PNJ_Susie(GamePanel gp, Player player) {
-        super(gp, "/img_npj/susie_pnj.png", 150, 288, 5);
+    	super(gp, "/img_npj/susie_pnj.png", 15);
+        initializePosition('s'); // 'p' pour le point de spawn de Susie
         this.player = player;
     }
     

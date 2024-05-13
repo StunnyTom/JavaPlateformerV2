@@ -2,12 +2,9 @@ package test;
 
 import tiles.Tile;
 import objects.gameObject;
-
 import java.awt.Rectangle;
-
-import entity.PNJ_Magalor;
 import entity.PNJ_Susie;
-import entity.PNJ_bandana;
+
 
 public class CollisionVerif {
     GamePanel gp;
@@ -109,40 +106,41 @@ public class CollisionVerif {
 
     public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {
         Rectangle playerArea = new Rectangle(newX, newY, l, L);
-        // Vérifier la collision pour PNJ_bandana sur "map2.txt"
-        if (gp.currentMap.equals("/maps/maps2.txt")) {
-            for (PNJ_bandana pnj : gp.listPNJ) {
-                if (pnj.solidAir.intersects(playerArea)) {
-                    pnj.isCollisionWithPlayer = true;
-                    pnj.dialogueTimer.stop();
-                    pnj.dialogueTimer.start();
-                    pnj.addItemToInventory(gp.player);
-                    //System.out.println("Collision avec PNJ_bandana");
-                    return true;
-                }
+        // Vérifier la collision pour PNJ_bandana sur "map2.txt"     
+        if (gp.currentMap.equals("/maps/maps1.txt")) {
+            if (gp.pnj_bandana != null && gp.pnj_bandana.solidAir.intersects(playerArea)) {
+                gp.pnj_bandana.isCollisionWithPlayer = true;
+                gp.pnj_bandana.triggerDialogue();
+                gp.pnj_bandana.addItemToInventory(gp.player);
+                
+                System.out.println("Collision avec test_bandana");
+                return true;
             }
+           
         }
+    
         // Vérifier la collision pour PNJ_Magalor sur "map3.txt"
-        if (gp.currentMap.equals("/maps/map3.txt")) {
-            for (PNJ_Magalor pnj1 : gp.listPNJ_Magalor) {
-                if (pnj1.solidAir.intersects(playerArea)) {
-                    pnj1.isCollisionWithPlayer = true;
-                    pnj1.triggerDialogue();
-                   // System.out.println("Collision avec PNJ_Magalor");
-                    return true;
-                }
-            }
+        if (gp.currentMap.equals("/maps/maps1.txt")) {
+            if (gp.pnj_magalor != null && gp.pnj_magalor.solidAir.intersects(playerArea)) {
+                gp.pnj_magalor.isCollisionWithPlayer = true;
+                gp.pnj_magalor.triggerDialogue();
+             // System.out.println("Collision avec PNJ_Magalor");
+                
+                System.out.println("Collision avec test_bandana");
+                return true;
+            	}
         }
         
+      
         if (gp.currentMap.equals("/maps/maps1.txt")) {
-        	for (PNJ_Susie pnj2 : gp.listPNJ_Susie) {
-                if (pnj2.solidAir.intersects(playerArea) && System.currentTimeMillis() - pnj2.lastCollisionTime > PNJ_Susie.COLLISION_COOLDOWN) {
-                    pnj2.isCollisionWithPlayer = true;
-                    pnj2.showInventoryDialog(); // Affiche la boîte de dialogue si la période de cooldown est passée
+        	if( gp.pnj_susie != null && gp.pnj_susie.solidAir.intersects(playerArea)&& System.currentTimeMillis() - gp.pnj_susie.lastCollisionTime > PNJ_Susie.COLLISION_COOLDOWN) {  
+        		gp.pnj_susie.isCollisionWithPlayer = true;
+        		gp.pnj_susie.showInventoryDialog(); // Affiche la boîte de dialogue si la période de cooldown est passée
                     return true;
                 }
-            }
-        }
+        	}
+            
+        
         // Aucune collision avec les PNJ car ils ne sont pas sur la carte actuelle
         return false;
     }   
