@@ -39,6 +39,7 @@ public class Objetc_manager {
     	}
     }
     
+    //a modifier 
     public void getObjetImage() {
         try {
         	

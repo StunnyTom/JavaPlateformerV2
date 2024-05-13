@@ -63,7 +63,7 @@ public class CollisionVerif {
         gameObject C4 = ObjCollision(entityRightObj, entityBottomObj);
         
         if (!C1.nullObj()) {
-        	System.out.println("Collision avec un objet détectée zertyuifghj ");
+        	System.out.println("Collision avec un objet détectée ");
         	return C1;
         }
         
