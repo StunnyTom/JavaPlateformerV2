@@ -107,16 +107,16 @@ public class CollisionVerif {
     public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {
         Rectangle playerArea = new Rectangle(newX, newY, l, L);
         if (gp.currentMap.equals("/maps/maps1.txt")) {
-            if (gp.pnj_susie != null && gp.pnj_susie.solidAir != null && gp.pnj_susie.solidAir.intersects(playerArea) && System.currentTimeMillis() - gp.pnj_susie.lastCollisionTime > PNJ_Susie.COLLISION_COOLDOWN) {
-                gp.pnj_susie.isCollisionWithPlayer = true;
+            if (gp.pnj_susie != null && gp.pnj_susie.getSolidAir() != null && gp.pnj_susie.getSolidAir().intersects(playerArea) && System.currentTimeMillis() - gp.pnj_susie.getLastCollisionTime() > PNJ_Susie.getCollisionCooldown()) {
+                gp.pnj_susie.setCollisionWithPlayer(true);
                 gp.pnj_susie.showInventoryDialog();
                 return true;
             }
         }
         
         if (gp.currentMap.equals("/maps/maps2.txt")) {
-            if (gp.pnj_bandana != null && gp.pnj_bandana.solidAir != null && gp.pnj_bandana.solidAir.intersects(playerArea)) {
-                gp.pnj_bandana.isCollisionWithPlayer = true;
+            if (gp.pnj_bandana != null && gp.pnj_bandana.getSolidAir() != null && gp.pnj_bandana.getSolidAir().intersects(playerArea)) {
+                gp.pnj_bandana.setCollisionWithPlayer(true);
                 gp.pnj_bandana.triggerDialogue();
                 gp.pnj_bandana.addItemToInventory(gp.player);
                 System.out.println("Collision avec test_bandana");

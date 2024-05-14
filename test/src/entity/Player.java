@@ -28,18 +28,18 @@ public class Player extends Entity {
         Point x;
 		try {
 			x = Entity.findSpawnPoints('z', nameMap.getName())[0];
-			screenX = (int) (gp.tileSize * x.getY());
-	        screenY = (int) (gp.tileSize * x.getX());
+			setScreenX((int) (gp.tileSize * x.getY()));
+	        setScreenY((int) (gp.tileSize * x.getX()));
 			//screenX=400;
 			//screenY=400;
-	        System.out.println(screenX);
-	        System.out.println(screenY);
+	        System.out.println(getScreenX());
+	        System.out.println(getScreenY());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
-        solidAir = new Rectangle(16, -10, gp.tileSize, gp.tileSize);
+        setSolidAir(new Rectangle(16, -10, gp.tileSize, gp.tileSize));
         
     }
     
@@ -47,17 +47,17 @@ public class Player extends Entity {
     	this.keyH = keyH;
     }
 
-    public void setDefaultValues() {
+    private void setDefaultValues() {
         l = 20;
         L = 25;
         speed = 2;
         direction = "neutre";
-        inv = new ArrayList<gameObject>();
+        setInv(new ArrayList<gameObject>());
     }
     
 
     //les images pour le sprite
-    public void getPlayerImage() {
+    private void getPlayerImage() {
         try {
             neutre1 = ImageIO.read(getClass().getResourceAsStream("/img_player/position_neutre.png"));
             neutre2 = ImageIO.read(getClass().getResourceAsStream("/img_player/position_neutre.png"));
@@ -71,19 +71,19 @@ public class Player extends Entity {
     
 
     public void update() {
-        int newX = screenX, newY = screenY;
+        int newX = getScreenX(), newY = getScreenY();
 
         // Appliquer la gravité
         ySpeed += GRAVITY;
         newY += ySpeed;
-        boolean onGround = gp.verif.checkCollision(screenX, screenY + 1, l, L, solidAir); // Vérifier les collisions avec le sol
+        boolean onGround = gp.verif.checkCollision(getScreenX(), getScreenY() + 1, l, L, getSolidAir()); // Vérifier les collisions avec le sol
         if (keyH.upPressed && onGround) {   // Sauter seulement si le personnage est au sol
             ySpeed = -3; // Valeur de saut
         }
 
         // Collision check pour l'axe Y
-        if (!gp.verif.checkCollision(screenX, newY, l, L, solidAir)) {
-            screenY = newY;
+        if (!gp.verif.checkCollision(getScreenX(), newY, l, L, getSolidAir())) {
+            setScreenY(newY);
         } else {
             ySpeed = 0; // Arrêter le mouvement si collision
         }
@@ -96,24 +96,24 @@ public class Player extends Entity {
             newX += speed;
         }
 
-        if (!gp.verif.checkCollision(newX, screenY, l, L, solidAir)) { // Collision check pour l'axe X
-            screenX = newX;
+        if (!gp.verif.checkCollision(newX, getScreenY(), l, L, getSolidAir())) { // Collision check pour l'axe X
+            setScreenX(newX);
         }
         
         // Vérification des collisions avec des objets
-        gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, solidAir);
+        gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
         if (!collOb.nullObj()) {
             addInv(collOb); // Ramasser l'objet en cas de collision
             gp.ObjectM.Objet_Map.remove(collOb.getID());
             
-            Iterator<gameObject> li = inv.iterator();
+            Iterator<gameObject> li = getInv().iterator();
             
             while (li.hasNext())
                 System.out.println(li.next()); 
         }
         
         // Vérification des collisions avec les pnj
-        if (gp.verif.checkCollisionPNJ(newX, newY, l, L, solidAir)) {
+        if (gp.verif.checkCollisionPNJ(newX, newY, l, L, getSolidAir())) {
             //System.out.println("collision pnj");
         }
         
@@ -158,7 +158,7 @@ public class Player extends Entity {
 		}
 				
 		//on dessine les images 
-		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
 		
 	}
 

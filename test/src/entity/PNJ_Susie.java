@@ -14,8 +14,8 @@ import test.GamePanel;
 public class PNJ_Susie extends PNJ {
 	private Player player; // Ajout d'un attribut Player (PERMET DE VOIR JUSTE L INVENTAIRE)
    
-	public long lastCollisionTime = 0; // Temps de la dernière collision
-    public static final long COLLISION_COOLDOWN = 10000; // Délai de 10 secondes
+	private long lastCollisionTime = 0; // Temps de la dernière collision
+    private static final long COLLISION_COOLDOWN = 10000; // Délai de 10 secondes
 
     public PNJ_Susie(GamePanel gp, Player player) {
     	super(gp, "/img_npj/susie_pnj.png", 15);
@@ -40,8 +40,8 @@ public class PNJ_Susie extends PNJ {
     
     //fonction qui permet de voir dans l'inventaire du joueur 
     public void showInventoryDialog() {
-        if (System.currentTimeMillis() - lastCollisionTime > COLLISION_COOLDOWN) { // me permet de plus avoir de collision avec mon pnj pendant 10 secondes 
-            ArrayList<gameObject> inventory = this.player.inv; //permet d'acceder a l'inventaire de mon joueur
+        if (System.currentTimeMillis() - getLastCollisionTime() > getCollisionCooldown()) { // me permet de plus avoir de collision avec mon pnj pendant 10 secondes 
+            ArrayList<gameObject> inventory = this.player.getInv(); //permet d'acceder a l'inventaire de mon joueur
             boolean hasItem1 = false; // l'id 1 est d'office a faux 
             
             for(gameObject item : inventory) { // boucle dans mon inventaire
@@ -60,7 +60,7 @@ public class PNJ_Susie extends PNJ {
                 addItemToInventory(gp.player); // Méthode pour ajouter un objet à l'inventaire du joueur
             }
             
-            lastCollisionTime = System.currentTimeMillis(); // Réinitialiser le temps de la dernière collision
+            setLastCollisionTime(System.currentTimeMillis()); // Réinitialiser le temps de la dernière collision
         }
     }
     
@@ -74,5 +74,17 @@ public class PNJ_Susie extends PNJ {
             e.printStackTrace();
         }
     }
+
+	public long getLastCollisionTime() {
+		return lastCollisionTime;
+	}
+
+	public void setLastCollisionTime(long lastCollisionTime) {
+		this.lastCollisionTime = lastCollisionTime;
+	}
+
+	public static long getCollisionCooldown() {
+		return COLLISION_COOLDOWN;
+	}
          
 }

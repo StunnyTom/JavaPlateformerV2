@@ -116,10 +116,9 @@ public class GamePanel extends JPanel implements Runnable{
 		    }
 
 		    // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
-			int playerTileX = player.screenX / tileSize;  // Utilisation de screenX pour la position en X
-		    int playerTileY = player.screenY / tileSize;  // Utilisation de screenY pour la position en Y
-		    //System.out.println("x = " + playerTileX);
-		    //System.out.println("y = "+ playerTileY);
+			int playerTileX = player.getScreenX() / tileSize;  // Utilisation de screenX pour la position en X
+		    int playerTileY = player.getScreenY() / tileSize;  // Utilisation de screenY pour la position en Y
+	
 		
 		    // Si le jeu continue, vérifier le changement de carte
 		    if (!gameState.isGameOver()) {

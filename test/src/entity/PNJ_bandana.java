@@ -14,9 +14,7 @@ import test.GamePanel;
 
 public class PNJ_bandana extends PNJ {
 
-    public Timer dialogueTimer;
-    public boolean isCollisionWithPlayer = false;
-
+    protected Timer dialogueTimer;
     public PNJ_bandana(GamePanel gp) {
         super(gp, "/img_npj/npj1_neutre.png", 15);
         initializePosition('b'); // 'p' pour le point de spawn de Test_Bandana

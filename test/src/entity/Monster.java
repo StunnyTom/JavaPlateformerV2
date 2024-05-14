@@ -30,8 +30,8 @@ public class Monster extends Entity {
         Point x;
 		try {
 			x = Entity.findSpawnPoints('b', nameMap.getName())[0];
-			screenX = (int) (gp.tileSize * x.getY());
-	        screenY = (int) (gp.tileSize * x.getX());
+			setScreenX((int) (gp.tileSize * x.getY()));
+	        setScreenY((int) (gp.tileSize * x.getX()));
 	        super.neutre1 = ImageIO.read(getClass().getResourceAsStream("/mobs/bomb.png"));
 			
 		} catch (IOException e) {
@@ -39,7 +39,7 @@ public class Monster extends Entity {
 			e.printStackTrace();
 		}
         
-        solidAir = new Rectangle(16, -10, gp.tileSize, gp.tileSize);
+        setSolidAir(new Rectangle(16, -10, gp.tileSize, gp.tileSize));
         
     }
 	
@@ -48,11 +48,11 @@ public class Monster extends Entity {
         L = 25;
         speed = 1;
         direction = "neutre";
-        inv = new ArrayList<gameObject>();
+        setInv(new ArrayList<gameObject>());
     }
 	
 	public void update() {
-        int newX = screenX+1, newY = screenY;
+        int newX = getScreenX()+1, newY = getScreenY();
 
         // Appliquer la gravité
         ySpeed += GRAVITY;
@@ -60,24 +60,24 @@ public class Monster extends Entity {
         //boolean onGround = gp.verif.checkCollision(screenX, screenY + 1, l, L, solidAir); // Vérifier les collisions avec le sol
         
         // Collision check pour l'axe Y
-        if (!gp.verif.checkCollision(screenX, newY, l, L, solidAir)) {
-            screenY = newY;
+        if (!gp.verif.checkCollision(getScreenX(), newY, l, L, getSolidAir())) {
+            setScreenY(newY);
         } else {
             ySpeed = 0; // Arrêter le mouvement si collision
         }
 
 
-        if (!gp.verif.checkCollision(newX, screenY, l, L, solidAir)) { // Collision check pour l'axe X
-            screenX = newX;
+        if (!gp.verif.checkCollision(newX, getScreenY(), l, L, getSolidAir())) { // Collision check pour l'axe X
+            setScreenX(newX);
         }
         
         // Vérification des collisions avec des objets
-        gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, solidAir);
+        gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
         if (!collOb.nullObj()) {
             addInv(collOb); // Ramasser l'objet en cas de collision
             gp.ObjectM.Objet_Map.remove(collOb.getID());
             
-            Iterator<gameObject> li = inv.iterator();
+            Iterator<gameObject> li = getInv().iterator();
             
             while (li.hasNext())
                 System.out.println(li.next());
@@ -109,7 +109,7 @@ public class Monster extends Entity {
         }
         
         // Dessine l'image sur le rectangle bleu
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
     }  
 	
 }

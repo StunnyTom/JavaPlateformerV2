@@ -15,33 +15,38 @@ import objects.gameObject;
 public class Entity {
 	
 	//variable
-    public int screenX;
-    public int screenY; 
-    public int l;
-    public int L;
-	public int speed;
+	protected int screenX;
+	protected int screenY; 
+    protected int l;
+    protected int L;
+	protected int speed;
 	
 	//Inventaire
-	public ArrayList<gameObject> inv;
+	private ArrayList<gameObject> inv;
 	
 	//Gravit�
-	public static final double GRAVITY = 0.06; // Constante de gravit�
-    public double ySpeed = 0; // Vitesse verticale
+	protected static final double GRAVITY = 0.06; // Constante de gravit�
+	protected double ySpeed = 0; // Vitesse verticale
 	
-	public BufferedImage neutre1, neutre2, up1, up2, right1, right2, left1, left2, down; //les images
-	public String direction;
+	protected BufferedImage neutre1, neutre2, up1, up2, right1, right2, left1, left2, down; //les images
+	protected String direction;
 	
 	//fait une animation
-	public int spriteCounter = 0;
-	public int spriteNum = 1;
+	protected int spriteCounter = 0;
+	protected int spriteNum = 1;
+	
+	protected int padding;
+	//private GamePanel gp;
 	
 	//pour les collision 
-	public Rectangle solidAir; //stocker un rectangle invisible ou abstrait avec x,y, largeur, hauteur
-	public boolean collisionOn = false;
+	private Rectangle solidAir; //stocker un rectangle invisible ou abstrait avec x,y, largeur, hauteur
+	protected boolean collisionOn = false;
+	
+	private final int taille_inv = 9;
 	
 	public void addInv(gameObject o) {
-		if (inv.size() < 9) {
-			this.inv.add(o);
+		if (getInv().size() < taille_inv) {
+			this.getInv().add(o);
 		} else {
 			System.out.println("Impossible : inventaire plein");
 		}
@@ -69,5 +74,34 @@ public class Entity {
       
         return spawnPointsList.toArray(new Point[0]);
     }
+	
+	//creation par default
+	public int getScreenX() {
+		return screenX;
+	}
+	public void setScreenX(int screenX) {
+		this.screenX = screenX;
+	}
+	public int getScreenY() {
+		return screenY;
+	}
+	public void setScreenY(int screenY) {
+		this.screenY = screenY;
+	}
 
+	public ArrayList<gameObject> getInv() {
+		return inv;
+	}
+
+	public void setInv(ArrayList<gameObject> inv) {
+		this.inv = inv;
+	}
+
+	public Rectangle getSolidAir() {
+		return solidAir;
+	}
+
+	public void setSolidAir(Rectangle solidAir) {
+		this.solidAir = solidAir;
+	}
 }

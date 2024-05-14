@@ -8,10 +8,10 @@ import objects.gameObject;
 import test.GamePanel;
 
 public class PNJ_Magalor extends PNJ {
-    boolean hasDialogStarted = false;
-    int attemptsLeft = 3;  // Nombre de tentatives autorisées
-    int currentQuestion = 1;
-    boolean hasMadeMistake = false; 
+    protected boolean hasDialogStarted = false;
+    private int attemptsLeft = 3;  // Nombre de tentatives autorisées
+    private int currentQuestion = 1;
+    private boolean hasMadeMistake = false; 
 
     public PNJ_Magalor(GamePanel gp) {
         super(gp, "/img_npj/PNJ_Magalor.png", 50);
@@ -83,7 +83,7 @@ public class PNJ_Magalor extends PNJ {
     }
 
     private void deactivateCollision() {
-        isCollisionWithPlayer = false;
+        setCollisionWithPlayer(false);
 
     }
 }

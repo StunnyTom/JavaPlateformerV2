@@ -33,7 +33,7 @@ public class InventoryDisplay extends JPanel {
         super.paintComponent(g);
 
         // Dessine les carrés représentant les objets de l'inventaire
-        ArrayList<gameObject> inv = entity.inv;
+        ArrayList<gameObject> inv = entity.getInv();
         for (int i = 0; i < inv.size(); i++) {
             int x = i * SQUARE_SIZE;
             g.setColor(new Color(255, 255, 255, 0));

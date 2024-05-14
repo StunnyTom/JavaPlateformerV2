@@ -16,7 +16,7 @@ public abstract class PNJ extends Entity {
     int screenX, screenY;
     int padding; // Ajout du padding comme attribut de la classe
     protected gameObject itemToGive; // Objet à donner utilisé dans les sous-classes
-    public boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
+    protected boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
 
     public PNJ(GamePanel gp, String imagePath, int padding) {
         super();
@@ -39,8 +39,8 @@ public abstract class PNJ extends Entity {
     //ajouter un objet dans l'inventaire
     public void addItemToInventory(Player player) {
         if (itemToGive != null && itemToGive.image != null) {
-            if (!player.inv.contains(itemToGive)) {
-                player.inv.add(itemToGive);
+            if (!player.getInv().contains(itemToGive)) {
+                player.getInv().add(itemToGive);
                 System.out.println("Objet ajouté à l'inventaire : " + itemToGive.getID());
                 itemToGive = null;  // Assurez-vous que l'objet ne peut être donné qu'une fois
             } else {
@@ -59,7 +59,7 @@ public abstract class PNJ extends Entity {
                 Point x = spawnPoints[0];
                 screenX = (int) (gp.tileSize * x.getY());
                 screenY = (int) (gp.tileSize * x.getX());
-                this.solidAir = new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding);
+                this.setSolidAir(new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding));
             } else {
                 System.err.println("Aucun point de spawn trouvé pour l'identifiant: " + identifier);
             }
@@ -74,4 +74,12 @@ public abstract class PNJ extends Entity {
         }
        
     }
+
+	public boolean isCollisionWithPlayer() {
+		return isCollisionWithPlayer;
+	}
+
+	public void setCollisionWithPlayer(boolean isCollisionWithPlayer) {
+		this.isCollisionWithPlayer = isCollisionWithPlayer;
+	}
 }
