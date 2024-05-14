@@ -13,7 +13,6 @@ public class gameObject {
         this.collision = collision;
     }
 
-
 	public BufferedImage getImage() {
     	return this.image;
     }

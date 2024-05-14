@@ -51,15 +51,18 @@ public abstract class PNJ extends Entity {
         }
     }
 
-
-
     protected void initializePosition(char identifier) {
         File nameMap = new File(gp.currentMap);
         try {
-            Point x = Entity.findSpawnPoints(identifier, nameMap.getName())[0];
-            screenX = (int) (gp.tileSize * x.getY());
-            screenY = (int) (gp.tileSize * x.getX());
-            this.solidAir = new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding);
+            Point[] spawnPoints = Entity.findSpawnPoints(identifier, nameMap.getName());
+            if (spawnPoints.length > 0) {
+                Point x = spawnPoints[0];
+                screenX = (int) (gp.tileSize * x.getY());
+                screenY = (int) (gp.tileSize * x.getX());
+                this.solidAir = new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding);
+            } else {
+                System.err.println("Aucun point de spawn trouvé pour l'identifiant: " + identifier);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

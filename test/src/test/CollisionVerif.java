@@ -106,20 +106,30 @@ public class CollisionVerif {
 
     public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {
         Rectangle playerArea = new Rectangle(newX, newY, l, L);
-        // Vérifier la collision pour PNJ_bandana sur "map2.txt"     
         if (gp.currentMap.equals("/maps/maps1.txt")) {
-            if (gp.pnj_bandana != null && gp.pnj_bandana.solidAir.intersects(playerArea)) {
+            if (gp.pnj_susie != null && gp.pnj_susie.solidAir != null && gp.pnj_susie.solidAir.intersects(playerArea) && System.currentTimeMillis() - gp.pnj_susie.lastCollisionTime > PNJ_Susie.COLLISION_COOLDOWN) {
+                gp.pnj_susie.isCollisionWithPlayer = true;
+                gp.pnj_susie.showInventoryDialog();
+                return true;
+            }
+        }
+        
+        if (gp.currentMap.equals("/maps/maps2.txt")) {
+            if (gp.pnj_bandana != null && gp.pnj_bandana.solidAir != null && gp.pnj_bandana.solidAir.intersects(playerArea)) {
                 gp.pnj_bandana.isCollisionWithPlayer = true;
                 gp.pnj_bandana.triggerDialogue();
                 gp.pnj_bandana.addItemToInventory(gp.player);
-                
                 System.out.println("Collision avec test_bandana");
                 return true;
             }
-           
         }
     
-        // Vérifier la collision pour PNJ_Magalor sur "map3.txt"
+        return false;
+}
+    
+
+    
+        /*// Vérifier la collision pour PNJ_Magalor sur "map3.txt"
         if (gp.currentMap.equals("/maps/maps1.txt")) {
             if (gp.pnj_magalor != null && gp.pnj_magalor.solidAir.intersects(playerArea)) {
                 gp.pnj_magalor.isCollisionWithPlayer = true;
@@ -129,19 +139,7 @@ public class CollisionVerif {
                 System.out.println("Collision avec test_bandana");
                 return true;
             	}
-        }
-        
-      
-        if (gp.currentMap.equals("/maps/maps1.txt")) {
-        	if( gp.pnj_susie != null && gp.pnj_susie.solidAir.intersects(playerArea)&& System.currentTimeMillis() - gp.pnj_susie.lastCollisionTime > PNJ_Susie.COLLISION_COOLDOWN) {  
-        		gp.pnj_susie.isCollisionWithPlayer = true;
-        		gp.pnj_susie.showInventoryDialog(); // Affiche la boîte de dialogue si la période de cooldown est passée
-                    return true;
-                }
-        	}
-            
-        
-        // Aucune collision avec les PNJ car ils ne sont pas sur la carte actuelle
-        return false;
-    }   
+        } */   
+   
+  
 }

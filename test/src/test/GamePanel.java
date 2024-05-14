@@ -101,6 +101,11 @@ public class GamePanel extends JPanel implements Runnable{
 	        gameThread = null;
 	    }
 	}
+	
+	public void spawnNPC(char npcChar, int row, int col) {
+        // Handle spawning NPC based on npcChar at the given row and col
+        // This might involve creating a new NPC object and setting its position
+    }
 
 		@SuppressWarnings("unused")
 		public void update() {
@@ -134,14 +139,14 @@ public class GamePanel extends JPanel implements Runnable{
 				ObjectM.draw(g2); // puis les objects
 				
 	        if (currentMap != null && currentMap.equals("/maps/maps2.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
+	        	//pnj_bandana.draw(g2);
 	        	
 	        }
         	if (currentMap != null && currentMap.equals("/maps/map3.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
 	        	
 	        }
         	if (currentMap != null && currentMap.equals("/maps/maps1.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
-	            	pnj_bandana.draw(g2);
-	            	pnj_magalor.draw(g2);
+	            	//pnj_magalor.draw(g2);
 	            	pnj_susie.draw(g2);
 	            	
 	            

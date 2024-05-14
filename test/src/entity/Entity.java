@@ -66,9 +66,7 @@ public class Entity {
                 row++;
             }
         }
-        if (spawnPointsList.isEmpty()) {
-            throw new IllegalArgumentException("Character not found in the file");
-        }
+      
         return spawnPointsList.toArray(new Point[0]);
     }
 
