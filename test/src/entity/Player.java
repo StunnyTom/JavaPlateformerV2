@@ -4,9 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javax.imageio.ImageIO;
-
 import objects.gameObject;
 import test.GamePanel;
 import test.KeyHandler;
@@ -16,6 +14,7 @@ import java.io.File;
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
+    private int keyCount = 0;  // Nombre de clés
     
     // ou nous dessinons le joueur 
     public Player(GamePanel gp) {
@@ -24,25 +23,34 @@ public class Player extends Entity {
         setDefaultValues();
         getPlayerImage();
         
+        
         File nameMap = new File(gp.currentMap);
         Point x;
 		try {
 			x = Entity.findSpawnPoints('z', nameMap.getName())[0];
 			setScreenX((int) (gp.tileSize * x.getY()));
 	        setScreenY((int) (gp.tileSize * x.getX()));
-			//screenX=400;
-			//screenY=400;
+	
 	        System.out.println(getScreenX());
 	        System.out.println(getScreenY());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
-        setSolidAir(new Rectangle(16, -10, gp.tileSize, gp.tileSize));
-        
+        setSolidAir(new Rectangle(16, -10, gp.tileSize, gp.tileSize));        
     }
     
+  //pour ajouter les clés   
+    public int getKeyCount() {
+        return keyCount;
+    }
+
+    public void addKey() {
+        keyCount++;
+        if (keyCount >= 3) {
+            gp.gameState.afficheVictory();  // Trigger the victory condition
+        }
+    }
     public void setkeyH(KeyHandler keyH) {
     	this.keyH = keyH;
     }
@@ -70,7 +78,7 @@ public class Player extends Entity {
     }
     
     
-	public void update() {
+    public void update() {
         int newX = getScreenX(), newY = getScreenY();
 
         // Appliquer la gravité
@@ -99,27 +107,20 @@ public class Player extends Entity {
         if (!gp.verif.checkCollision(newX, getScreenY(), l, L, getSolidAir())) { // Collision check pour l'axe X
             setScreenX(newX);
         }
-        
-       
+
         // Vérification des collisions avec des objets
         gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
         if (!collOb.nullObj()) {
-            addInv(collOb); // Ramasser l'objet en cas de collision
+            if (collOb.getID().equals("k") || collOb.getID().equals("y")) {
+                addKey(); // Incrémente le nombre de clés
+            }
             gp.getObjectM().Objet_Map.remove(collOb.getID());
-
-            
-            Iterator<gameObject> li = getInv().iterator();
-            
-            while (li.hasNext())
-                System.out.println(li.next()); 
         }
-        
-                
+
         // Vérification des collisions avec les pnj
         if (gp.verif.checkCollisionPNJ(newX, newY, l, L, getSolidAir())) {
             //System.out.println("collision pnj");
         }
-        
 
         // Gestion de l'animation sprite
         spriteCounter++;
@@ -127,42 +128,46 @@ public class Player extends Entity {
             spriteNum = spriteNum == 1 ? 2 : 1;
             spriteCounter = 0;
         }
+    }
+        
+    public void draw(Graphics2D g2) {
+        BufferedImage image = null;
 
+        switch (direction) {
+            case "neutre":
+                if (spriteNum == 1) {
+                    image = neutre1;
+                }
+                if (spriteNum == 2) {
+                    image = neutre2;
+                }
+                break;
+
+            case "right":
+                if (spriteNum == 1) {
+                    image = right1;
+                }
+                if (spriteNum == 2) {
+                    image = right2;
+                }
+                break;
+            case "left":
+                if (spriteNum == 1) {
+                    image = left1;
+                }
+                if (spriteNum == 2) {
+                    image = left2;
+                }
+        }
+
+        // On dessine les images
+        g2.drawImage(image, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
+
+        // Dessiner le nombre de clés en haut à droite de l'écran
+        g2.setFont(new Font("Arial", Font.PLAIN, 20));
+        g2.setColor(Color.WHITE);
+        g2.drawString("Clés : " + getKeyCount(), gp.maxScreenCol * gp.tileSize - 100, 30);
     }
 
-	public void draw(Graphics2D g2) {
-		BufferedImage image = null;
-		
-		switch(direction) {
-			case"neutre":
-				if(spriteNum == 1) {
-					image = neutre1;
-				}
-				if (spriteNum == 2) {
-					image = neutre2;
-				}
-				break;
-				
-			case "right":
-				if(spriteNum == 1) {
-					image = right1;
-				}
-				if (spriteNum == 2) {
-					image = right2;
-				}
-				break;
-			case"left":
-				if(spriteNum == 1) {
-					image = left1;
-				}
-				if (spriteNum == 2) {
-					image = left2;
-				}
-		}
-				
-		//on dessine les images 
-		g2.drawImage(image, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
-		
-	}
 
 }

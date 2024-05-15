@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
 import javax.swing.*;
-import java.awt.*;
 
 import entity.Player;
 import objects.InventoryDisplay;
@@ -58,7 +60,7 @@ public class GamePanel extends JPanel implements Runnable{
  	public Monster bomb;
 
 
-    GameState gameState; // Ajout de l'attribut gameState
+    public GameState gameState; // Ajout de l'attribut gameState
 	
 	//constructeur de panel 
 	public GamePanel() {
@@ -83,7 +85,9 @@ public class GamePanel extends JPanel implements Runnable{
 		player.setkeyH(keyH);
 		this.addKeyListener(keyH); //reconaitre l'entr�e des touches 
 		this.setFocusable(true);
-	    
+		
+		ObjectM.loadMap("/maps_spawn/maps1.txt"); // Remplacez par le chemin réel du fichier
+    
 	    //bomb = new Monster(this);	
 	    pnj_bandana = new PNJ_bandana(this);
 	    pnj_magalor = new PNJ_Magalor(this);
@@ -101,12 +105,12 @@ public class GamePanel extends JPanel implements Runnable{
 	        gameThread = null;
 	    }
 	}
-	
+	/*
 	public void spawnNPC(char npcChar, int row, int col) {
         // Handle spawning NPC based on npcChar at the given row and col
         // This might involve creating a new NPC object and setting its position
     }
-
+*/
 		@SuppressWarnings("unused")
 		public void update() {
 		    // Mettre à jour le joueur en premier pour prendre en compte les nouvelles positions
