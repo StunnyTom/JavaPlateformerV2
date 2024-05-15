@@ -90,9 +90,9 @@ public class CollisionVerif {
         }
 
         // Obtenir le caractère de la tuile et vérifier pour la collision
-        char key = (char) (gp.getObjectM().getMapObjetnum()[col][row] + 'a');
+        char key = (char) (gp.ObjectM.mapObjetnum[col][row] + 'a');
         String objChar = "" + key;
-        gameObject object = gp.getObjectM().getObjet_Map().get(objChar);
+        gameObject object = gp.ObjectM.Objet_Map.get(objChar);
 
         if (object == null) {
             //System.out.println("Aucun objet trouvé");
@@ -103,6 +103,7 @@ public class CollisionVerif {
         //boolean collision = object.collision;
         return object; // Retourne true si l'objet a une propriété de collision
     }
+
 
     public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {
         Rectangle playerArea = new Rectangle(newX, newY, l, L);

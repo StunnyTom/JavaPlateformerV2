@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
 	int FPS = 20;
 	
 	Tiles_manger tileM = new Tiles_manger(this);//tuile img
-	private Objetc_manager ObjectM = new Objetc_manager(this); // img object
+	Objetc_manager ObjectM = new Objetc_manager(this); // img object
 	public InventoryDisplay displayInv;
 	KeyHandler keyH;
 	Thread gameThread; //le fil du jeu, il appelle automatiquement la methode run 

@@ -69,8 +69,8 @@ public class Player extends Entity {
         }
     }
     
-
-    public void update() {
+    
+	public void update() {
         int newX = getScreenX(), newY = getScreenY();
 
         // Appliquer la gravité
@@ -100,11 +100,13 @@ public class Player extends Entity {
             setScreenX(newX);
         }
         
+       
         // Vérification des collisions avec des objets
         gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
         if (!collOb.nullObj()) {
             addInv(collOb); // Ramasser l'objet en cas de collision
-            gp.getObjectM().getObjet_Map().remove(collOb.getID());
+            gp.getObjectM().Objet_Map.remove(collOb.getID());
+
             
             Iterator<gameObject> li = getInv().iterator();
             
@@ -112,6 +114,7 @@ public class Player extends Entity {
                 System.out.println(li.next()); 
         }
         
+                
         // Vérification des collisions avec les pnj
         if (gp.verif.checkCollisionPNJ(newX, newY, l, L, getSolidAir())) {
             //System.out.println("collision pnj");

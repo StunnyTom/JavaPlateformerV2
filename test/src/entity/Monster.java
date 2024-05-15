@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
+
 import javax.imageio.ImageIO;
 import objects.gameObject;
 import test.GamePanel;
@@ -52,48 +54,53 @@ public class Monster extends Entity {
     }
 	
 	public void update() {
-        int newX = getScreenX()+1, newY = getScreenY();
+	    int newX = getScreenX() + 1, newY = getScreenY();
 
-        // Appliquer la gravité
-        ySpeed += GRAVITY;
-        newY += ySpeed;
-        //boolean onGround = gp.verif.checkCollision(screenX, screenY + 1, l, L, solidAir); // Vérifier les collisions avec le sol
-        
-        // Collision check pour l'axe Y
-        if (!gp.verif.checkCollision(getScreenX(), newY, l, L, getSolidAir())) {
-            setScreenY(newY);
-        } else {
-            ySpeed = 0; // Arrêter le mouvement si collision
-        }
+	    // Appliquer la gravité
+	    ySpeed += GRAVITY;
+	    newY += ySpeed;
 
+	    // Collision check pour l'axe Y
+	    if (!gp.verif.checkCollision(getScreenX(), newY, l, L, getSolidAir())) {
+	        setScreenY(newY);
+	    } else {
+	        ySpeed = 0; // Arrêter le mouvement si collision
+	    }
 
-        if (!gp.verif.checkCollision(newX, getScreenY(), l, L, getSolidAir())) { // Collision check pour l'axe X
-            setScreenX(newX);
-        }
-        
-        // Vérification des collisions avec des objets
-        gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
-        if (!collOb.nullObj()) {
-            addInv(collOb); // Ramasser l'objet en cas de collision
-            gp.getObjectM().getObjet_Map().remove(collOb.getID());
-            
-            Iterator<gameObject> li = getInv().iterator();
-            
-            while (li.hasNext())
-                System.out.println(li.next());
-            
-        }
-        
-        
+	    // Collision check pour l'axe X
+	    if (!gp.verif.checkCollision(newX, getScreenX(), l, L, getSolidAir())) {
+	        setScreenX(newX);
+	    }
 
-        // Gestion de l'animation sprite
-        spriteCounter++;
-        if (spriteCounter > 25) {
-            spriteNum = spriteNum == 1 ? 2 : 1;
-            spriteCounter = 0;
-        }
+	    // Vérification des collisions avec des objets
+	    gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
+	    if (!collOb.nullObj()) {
+	        addInv(collOb); // Ramasser l'objet en cas de collision
 
-    }
+	        // Suppression de l'objet de la carte
+	        Map<String, gameObject> objectMap = gp.getObjectM().Objet_Map;
+
+	        String objectId = collOb.getID();
+	        
+	        if (objectMap.containsKey(objectId)) {
+	            objectMap.remove(objectId);
+	        }
+	        
+	        Iterator<gameObject> li = getInv().iterator();
+	        
+	        while (li.hasNext()) {
+	            System.out.println(li.next());
+	        }
+	    }
+
+	    // Gestion de l'animation sprite
+	    spriteCounter++;
+	    if (spriteCounter > 25) {
+	        spriteNum = spriteNum == 1 ? 2 : 1;
+	        spriteCounter = 0;
+	    }
+	}
+
 	
 	public void draw(Graphics2D g2) {
         BufferedImage image = null;
