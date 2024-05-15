@@ -15,18 +15,13 @@ import objects.gameObject;
 import test.GamePanel;
 
 public class Monster extends Entity {
-	
-	GamePanel gp;
-	public String sprite;
-	
+
 	
 	public Monster(GamePanel gp) {
-		//super();
 		
         this.gp = gp;
 
         setDefaultValues();
-        this.sprite = "/mobs/bomb.png";
         
         File nameMap = new File(gp.currentMap);
         Point x;
@@ -34,7 +29,7 @@ public class Monster extends Entity {
 			x = Entity.findSpawnPoints('b', nameMap.getName())[0];
 			setScreenX((int) (gp.tileSize * x.getY()));
 	        setScreenY((int) (gp.tileSize * x.getX()));
-	        super.neutre1 = ImageIO.read(getClass().getResourceAsStream("/mobs/bomb.png"));
+	        this.setImage(ImageIO.read(getClass().getResourceAsStream("/mobs/bomb.png"))); 
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -49,7 +44,6 @@ public class Monster extends Entity {
         l = 20;
         L = 25;
         speed = 1;
-        direction = "neutre";
         setInv(new ArrayList<gameObject>());
     }
 	
@@ -102,21 +96,5 @@ public class Monster extends Entity {
 	}
 
 	
-	public void draw(Graphics2D g2) {
-        BufferedImage image = null;
-
-        switch (direction) {
-            case "neutre":
-                if (spriteNum == 1) {
-                    image = neutre1;
-                } else if (spriteNum == 2) {
-                    image = neutre1;
-                }
-                break;
-        }
-        
-        // Dessine l'image sur le rectangle bleu
-        g2.drawImage(image, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
-    }  
 	
 }

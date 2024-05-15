@@ -12,7 +12,7 @@ import java.io.File;
 
 
 public class Player extends Entity {
-    GamePanel gp;
+    
     KeyHandler keyH;
     private int keyCount = 0;  // Nombre de clés
     
@@ -59,7 +59,6 @@ public class Player extends Entity {
         l = 20;
         L = 25;
         speed = 2;
-        direction = "neutre";
         setInv(new ArrayList<gameObject>());
     }
     
@@ -67,11 +66,7 @@ public class Player extends Entity {
     //les images pour le sprite
     private void getPlayerImage() {
         try {
-            neutre1 = ImageIO.read(getClass().getResourceAsStream("/img_player/position_neutre.png"));
-            neutre2 = ImageIO.read(getClass().getResourceAsStream("/img_player/position_neutre.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/img_player/right1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/img_player/right2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/img_player/position_neutre.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/img_player/position_neutre.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -118,9 +113,11 @@ public class Player extends Entity {
         }
 
         // Vérification des collisions avec les pnj
+        /*
         if (gp.verif.checkCollisionPNJ(newX, newY, l, L, getSolidAir())) {
             //System.out.println("collision pnj");
         }
+        */
 
         // Gestion de l'animation sprite
         spriteCounter++;
@@ -131,37 +128,8 @@ public class Player extends Entity {
     }
         
     public void draw(Graphics2D g2) {
-        BufferedImage image = null;
-
-        switch (direction) {
-            case "neutre":
-                if (spriteNum == 1) {
-                    image = neutre1;
-                }
-                if (spriteNum == 2) {
-                    image = neutre2;
-                }
-                break;
-
-            case "right":
-                if (spriteNum == 1) {
-                    image = right1;
-                }
-                if (spriteNum == 2) {
-                    image = right2;
-                }
-                break;
-            case "left":
-                if (spriteNum == 1) {
-                    image = left1;
-                }
-                if (spriteNum == 2) {
-                    image = left2;
-                }
-        }
-
-        // On dessine les images
-        g2.drawImage(image, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
+        
+    	super.draw(g2);
 
         // Dessiner le nombre de clés en haut à droite de l'écran
         g2.setFont(new Font("Arial", Font.PLAIN, 20));

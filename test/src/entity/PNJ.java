@@ -12,7 +12,7 @@ import test.GamePanel;
 public abstract class PNJ extends Entity {
     GamePanel gp;
     String direction;
-    BufferedImage spriteImage;
+
     int screenX, screenY;
     int padding; // Ajout du padding comme attribut de la classe
     protected gameObject itemToGive; // Objet à donner utilisé dans les sous-classes
@@ -29,7 +29,7 @@ public abstract class PNJ extends Entity {
             if (is == null) {
                 throw new RuntimeException("Pas accès au lieu du pnj: " + imagePath);
             }
-            this.spriteImage = ImageIO.read(is);
+            this.setImage(ImageIO.read(is));
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,7 +38,7 @@ public abstract class PNJ extends Entity {
     
     //ajouter un objet dans l'inventaire
     public void addItemToInventory(Player player) {
-        if (itemToGive != null && itemToGive.image != null) {
+        if (itemToGive != null && itemToGive.getImage() != null) {
             if (!player.getInv().contains(itemToGive)) {
                 player.getInv().add(itemToGive);
                 System.out.println("Objet ajouté à l'inventaire : " + itemToGive.getID());
@@ -69,8 +69,8 @@ public abstract class PNJ extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-        if (spriteImage != null) {
-            g2.drawImage(spriteImage, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        if (getImage() != null) {
+            g2.drawImage(getImage(), screenX, screenY, gp.tileSize, gp.tileSize, null);
         }
        
     }

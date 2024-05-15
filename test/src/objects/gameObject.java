@@ -2,9 +2,10 @@ package objects;
 
 import java.awt.image.BufferedImage;
 
-public class gameObject {
+import generation.Generateur;
 
-    public BufferedImage image;
+public class gameObject extends Generateur {
+
     public String nom;
     public boolean collision = false; // collision
     public String id;

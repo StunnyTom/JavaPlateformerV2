@@ -13,8 +13,8 @@ public class PNJ_Magalor extends PNJ {
     private int currentQuestion = 1;
     private boolean hasMadeMistake = false; 
 
-    public PNJ_Magalor(GamePanel gp) {
-        super(gp, "/img_npj/PNJ_Magalor.png", 50);
+    public PNJ_Magalor() {
+        super(getGP(), "/img_npj/PNJ_Magalor.png", 50);
         initializePosition('m'); // 'p' pour le point de spawn de Test_Bandana
     }
 
@@ -49,7 +49,7 @@ public class PNJ_Magalor extends PNJ {
                 } else {
                     if (!hasMadeMistake) {
                         initializeItemToGive();
-                        addItemToInventory(gp.player);
+                        addItemToInventory(gp.getPlayer());
                         JOptionPane.showMessageDialog(null, "Voici un cadeau pour vous :)");
                     }
                     deactivateCollision(); //desactive la collision
@@ -75,7 +75,7 @@ public class PNJ_Magalor extends PNJ {
         this.itemToGive = new gameObject(false);
         try {
             BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/cle.png"));
-            itemToGive.image = itemImage;
+            itemToGive.setImage(itemImage);
             itemToGive.setID("2");
         } catch (IOException e) {
             e.printStackTrace();

@@ -43,8 +43,8 @@ import test.GamePanel;
 	    }
 	    
 	    public void checkAndChangeMapOnPosition() {
-	        int playerTileX = gp.player.getScreenX() / gp.tileSize;
-	        int playerTileY = gp.player.getScreenY() / gp.tileSize;
+	        int playerTileX = gp.getPlayer().getScreenX() / gp.tileSize;
+	        int playerTileY = gp.getPlayer().getScreenY() / gp.tileSize;
 	        Point playerTile = new Point(playerTileX, playerTileY);
 
 	        // Vérifie si une transition est disponible pour cette position
@@ -123,8 +123,8 @@ import test.GamePanel;
      private void changeMap(String mapPath, int startX, int startY) {
          System.out.println("Changement de carte à " + mapPath);
          loadMap(mapPath);
-         gp.player.setScreenX(startX * gp.tileSize);
-         gp.player.setScreenY(startY * gp.tileSize);
+         gp.getPlayer().setScreenX(startX * gp.tileSize);
+         gp.getPlayer().setScreenY(startY * gp.tileSize);
          System.out.println("La carte a été changée avec succès à: " + mapPath);
      }
 

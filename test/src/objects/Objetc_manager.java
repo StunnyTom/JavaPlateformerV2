@@ -28,7 +28,7 @@ public class Objetc_manager {
     public void instObjet(String c, String filePath, boolean col) {
         try {
             Objet_Map.put(c, new gameObject(true));
-            Objet_Map.get(c).image = ImageIO.read(getClass().getResourceAsStream(filePath));
+            Objet_Map.get(c).setImage(ImageIO.read(getClass().getResourceAsStream(filePath)));
             Objet_Map.get(c).collision = col;
             Objet_Map.get(c).id = c; // Ajouter un champ "id"
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class Objetc_manager {
                     gameObject Objet_test = Objet_Map.get(Objet_testKey);
 
                     if (Objet_test != null) { // Vérifiez que ce n'est pas null
-                        g2.drawImage(Objet_test.image,
+                        g2.drawImage(Objet_test.getImage(),
                                 worldCol * gp.ObjetSize,
                                 worldRow * gp.ObjetSize,
                                 gp.ObjetSize,

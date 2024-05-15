@@ -6,17 +6,20 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 import entity.Player;
 import objects.InventoryDisplay;
 import entity.Monster;
+import entity.PNJ;
 import entity.PNJ_Magalor;
 import entity.PNJ_Susie;
 import entity.PNJ_bandana;
 import objects.Objetc_manager;
 import tiles.Tiles_manger;
+import generation.Generateur;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable{
@@ -50,15 +53,13 @@ public class GamePanel extends JPanel implements Runnable{
 	Thread gameThread; //le fil du jeu, il appelle automatiquement la methode run 
 	
 	public CollisionVerif verif = new CollisionVerif(this); // pour la collision 
- 	public Player player;
 
- 	public PNJ_bandana pnj_bandana;
- 	public PNJ_Magalor pnj_magalor;
- 	public PNJ_Susie pnj_susie;
- 	
+ 	public ArrayList<Generateur> Genlist = new ArrayList<>();
+ 	//public PNJ_bandana pnj_bandana;
+ 	//public PNJ_Magalor pnj_magalor;
+ 	//public PNJ_Susie pnj_susie;
  	
  	public Monster bomb;
-
 
     public GameState gameState; // Ajout de l'attribut gameState
 	
@@ -68,7 +69,7 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		
-		player = new Player(this);
+		this.Genlist.add(new Player(this));
 		gameState = new GameState(this); // Initialisation de gameState
 		
 		setLayout(new GridBagLayout());
@@ -76,22 +77,29 @@ public class GamePanel extends JPanel implements Runnable{
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.PAGE_END;
-        displayInv = new InventoryDisplay(player);
+        displayInv = new InventoryDisplay(getPlayer());
         add(displayInv, gbc);
         setOpaque(false);
         
         keyH = new KeyHandler(displayInv, this);  // Passer 'this' pour référencer GamePanel
-
-		player.setkeyH(keyH);
+		getPlayer().setkeyH(keyH);
 		this.addKeyListener(keyH); //reconaitre l'entr�e des touches 
 		this.setFocusable(true);
 		
 		ObjectM.loadMap("/maps_spawn/maps1.txt"); // Remplacez par le chemin réel du fichier
     
+		
+		this.Genlist.add(new PNJ_bandana());
+		this.Genlist.add(new PNJ_Magalor());
+		this.Genlist.add(new PNJ_Susie(getPlayer()));
 	    //bomb = new Monster(this);	
-	    pnj_bandana = new PNJ_bandana(this);
-	    pnj_magalor = new PNJ_Magalor(this);
-	    pnj_susie = new PNJ_Susie(this, player);
+	    //pnj_bandana = new PNJ_bandana(this);
+	    //pnj_magalor = new PNJ_Magalor(this);
+	    //pnj_susie = new PNJ_Susie(this, player);
+	}
+	
+	public Player getPlayer() {
+		return ((Player) this.Genlist.get(0));
 	}
 
 	public void startGameThread() {
@@ -115,13 +123,13 @@ public class GamePanel extends JPanel implements Runnable{
 		public void update() {
 		    // Mettre à jour le joueur en premier pour prendre en compte les nouvelles positions
 		    if (!gameState.isGameOver()) {
-		        player.update();
+		        ((Player) this.Genlist.get(0)).update();
 		        //bomb.update();
 		    }
 
 		    // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
-			int playerTileX = player.getScreenX() / tileSize;  // Utilisation de screenX pour la position en X
-		    int playerTileY = player.getScreenY() / tileSize;  // Utilisation de screenY pour la position en Y
+			int playerTileX = getPlayer().getScreenX() / tileSize;  // Utilisation de screenX pour la position en X
+		    int playerTileY = getPlayer().getScreenY() / tileSize;  // Utilisation de screenY pour la position en Y
 	
 		
 		    // Si le jeu continue, vérifier le changement de carte
@@ -150,11 +158,11 @@ public class GamePanel extends JPanel implements Runnable{
 	        }
         	if (currentMap != null && currentMap.equals("/maps/maps1.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
 	            	//pnj_magalor.draw(g2);
-	            	pnj_susie.draw(g2);
+	            	//pnj_susie.draw(g2);
 	            	
 	            
 	        }
-			player.draw(g2);// puis apres le perso 	
+			getPlayer().draw(g2);// puis apres le perso 	
 			displayInv.paint(g2);
 			
 			

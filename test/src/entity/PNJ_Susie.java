@@ -17,8 +17,8 @@ public class PNJ_Susie extends PNJ {
 	private long lastCollisionTime = 0; // Temps de la dernière collision
     private static final long COLLISION_COOLDOWN = 10000; // Délai de 10 secondes
 
-    public PNJ_Susie(GamePanel gp, Player player) {
-    	super(gp, "/img_npj/susie_pnj.png", 15);
+    public PNJ_Susie(Player player) {
+    	super(getGP(), "/img_npj/susie_pnj.png", 15);
         initializePosition('s'); // 'p' pour le point de spawn de Susie
         this.player = player;
     }
@@ -57,7 +57,7 @@ public class PNJ_Susie extends PNJ {
             } else {
                 JOptionPane.showMessageDialog(null, "Tu as enfin l'épé, tiens pour toi :)", "accès a l'inventaire du joueur", JOptionPane.INFORMATION_MESSAGE);
                 initializeItemToGive();
-                addItemToInventory(gp.player); // Méthode pour ajouter un objet à l'inventaire du joueur
+                addItemToInventory(gp.getPlayer()); // Méthode pour ajouter un objet à l'inventaire du joueur
             }
             
             setLastCollisionTime(System.currentTimeMillis()); // Réinitialiser le temps de la dernière collision
@@ -68,7 +68,7 @@ public class PNJ_Susie extends PNJ {
         this.itemToGive = new gameObject(false);
         try {
             BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/cle.png"));
-            itemToGive.image = itemImage;
+            itemToGive.setImage(itemImage);
             itemToGive.setID("3");
         } catch (IOException e) {
             e.printStackTrace();

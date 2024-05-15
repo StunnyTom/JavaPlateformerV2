@@ -104,7 +104,7 @@ public class CollisionVerif {
         return object; // Retourne true si l'objet a une propriété de collision
     }
 
-
+    /*
     public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {
         Rectangle playerArea = new Rectangle(newX, newY, l, L);
         if (gp.currentMap.equals("/maps/maps1.txt")) {
@@ -126,7 +126,8 @@ public class CollisionVerif {
         }
     
         return false;
-}
+	}
+     */
     
 
     
