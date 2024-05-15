@@ -13,28 +13,26 @@
 
 	public class Objetc_manager {
 	    GamePanel gp;
-	    public Map<String, gameObject> Objet_Map;
-	    public int mapObjetnum[][]; // Variable pour la map
+	    private Map<String, gameObject> Objet_Map;
+	    private int mapObjetnum[][]; // Variable pour la map
 	  
-
 	 
 	    // Constructeur
 	    public Objetc_manager(GamePanel gp) {
 	        this.gp = gp;
-	        Objet_Map = new HashMap<>();
-	        mapObjetnum = new int[gp.maxWorldCol][gp.maxWorldRow];
+	        setObjet_Map(new HashMap<>());
+	        setMapObjetnum(new int[gp.maxWorldCol][gp.maxWorldRow]);
 
 	        getObjetImage();
-	        loadMap("/maps_object/maps1_obj.txt");
+	        loadMap("/maps_spawn/maps1.txt");
 	            }
 	    
 	    public void instObjet(String c, String filePath, boolean col) {
 	    	try {
-	    		
-	    		Objet_Map.put(c, new gameObject(true));
-	    		Objet_Map.get(c).image = ImageIO.read(getClass().getResourceAsStream(filePath));
-	    		Objet_Map.get(c).collision = col;
-	    		Objet_Map.get(c).id = c; // Ajouter un champ "id"
+	    		getObjet_Map().put(c, new gameObject(true));
+	    		getObjet_Map().get(c).image = ImageIO.read(getClass().getResourceAsStream(filePath));
+	    		getObjet_Map().get(c).collision = col;
+	    		getObjet_Map().get(c).id = c; // Ajouter un champ "id"
 	    	} catch (Exception e) {
 	    		e.printStackTrace();
 	    	}
@@ -43,7 +41,7 @@
 	    public void getObjetImage() {
 	        try {
 	        	
-	        	this.instObjet("z", "/objects/cle.png", true);
+	        	this.instObjet("w", "/objects/cle.png", true);
 	        	this.instObjet("y", "/objects/cle.png", true);
 	       
 	        } catch (Exception e) {
@@ -69,7 +67,7 @@
 	   	            while (col < gp.maxScreenCol && col < characters.length) {
 	   	                char Objet_testChar = characters[col].charAt(0); // Obtient le premier caract�re de la cha�ne
 	   	                int Objet_testNum = Objet_testChar - 'a'; 
-	   	                mapObjetnum[col][row] = Objet_testNum;
+	   	                getMapObjetnum()[col][row] = Objet_testNum;
 	   	                col++;
 	   	            }
 	   	            row++;
@@ -84,7 +82,7 @@
 	        int worldRow = 0;
 
 	        while (worldCol < gp.maxScreenCol && worldRow < gp.maxScreenRow) {
-	            int Objet_testNum = mapObjetnum[worldCol][worldRow];
+	            int Objet_testNum = getMapObjetnum()[worldCol][worldRow];
 
 	            if (Objet_testNum != 0) { // Si l'objet n'est pas vide
 	            	char key = (char) ('a' + Objet_testNum);
@@ -92,8 +90,8 @@
 	                
 
 	                // Vérifiez que l'objet existe dans la map
-	                if (Objet_Map.containsKey(Objet_testKey)) {
-	                    gameObject Objet_test = Objet_Map.get(Objet_testKey);
+	                if (getObjet_Map().containsKey(Objet_testKey)) {
+	                    gameObject Objet_test = getObjet_Map().get(Objet_testKey);
 	                    
 	                    if (Objet_test != null) { // Vérifiez que ce n'est pas null
 	                        g2.drawImage(Objet_test.image, 
@@ -114,6 +112,22 @@
 	            }
 	        }
 	    }
+
+		public int[][] getMapObjetnum() {
+			return mapObjetnum;
+		}
+
+		public void setMapObjetnum(int mapObjetnum[][]) {
+			this.mapObjetnum = mapObjetnum;
+		}
+
+		public Map<String, gameObject> getObjet_Map() {
+			return Objet_Map;
+		}
+
+		public void setObjet_Map(Map<String, gameObject> objet_Map) {
+			Objet_Map = objet_Map;
+		}
 
 
 	}

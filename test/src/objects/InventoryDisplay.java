@@ -11,13 +11,11 @@ import javax.swing.JPanel;
 import entity.Entity;
 import java.awt.Graphics2D;
 
-
 public class InventoryDisplay extends JPanel {
 
     private static final long serialVersionUID = 1L;
-
-    public static final int NUM_SQUARES = 10;
-    public static final int SQUARE_SIZE = 40;
+    protected static final int NUM_SQUARES = 10;
+    protected static final int SQUARE_SIZE = 40;
 
     private Entity entity; // Référence à l'entité pour obtenir l'inventaire
     private int selectedObjectIndex = -1; // Index de l'objet sélectionné dans l'inventaire (-1 signifie aucun objet sélectionné)

@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
 	int FPS = 20;
 	
 	Tiles_manger tileM = new Tiles_manger(this);//tuile img
-	public Objetc_manager ObjectM = new Objetc_manager(this); // img object
+	private Objetc_manager ObjectM = new Objetc_manager(this); // img object
 	public InventoryDisplay displayInv;
 	KeyHandler keyH;
 	Thread gameThread; //le fil du jeu, il appelle automatiquement la methode run 
@@ -135,7 +135,7 @@ public class GamePanel extends JPanel implements Runnable{
 		    } 
 			else {
 				tileM.draw(g2); // d abord le decors 
-				ObjectM.draw(g2); // puis les objects
+				getObjectM().draw(g2); // puis les objects
 				
 	        if (currentMap != null && currentMap.equals("/maps/maps2.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
 	        	//pnj_bandana.draw(g2);
@@ -186,5 +186,13 @@ public class GamePanel extends JPanel implements Runnable{
 		            break; // Sort de la boucle
 		        }
 		    }
+		}
+
+		public Objetc_manager getObjectM() {
+			return ObjectM;
+		}
+
+		public void setObjectM(Objetc_manager objectM) {
+			ObjectM = objectM;
 		}	
 }

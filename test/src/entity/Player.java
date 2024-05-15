@@ -104,7 +104,7 @@ public class Player extends Entity {
         gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
         if (!collOb.nullObj()) {
             addInv(collOb); // Ramasser l'objet en cas de collision
-            gp.ObjectM.Objet_Map.remove(collOb.getID());
+            gp.getObjectM().getObjet_Map().remove(collOb.getID());
             
             Iterator<gameObject> li = getInv().iterator();
             

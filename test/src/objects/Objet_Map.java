@@ -1,3 +1,5 @@
+
+/*
 package objects;
 
 import java.util.HashMap;
@@ -23,3 +25,4 @@ public class Objet_Map {
         System.out.println("Objet retiré du Map");
     }
 }
+*/
