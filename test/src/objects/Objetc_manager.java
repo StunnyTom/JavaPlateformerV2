@@ -34,6 +34,7 @@ public class Objetc_manager {
         	instObjet(new Potion());
         	instObjet(new Epe());
         	instObjet(new Dead());
+        	instObjet(new Apple());
         	
         	
         } catch (Exception e) {

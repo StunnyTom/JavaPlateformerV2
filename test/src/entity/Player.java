@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
+import objects.Apple;
 import objects.Potion;
 import objects.Usable;
 import objects.gameObject;
@@ -19,6 +20,7 @@ public class Player extends Entity {
 	private long potionStartTime;
 	private int lives = 3;
 	private Image heartImage;  // Image pour les cœurs
+	private  final int maxLives = 3;
 	
 	
     //on dessine le joueur
@@ -69,6 +71,10 @@ public class Player extends Entity {
         return lives;
     }
 
+    public int getMaxLives() {
+        return maxLives;
+    }
+
     // Méthode pour réduire le nombre de vies
     public void loseLife() {
         if (lives > 0) {
@@ -80,6 +86,16 @@ public class Player extends Entity {
         }
     }
 
+    
+ // Méthode pour gagner une vie
+    public void gainLife() {
+        if (lives < maxLives) {
+            lives++;
+            System.out.println("Vies restantes : " + lives);
+        } else {
+            System.out.println("Tu ne peux pas utiliser cet objet");
+        }
+    } 
   //pour ajouter les clés   
     public int getKeyCount() {
         return keyCount;
@@ -108,6 +124,10 @@ public class Player extends Entity {
                 System.out.println("Utilisation de l'objet avec ID: " + itemId);
                 Usable usableItem = (Usable) item;
                 usableItem.use(this);
+                
+                if (usableItem.isConsumable() && (item instanceof Apple) && (getLives() < getMaxLives())) {
+                    inv.remove(i);
+                }
                 break;
             }
         }

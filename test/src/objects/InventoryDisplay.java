@@ -69,26 +69,26 @@ public class InventoryDisplay extends JPanel {
     // Méthode pour supprimer l'objet sélectionné
     public void removeSelectedObject() {
         ArrayList<gameObject> inv = entity.getInv();
-        if (inv == null || inv.isEmpty()) {
+        if (inv == null || inv.isEmpty()) { // le cas ou si l'inventaire est vide 
             System.out.println("L'inventaire est vide.");
             return;
         }
 
+        //le cas si il selectionne un objet de l'inventaire
         if (selectedObjectIndex >= 0 && selectedObjectIndex < inv.size()) {
             gameObject obj = inv.get(selectedObjectIndex);
             if (obj != null) {
-                // Utiliser l'objet avant de le supprimer
-                //System.out.println("Suppression de l'objet avec ID: " + obj.getID());
-
                 if (entity instanceof Player) {
                     Player player = (Player) entity;
+                    if (obj instanceof Apple && player.getLives() >= player.getMaxLives()) {
+                        System.out.println("Tu ne peux pas utiliser cet objet");
+                        return;
+                    }
                     player.useItem(obj.getId());
 
-                    // Ne supprimer que si l'objet est consommable
                     if (obj instanceof Usable && ((Usable) obj).isConsumable()) {
                         inv.remove(selectedObjectIndex);
 
-                        // Ajuster l'index sélectionné
                         if (inv.size() == 0) {
                             selectedObjectIndex = -1;
                         } else if (selectedObjectIndex >= inv.size()) {
@@ -97,7 +97,7 @@ public class InventoryDisplay extends JPanel {
                     }
                 }
 
-                repaint(); // Redessinez le composant pour refléter le changement
+                repaint();
             } else {
                 System.out.println("L'objet à l'index sélectionné est null.");
             }
@@ -105,5 +105,4 @@ public class InventoryDisplay extends JPanel {
             System.out.println("Index sélectionné invalide: " + selectedObjectIndex);
         }
     }
-
 }
