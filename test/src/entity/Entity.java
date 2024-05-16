@@ -22,7 +22,7 @@ public class Entity extends Generateur {
 	protected int speed;
 	
 	//Inventaire
-	private ArrayList<gameObject> inv;
+	protected ArrayList<gameObject> inv;
 	
 	//Gravit�
 	protected static final double GRAVITY = 0.06; // Constante de gravit�
@@ -41,16 +41,26 @@ public class Entity extends Generateur {
 	private final int taille_inv = 9;
 	
 	public void addInv(gameObject o) {
-		if (getInv().size() < taille_inv) {
-			this.getInv().add(o);
-		} else {
-			System.out.println("Impossible : inventaire plein");
-		}
-	}
-	
-	
-	//creation par default
-	
+		if (getInv() == null) {
+			inv = new ArrayList<>();
+		} if (getInv().size() < taille_inv) {
+			if (!inv.contains(o)) {
+				this.getInv().add(o);
+	            System.out.println("Objet ajouté à l'inventaire.");
+	        }else {
+	            System.out.println("Objet déjà dans l'inventaire.");
+	        }
+		}else {
+	        System.out.println("Impossible : inventaire plein");
+	    }
+}
+
+	 public void removeInv(gameObject obj) {
+	        if (obj != null) {
+	        	getInv().remove(obj);
+	        }
+	    }
+
 
 	public ArrayList<gameObject> getInv() {
 		return inv;

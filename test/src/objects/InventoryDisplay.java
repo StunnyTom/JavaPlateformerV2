@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import entity.Entity;
+import entity.Player;
+
 import java.awt.Graphics2D;
 
 public class InventoryDisplay extends JPanel {
@@ -63,4 +65,45 @@ public class InventoryDisplay extends JPanel {
         selectedObjectIndex = index;
         repaint(); // Redessinez le composant pour refléter le changement de sélection
     }
+    
+    // Méthode pour supprimer l'objet sélectionné
+    public void removeSelectedObject() {
+        ArrayList<gameObject> inv = entity.getInv();
+        if (inv == null || inv.isEmpty()) {
+            System.out.println("L'inventaire est vide.");
+            return;
+        }
+
+        if (selectedObjectIndex >= 0 && selectedObjectIndex < inv.size()) {
+            gameObject obj = inv.get(selectedObjectIndex);
+            if (obj != null) {
+                // Utiliser l'objet avant de le supprimer
+                //System.out.println("Suppression de l'objet avec ID: " + obj.getID());
+
+                if (entity instanceof Player) {
+                    Player player = (Player) entity;
+                    player.useItem(obj.getId());
+
+                    // Ne supprimer que si l'objet est consommable
+                    if (obj instanceof Usable && ((Usable) obj).isConsumable()) {
+                        inv.remove(selectedObjectIndex);
+
+                        // Ajuster l'index sélectionné
+                        if (inv.size() == 0) {
+                            selectedObjectIndex = -1;
+                        } else if (selectedObjectIndex >= inv.size()) {
+                            selectedObjectIndex = inv.size() - 1;
+                        }
+                    }
+                }
+
+                repaint(); // Redessinez le composant pour refléter le changement
+            } else {
+                System.out.println("L'objet à l'index sélectionné est null.");
+            }
+        } else {
+            System.out.println("Index sélectionné invalide: " + selectedObjectIndex);
+        }
+    }
+
 }

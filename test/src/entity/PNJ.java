@@ -1,7 +1,6 @@
 package entity;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +11,6 @@ import test.GamePanel;
 public abstract class PNJ extends Entity {
     GamePanel gp;
     String direction;
-
     int screenX, screenY;
     int padding; // Ajout du padding comme attribut de la classe
     protected gameObject itemToGive; // Objet à donner utilisé dans les sous-classes
@@ -37,11 +35,11 @@ public abstract class PNJ extends Entity {
     }
     
     //ajouter un objet dans l'inventaire
-    public void addItemToInventory(Player player) {
+    public void AddItemToPlayer(Player player) {
         if (itemToGive != null && itemToGive.getImage() != null) {
             if (!player.getInv().contains(itemToGive)) {
                 player.getInv().add(itemToGive);
-                System.out.println("Objet ajouté à l'inventaire : " + itemToGive.getID());
+                System.out.println("Objet ajouté à l'inventaire : " + itemToGive.getId());
                 itemToGive = null;  // Assurez-vous que l'objet ne peut être donné qu'une fois
             } else {
                 System.out.println("L'objet existe déjà dans l'inventaire.");
@@ -61,7 +59,7 @@ public abstract class PNJ extends Entity {
                 screenY = (int) (gp.tileSize * x.getX());
                 this.setSolidAir(new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding));
             } else {
-                System.err.println("Aucun point de spawn trouvé pour l'identifiant: " + identifier);
+                //System.err.println("Aucun point de spawn trouvé pour l'identifiant: " + identifier);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -15,12 +15,9 @@ import objects.gameObject;
 import test.GamePanel;
 
 public class Monster extends Entity {
-
-	
 	public Monster(GamePanel gp) {
 		
         this.gp = gp;
-
         setDefaultValues();
         
         File nameMap = new File(gp.currentMap);
@@ -35,9 +32,7 @@ public class Monster extends Entity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
         setSolidAir(new Rectangle(16, -10, gp.tileSize, gp.tileSize));
-        
     }
 	
 	public void setDefaultValues() {
@@ -74,7 +69,7 @@ public class Monster extends Entity {
 	        // Suppression de l'objet de la carte
 	        Map<String, gameObject> objectMap = gp.getObjectM().Objet_Map;
 
-	        String objectId = collOb.getID();
+	        String objectId = collOb.getId();
 	        
 	        if (objectMap.containsKey(objectId)) {
 	            objectMap.remove(objectId);

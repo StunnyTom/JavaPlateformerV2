@@ -6,15 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 import objects.gameObject;
-import test.GamePanel;
 
 public class PNJ_bandana extends PNJ {
-
     protected Timer dialogueTimer;
+    
     public PNJ_bandana() {
         super(getGP(), "/img_npj/npj1_neutre.png", 15);
         initializePosition('b'); // 'p' pour le point de spawn de Test_Bandana
@@ -31,7 +29,7 @@ public class PNJ_bandana extends PNJ {
         }
         BufferedImage itemImage = ImageIO.read(is);
         itemToGive.setImage(itemImage);
-        itemToGive.setID("5"); // Un identifiant unique pour cet objet
+        itemToGive.setID("e"); // Un identifiant unique pour cet objet
     } catch (IOException e) {
         e.printStackTrace();
     }

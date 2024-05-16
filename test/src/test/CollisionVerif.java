@@ -3,7 +3,7 @@ package test;
 import tiles.Tile;
 import objects.gameObject;
 import java.awt.Rectangle;
-import entity.PNJ_Susie;
+
 
 
 public class CollisionVerif {
@@ -84,25 +84,22 @@ public class CollisionVerif {
  
     private gameObject ObjCollision(int col, int row) {
         if (col < 0 || row < 0 || col >= gp.maxScreenCol || row >= gp.maxScreenRow) {
-        	gameObject newOb = new gameObject(false);
-        	newOb.setID("0");
+            gameObject newOb = new gameObject(false);
+            newOb.setId("0");
             return newOb; // Hors des limites
         }
 
-        // Obtenir le caractère de la tuile et vérifier pour la collision
-        char key = (char) (gp.ObjectM.mapObjetnum[col][row] + 'a');
-        String objChar = "" + key;
-        gameObject object = gp.ObjectM.Objet_Map.get(objChar);
+        String objId = gp.ObjectM.mapObjetnum[col][row];
+        gameObject object = gp.ObjectM.Objet_Map.get(objId);
 
         if (object == null) {
-            //System.out.println("Aucun objet trouvé");
-        	gameObject newOb = new gameObject(false);
-        	newOb.setID(Integer.toString(0));
-            return newOb;
+            gameObject newOb = new gameObject(false);
+            newOb.setId("0");
+            return newOb; // Aucun objet trouvé
         }
-        //boolean collision = object.collision;
-        return object; // Retourne true si l'objet a une propriété de collision
+        return object;
     }
+
 
     /*
     public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {

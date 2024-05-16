@@ -3,17 +3,12 @@ package entity;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-
 import objects.gameObject;
-import test.GamePanel;
-
 
 public class PNJ_Susie extends PNJ {
 	private Player player; // Ajout d'un attribut Player (PERMET DE VOIR JUSTE L INVENTAIRE)
-   
 	private long lastCollisionTime = 0; // Temps de la dernière collision
     private static final long COLLISION_COOLDOWN = 10000; // Délai de 10 secondes
 
@@ -45,7 +40,7 @@ public class PNJ_Susie extends PNJ {
             boolean hasItem1 = false; // l'id 1 est d'office a faux 
             
             for(gameObject item : inventory) { // boucle dans mon inventaire
-                if (item.id.equals("1")) {
+                if (item.getId().equals("e")) {
                     hasItem1 = true;
                     break; // Dès que l'ID 1 est trouvé, arrêtez la recherche
                 }
@@ -57,7 +52,7 @@ public class PNJ_Susie extends PNJ {
             } else {
                 JOptionPane.showMessageDialog(null, "Tu as enfin l'épé, tiens pour toi :)", "accès a l'inventaire du joueur", JOptionPane.INFORMATION_MESSAGE);
                 initializeItemToGive();
-                addItemToInventory(gp.getPlayer()); // Méthode pour ajouter un objet à l'inventaire du joueur
+                AddItemToPlayer(gp.getPlayer()); // Méthode pour ajouter un objet à l'inventaire du joueur
             }
             
             setLastCollisionTime(System.currentTimeMillis()); // Réinitialiser le temps de la dernière collision

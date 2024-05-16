@@ -13,7 +13,6 @@ import javax.swing.*;
 import entity.Player;
 import objects.InventoryDisplay;
 import entity.Monster;
-import entity.PNJ;
 import entity.PNJ_Magalor;
 import entity.PNJ_Susie;
 import entity.PNJ_bandana;
@@ -60,7 +59,6 @@ public class GamePanel extends JPanel implements Runnable{
  	//public PNJ_Susie pnj_susie;
  	
  	public Monster bomb;
-
     public GameState gameState; // Ajout de l'attribut gameState
 	
 	//constructeur de panel 
@@ -86,7 +84,7 @@ public class GamePanel extends JPanel implements Runnable{
 		this.addKeyListener(keyH); //reconaitre l'entr�e des touches 
 		this.setFocusable(true);
 		
-		ObjectM.loadMap("/maps_spawn/maps1.txt"); // Remplacez par le chemin réel du fichier
+		//ObjectM.loadMap("/maps_spawn/maps1.txt"); // Remplacez par le chemin réel du fichier
     
 		
 		this.Genlist.add(new PNJ_bandana());

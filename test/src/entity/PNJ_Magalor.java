@@ -5,13 +5,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import objects.gameObject;
-import test.GamePanel;
 
 public class PNJ_Magalor extends PNJ {
     protected boolean hasDialogStarted = false;
     private int attemptsLeft = 3;  // Nombre de tentatives autorisées
     private int currentQuestion = 1;
-    private boolean hasMadeMistake = false; 
+    private boolean hasMadeMistake = false;  // si le joueur se trompe
 
     public PNJ_Magalor() {
         super(getGP(), "/img_npj/PNJ_Magalor.png", 50);
@@ -49,7 +48,7 @@ public class PNJ_Magalor extends PNJ {
                 } else {
                     if (!hasMadeMistake) {
                         initializeItemToGive();
-                        addItemToInventory(gp.getPlayer());
+                        AddItemToPlayer(gp.getPlayer());
                         JOptionPane.showMessageDialog(null, "Voici un cadeau pour vous :)");
                     }
                     deactivateCollision(); //desactive la collision

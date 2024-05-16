@@ -40,9 +40,6 @@ public class KeyHandler implements KeyListener{
 	            case KeyEvent.VK_UP:
 	                upPressed = true;
 	                break;
-	            case KeyEvent.VK_DOWN:
-	                downPressed = true;
-	                break;
 	        }
 	    }
 
@@ -51,6 +48,11 @@ public class KeyHandler implements KeyListener{
             selectedObjectIndex = code - KeyEvent.VK_0 - 1; // Soustraire le code de la touche numérique pour obtenir l'index (0-9)
             System.out.println(selectedObjectIndex);
             inventoryDisplay.setSelectedObjectIndex(selectedObjectIndex);
+        }
+        
+        // Suppression de l'objet sélectionné avec la touche 'Espace'
+        if (code == KeyEvent.VK_SPACE) {
+            inventoryDisplay.removeSelectedObject();
         }
 	}
 
@@ -67,8 +69,28 @@ public class KeyHandler implements KeyListener{
 		if (code ==  KeyEvent.VK_UP) {
 			upPressed = false;
 		}
-		if (code ==  KeyEvent.VK_DOWN) {
-			downPressed = false;
-		}
 	}
+	
+	   public boolean isLeftPressed() {
+	        return leftPressed;
+	    }
+
+	    public void setLeftPressed(boolean leftPressed) {
+	        this.leftPressed = leftPressed;
+	    }
+	    public boolean isRightPressed() {
+	        return rightPressed;
+	    }
+
+	    public void setRightPressed(boolean rightPressed) {
+	        this.rightPressed = rightPressed;
+	    }
+
+	    public boolean isUpPressed() {
+	        return upPressed;
+	    }
+
+	    public void setUpPressed(boolean upPressed) {
+	        this.upPressed = upPressed;
+	    }
 }

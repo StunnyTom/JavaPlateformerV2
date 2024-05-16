@@ -1,28 +1,29 @@
 package entity;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+
+import objects.Potion;
+import objects.Usable;
 import objects.gameObject;
 import test.GamePanel;
 import test.KeyHandler;
 import java.io.File;
 
-
-public class Player extends Entity {
-    
+public class Player extends Entity {    
     KeyHandler keyH;
     private int keyCount = 0;  // Nombre de clés
+	private boolean hasPotionEffect = false;
+	private long potionStartTime;
     
-    // ou nous dessinons le joueur 
+    //on dessine le joueur
     public Player(GamePanel gp) {
-        this.gp = gp;
+        Player.gp = gp;
         this.keyH = null;
         setDefaultValues();
         getPlayerImage();
-        
         
         File nameMap = new File(gp.currentMap);
         Point x;
@@ -34,11 +35,22 @@ public class Player extends Entity {
 	        System.out.println(getScreenX());
 	        System.out.println(getScreenY());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         setSolidAir(new Rectangle(16, -10, gp.tileSize, gp.tileSize));        
     }
+    
+    public void setkeyH(KeyHandler keyH) {
+    	this.keyH = keyH;
+    }
+
+    private void setDefaultValues() {
+        l = 20;
+        L = 25;
+        speed = 2;
+        setInv(new ArrayList<gameObject>());
+    }
+    
     
   //pour ajouter les clés   
     public int getKeyCount() {
@@ -51,18 +63,28 @@ public class Player extends Entity {
             gp.gameState.afficheVictory();  // Trigger the victory condition
         }
     }
-    public void setkeyH(KeyHandler keyH) {
-    	this.keyH = keyH;
+ 
+    
+    //l'impact de la potion sur le joueur
+    public void setPotionEffect(boolean hasPotionEffect, long potionStartTime) {
+        this.hasPotionEffect = hasPotionEffect;
+        this.potionStartTime = potionStartTime;
     }
 
-    private void setDefaultValues() {
-        l = 20;
-        L = 25;
-        speed = 2;
-        setInv(new ArrayList<gameObject>());
+  
+    //utilisation des items 
+    public void useItem(String itemId) {
+        for (int i = 0; i < inv.size(); i++) {
+            gameObject item = inv.get(i);
+            if (item.getId().equals(itemId) && item instanceof Usable) {
+                System.out.println("Utilisation de l'objet avec ID: " + itemId);
+                Usable usableItem = (Usable) item;
+                usableItem.use(this);
+                break;
+            }
+        }
     }
     
-
     //les images pour le sprite
     private void getPlayerImage() {
         try {
@@ -72,7 +94,6 @@ public class Player extends Entity {
         }
     }
     
-    
     public void update() {
         int newX = getScreenX(), newY = getScreenY();
 
@@ -80,6 +101,7 @@ public class Player extends Entity {
         ySpeed += GRAVITY;
         newY += ySpeed;
         boolean onGround = gp.verif.checkCollision(getScreenX(), getScreenY() + 1, l, L, getSolidAir()); // Vérifier les collisions avec le sol
+        
         if (keyH.upPressed && onGround) {   // Sauter seulement si le personnage est au sol
             ySpeed = -3; // Valeur de saut
         }
@@ -102,14 +124,30 @@ public class Player extends Entity {
         if (!gp.verif.checkCollision(newX, getScreenY(), l, L, getSolidAir())) { // Collision check pour l'axe X
             setScreenX(newX);
         }
+        
+        
+          if (hasPotionEffect && (System.currentTimeMillis() - potionStartTime > Potion.getPotionEffectDuration())) {
+            hasPotionEffect = false; // Reset potion effect after duration
+        }
+
+        if (keyH.isUpPressed() && onGround) {
+            if (hasPotionEffect) {
+                ySpeed = Potion.getBoostedJumpSpeed(); // Boosted jump speed
+            } else {
+                ySpeed = -3; // Normal jump speed
+            }
+        }
+         
 
         // Vérification des collisions avec des objets
         gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
         if (!collOb.nullObj()) {
-            if (collOb.getID().equals("k") || collOb.getID().equals("y")) {
+        	if (collOb.getId().startsWith("k")) {
                 addKey(); // Incrémente le nombre de clés
+            }else {
+            	addInv(collOb);
             }
-            gp.getObjectM().Objet_Map.remove(collOb.getID());
+            gp.getObjectM().Objet_Map.remove(collOb.getId());
         }
 
         // Vérification des collisions avec les pnj
@@ -117,7 +155,6 @@ public class Player extends Entity {
         if (gp.verif.checkCollisionPNJ(newX, newY, l, L, getSolidAir())) {
             //System.out.println("collision pnj");
         }
-        */
 
         // Gestion de l'animation sprite
         spriteCounter++;
@@ -125,6 +162,7 @@ public class Player extends Entity {
             spriteNum = spriteNum == 1 ? 2 : 1;
             spriteCounter = 0;
         }
+        */
     }
         
     public void draw(Graphics2D g2) {

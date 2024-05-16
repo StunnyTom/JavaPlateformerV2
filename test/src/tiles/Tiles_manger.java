@@ -28,19 +28,21 @@ import test.GamePanel;
 	        getTileImage();
 	        initMapTransitions();  // Initialiser les transitions ici
 	        loadMap("/maps/maps1.txt");  // Charge la première carte au démarrage
-	        System.out.println("Initial map loaded: /maps/maps1.txt");
+	        loadSpawnMap("/maps_spawn/maps1.txt");
+	        //System.out.println("Initial map loaded: /maps/maps1.txt");
 	    }
 	    
 	 // Initialisation des transitions de carte
 	    private void initMapTransitions() {
 	        mapTransitions = new HashMap<>();
-	        mapTransitions.put(new Point(20, 6), new MapTransition("/maps/maps2.txt", 1, 0)); //map 1 à 2
-	        mapTransitions.put(new Point(0, 1), new MapTransition("/maps/maps1.txt", 20, 6)); // map 2 à 1
-	        mapTransitions.put(new Point(20, 7), new MapTransition("/maps/map3.txt", 0, 6)); //map 2 à 3
-	        mapTransitions.put(new Point(0, 7), new MapTransition("/maps/maps2.txt", 19, 7)); // map 3 à 2 
-	        mapTransitions.put(new Point(19, 1), new MapTransition("/maps/maps4.txt", 1, 3));  // map 3 à 4 
-	        mapTransitions.put(new Point(20, 3), new MapTransition("/maps/maps1.txt", 1, 2)); //map 4 à 1
+	        mapTransitions.put(new Point(20, 6), new MapTransition("/maps/maps2.txt", "/maps_spawn/maps2.txt", 1, 0)); // map 1 à 2
+	        mapTransitions.put(new Point(0, 1), new MapTransition("/maps/maps1.txt", "/maps_spawn/maps1.txt", 20, 6)); // map 2 à 1
+	        mapTransitions.put(new Point(20, 7), new MapTransition("/maps/map3.txt", "/maps_spawn/map3.txt", 0, 6)); // map 2 à 3
+	        mapTransitions.put(new Point(0, 7), new MapTransition("/maps/maps2.txt", "/maps_spawn/maps2.txt", 19, 7)); // map 3 à 2
+	        mapTransitions.put(new Point(19, 1), new MapTransition("/maps/maps4.txt", "/maps_spawn/maps4.txt", 1, 3)); // map 3 à 4
+	        mapTransitions.put(new Point(20, 3), new MapTransition("/maps/maps1.txt", "/maps_spawn/maps1.txt", 1, 2)); // map 4 à 1
 	    }
+
 	    
 	    public void checkAndChangeMapOnPosition() {
 	        int playerTileX = gp.getPlayer().getScreenX() / gp.tileSize;
@@ -50,7 +52,7 @@ import test.GamePanel;
 	        // Vérifie si une transition est disponible pour cette position
 	        if (mapTransitions.containsKey(playerTile)) {
 	            MapTransition transition = mapTransitions.get(playerTile);
-	            changeMap(transition.mapPath, transition.startX, transition.startY);
+	            changeMap(transition.getMapPath(), transition.getSpawnMapPath(),  transition.startX, transition.startY);
 	        }
 	    }
 
@@ -120,9 +122,10 @@ import test.GamePanel;
          }
      }
      
-     private void changeMap(String mapPath, int startX, int startY) {
+     private void changeMap(String mapPath, String spawnMapPath, int startX, int startY) {
          System.out.println("Changement de carte à " + mapPath);
          loadMap(mapPath);
+         loadSpawnMap(spawnMapPath);
          gp.getPlayer().setScreenX(startX * gp.tileSize);
          gp.getPlayer().setScreenY(startY * gp.tileSize);
          System.out.println("La carte a été changée avec succès à: " + mapPath);
@@ -154,6 +157,24 @@ import test.GamePanel;
          } catch (Exception e) {
              e.printStackTrace();
              System.out.println("Error loading map: " + filePath);
+         }
+     }
+     
+     public void loadSpawnMap(String filePath) {
+         try {
+             //System.out.println("Loading spawn map: " + filePath);
+             InputStream is = getClass().getResourceAsStream(filePath);
+             BufferedReader br = new BufferedReader(new InputStreamReader(is));
+             @SuppressWarnings("unused")
+			String line;
+             while ((line = br.readLine()) != null) {
+                 // Implémentez ici le chargement des objets, PNJ et monstres
+                 // Exemple: parsez la ligne et créez des instances d'objets correspondantes
+             }
+            // System.out.println("Spawn map loaded successfully.");
+         } catch (Exception e) {
+             e.printStackTrace();
+            // System.out.println("Error loading spawn map: " + filePath);
          }
      }
      
@@ -201,89 +222,7 @@ import test.GamePanel;
 	
  }
  
-     
-     /*
-     //A CHANGER
-     public void checkAndChangeMapOnPosition() {
-         // Convertir les coordonnées du joueur en indices de tuile
-         int playerTileX = gp.player.screenX / gp.tileSize;
-         int playerTileY = gp.player.screenY / gp.tileSize;
-
-         // Spécifier la position de changement de carte map 1 => 2
-         if (playerTileX == 20 && playerTileY == 6) {
-             String nextMap = "/maps/maps2.txt"; // Chemin de la nouvelle carte
-             System.out.println("Changement de carte à " + nextMap);
-             loadMap(nextMap);  // Charger la nouvelle carte
-             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
-             gp.player.screenX = 1 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
-             gp.player.screenY = 0 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
-             System.out.println("La carte a été changée avec succès à: " + nextMap);
-         }
-         //maps 2 => 1 
-         if (playerTileX == 0 && playerTileY == 1) {
-             String nextMap = "/maps/maps1.txt"; // Chemin de la nouvelle carte
-             System.out.println("Changement de carte à " + nextMap);
-             loadMap(nextMap);  // Charger la nouvelle carte
-             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
-             gp.player.screenX = 20 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
-             gp.player.screenY = 6 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
-             System.out.println("La carte a été changée avec succès à: " + nextMap);
-             }
-
-         //maps 2 => 3
-         if (playerTileX == 20 && playerTileY == 7) {
-             String nextMap = "/maps/map3.txt"; // Chemin de la nouvelle carte
-             System.out.println("Changement de carte à " + nextMap);
-             loadMap(nextMap);  // Charger la nouvelle carte
-             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
-             gp.player.screenX = 0 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
-             gp.player.screenY = 6 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
-             System.out.println("La carte a été changée avec succès à: " + nextMap);
-         }
-         
-         //map 3 => 2
-         if (playerTileX == 0 && playerTileY == 7) {
-             String nextMap = "/maps/maps2.txt"; // Chemin de la nouvelle carte
-             System.out.println("Changement de carte à " + nextMap);
-             loadMap(nextMap);  // Charger la nouvelle carte
-             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
-             gp.player.screenX = 19 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
-             gp.player.screenY = 7 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
-             System.out.println("La carte a été changée avec succès à: " + nextMap);
-         }
-       //map 3 => 4 
-         if (playerTileX == 19 && playerTileY == 1) {
-             String nextMap = "/maps/maps4.txt"; // Chemin de la nouvelle carte
-             System.out.println("Changement de carte à " + nextMap);
-             loadMap(nextMap);  // Charger la nouvelle carte
-             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
-             gp.player.screenX = 1 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
-             gp.player.screenY = 3 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
-             System.out.println("La carte a été changée avec succès à: " + nextMap);
-         }
-         
-         if (playerTileX == 20 && playerTileY == 3) {
-             String nextMap = "/maps/maps1.txt"; // Chemin de la nouvelle carte
-             System.out.println("Changement de carte à " + nextMap);
-             loadMap(nextMap);  // Charger la nouvelle carte
-             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
-             gp.player.screenX = 1 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
-             gp.player.screenY = 2 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
-             System.out.println("La carte a été changée avec succès à: " + nextMap);
-         }
-         
-         if (playerTileX == 0 && playerTileY == 2) {
-             String nextMap = "/maps/maps4.txt"; // Chemin de la nouvelle carte
-             System.out.println("Changement de carte à " + nextMap);
-             loadMap(nextMap);  // Charger la nouvelle carte
-             // Réinitialiser la position du joueur si nécessaire ou ajuster selon la logique de votre jeu
-             gp.player.screenX = 1 * gp.tileSize; // Réinitialiser x à l'entrée de la nouvelle carte
-             gp.player.screenY = 2 * gp.tileSize; // Réinitialiser y à l'entrée de la nouvelle carte
-             System.out.println("La carte a été changée avec succès à: " + nextMap);
-         }
-         
-      */
-         
+    
          
          
         
