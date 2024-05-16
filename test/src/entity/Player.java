@@ -17,13 +17,17 @@ public class Player extends Entity {
     private int keyCount = 0;  // Nombre de clés
 	private boolean hasPotionEffect = false;
 	private long potionStartTime;
-    
+	private int lives = 3;
+	private Image heartImage;  // Image pour les cœurs
+	
+	
     //on dessine le joueur
     public Player(GamePanel gp) {
         Player.gp = gp;
         this.keyH = null;
         setDefaultValues();
         getPlayerImage();
+        loadHeartImage();  // Charger l'image du cœur
         
         File nameMap = new File(gp.currentMap);
         Point x;
@@ -51,7 +55,31 @@ public class Player extends Entity {
         setInv(new ArrayList<gameObject>());
     }
     
-    
+    // Charger l'image du cœur
+    private void loadHeartImage() {
+        try {
+            heartImage = ImageIO.read(getClass().getResourceAsStream("/img_player/heart.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Getter pour le nombre de vies
+    public int getLives() {
+        return lives;
+    }
+
+    // Méthode pour réduire le nombre de vies
+    public void loseLife() {
+        if (lives > 0) {
+            lives--;
+            System.out.println("Vies restantes : " + lives);
+            if (lives == 0) {
+                gp.gameState.afficheGameOver();  // Terminer le jeu si le joueur n'a plus de vies
+            }
+        }
+    }
+
   //pour ajouter les clés   
     public int getKeyCount() {
         return keyCount;
@@ -125,8 +153,8 @@ public class Player extends Entity {
             setScreenX(newX);
         }
         
-        
-          if (hasPotionEffect && (System.currentTimeMillis() - potionStartTime > Potion.getPotionEffectDuration())) {
+        //utilisation de la potion sur le joueur
+         if (hasPotionEffect && (System.currentTimeMillis() - potionStartTime > Potion.getPotionEffectDuration())) {
             hasPotionEffect = false; // Reset potion effect after duration
         }
 
@@ -134,7 +162,7 @@ public class Player extends Entity {
             if (hasPotionEffect) {
                 ySpeed = Potion.getBoostedJumpSpeed(); // Boosted jump speed
             } else {
-                ySpeed = -3; // Normal jump speed
+                ySpeed = -3; // 
             }
         }
          
@@ -144,6 +172,9 @@ public class Player extends Entity {
         if (!collOb.nullObj()) {
         	if (collOb.getId().startsWith("k")) {
                 addKey(); // Incrémente le nombre de clés
+            }else if (collOb.getId().equals("d")) {
+            	loseLife();
+               // gp.gameState.afficheGameOver(); // game over si il touche l'objet 
             }else {
             	addInv(collOb);
             }
@@ -166,13 +197,21 @@ public class Player extends Entity {
     }
         
     public void draw(Graphics2D g2) {
-        
     	super.draw(g2);
 
         // Dessiner le nombre de clés en haut à droite de l'écran
         g2.setFont(new Font("Arial", Font.PLAIN, 20));
         g2.setColor(Color.WHITE);
-        g2.drawString("Clés : " + getKeyCount(), gp.maxScreenCol * gp.tileSize - 100, 30);
+        g2.drawString("Clés : " + getKeyCount(), gp.maxScreenCol * gp.tileSize - 250, 30);
+     
+        // Dessiner les cœurs en haut à gauche de l'écran
+        int heartX = 850; // Position X initiale pour les cœurs
+        int heartY = 0; // Position Y initiale pour les cœurs
+        int heartSpacing = 50; // Espacement entre les cœurs
+
+        for (int i = 0; i < lives; i++) {
+            g2.drawImage(heartImage, heartX + (i * heartSpacing), heartY, gp.tileSize, gp.tileSize, null);
+        }
     }
 
 

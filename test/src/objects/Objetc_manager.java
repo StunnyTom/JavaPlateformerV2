@@ -33,6 +33,7 @@ public class Objetc_manager {
             //instancier d'autre objets 
         	instObjet(new Potion());
         	instObjet(new Epe());
+        	instObjet(new Dead());
         	
         	
         } catch (Exception e) {
