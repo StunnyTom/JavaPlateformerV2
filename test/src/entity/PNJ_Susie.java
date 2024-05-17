@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+
+import objects.Key;
 import objects.gameObject;
 
 public class PNJ_Susie extends PNJ {
@@ -40,7 +42,7 @@ public class PNJ_Susie extends PNJ {
             boolean hasItem1 = false; // l'id 1 est d'office a faux 
             
             for(gameObject item : inventory) { // boucle dans mon inventaire
-                if (item.getId().equals("e")) {
+                if (item.getID().equals("e")) {
                     hasItem1 = true;
                     break; // Dès que l'ID 1 est trouvé, arrêtez la recherche
                 }
@@ -60,7 +62,7 @@ public class PNJ_Susie extends PNJ {
     }
     
     private void initializeItemToGive() {
-        this.itemToGive = new gameObject(false);
+    	 this.itemToGive = new Key();
         try {
             BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/cle.png"));
             itemToGive.setImage(itemImage);

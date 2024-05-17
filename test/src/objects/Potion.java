@@ -10,15 +10,9 @@ public class Potion extends gameObject implements Usable {
     private static final double BOOSTED_JUMP_SPEED = -5; // permet de sauter plus haut 
 
     public Potion() {
-        super(true); // La potion a une collision
-        this.nom = "Potion"; // nom 
-        this.id = "p"; //id
-        try {
-            this.image = ImageIO.read(getClass().getResourceAsStream("/objects/potion.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        super("potion", "p", "/objects/potion.png", true);
     }
+
 
     @Override
     public void use(Player player) { // l'effet sur le joueur 
@@ -39,8 +33,7 @@ public class Potion extends gameObject implements Usable {
         return BOOSTED_JUMP_SPEED;
     }
     
-    @Override
-    public String getDescription() {
-        return "tu peux sauter pluvsvsdvsss haut pendant 10 secondes";
-    }
+    
+  
+
 }

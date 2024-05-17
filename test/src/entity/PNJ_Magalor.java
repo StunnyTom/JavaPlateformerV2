@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+
+import objects.Key;
 import objects.gameObject;
 
 public class PNJ_Magalor extends PNJ {
@@ -71,8 +73,7 @@ public class PNJ_Magalor extends PNJ {
     }
     
     private void initializeItemToGive() {
-        this.itemToGive = new gameObject(false);
-        try {
+    	 this.itemToGive = new Key();        try {
             BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/cle.png"));
             itemToGive.setImage(itemImage);
             itemToGive.setID("2");

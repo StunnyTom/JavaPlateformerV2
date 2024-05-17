@@ -84,7 +84,7 @@ public class InventoryDisplay extends JPanel {
                         System.out.println("Tu ne peux pas utiliser cet objet");
                         return;
                     }
-                    player.useItem(obj.getId());
+                    player.useItem(obj.getID());
 
                     if (obj instanceof Usable && ((Usable) obj).isConsumable()) {
                         inv.remove(selectedObjectIndex);

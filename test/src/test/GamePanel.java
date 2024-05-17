@@ -96,6 +96,8 @@ public class GamePanel extends JPanel implements Runnable{
 	    //pnj_susie = new PNJ_Susie(this, player);
 	}
 	
+	
+	
 	public Player getPlayer() {
 		return ((Player) this.Genlist.get(0));
 	}

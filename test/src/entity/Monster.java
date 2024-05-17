@@ -1,15 +1,10 @@
 package entity;
 
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-
 import javax.imageio.ImageIO;
 import objects.gameObject;
 import test.GamePanel;
@@ -61,6 +56,7 @@ public class Monster extends Entity {
 	        setScreenX(newX);
 	    }
 
+	    /*
 	    // Vérification des collisions avec des objets
 	    gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
 	    if (!collOb.nullObj()) {
@@ -81,7 +77,7 @@ public class Monster extends Entity {
 	            System.out.println(li.next());
 	        }
 	    }
-
+*/
 	    // Gestion de l'animation sprite
 	    spriteCounter++;
 	    if (spriteCounter > 25) {

@@ -25,14 +25,14 @@ public class Objetc_manager {
     }
 
     public void instObjet(gameObject objects) {
-    	Objet_Map.put(objects.getId(), objects);
+    	Objet_Map.put(objects.getID(), objects);
     }
 
     public void getObjetImage() {
         try {
             //instancier d'autre objets 
         	instObjet(new Potion());
-        	instObjet(new Epe());
+        	instObjet(new Epee());
         	instObjet(new Dead());
         	instObjet(new Apple());
         	
@@ -62,7 +62,7 @@ public class Objetc_manager {
                     if (objChar == 'k') {
                         String uniqueKeyId = "k" + keyCounter++;
                         mapObjetnum[col][row] = uniqueKeyId; // Utilisation de l'identifiant unique
-                        Objet_Map.put(uniqueKeyId, new Key(uniqueKeyId)); // Créer une clé avec un identifiant unique
+                        Objet_Map.put(uniqueKeyId, new Key()); // Créer une clé avec un identifiant unique
                     } else {
                         mapObjetnum[col][row] = String.valueOf(objChar);
                     }

@@ -21,6 +21,7 @@ public class Player extends Entity {
 	private int lives = 3;
 	private Image heartImage;  // Image pour les cœurs
 	private  final int maxLives = 3;
+	private boolean justPickedUpKey = false;  // Nouvelle variable pour gérer l'état de ramassage de clé
 	
 	
     //on dessine le joueur
@@ -87,27 +88,36 @@ public class Player extends Entity {
     }
 
     
- // Méthode pour gagner une vie
-    public void gainLife() {
-        if (lives < maxLives) {
-            lives++;
-            System.out.println("Vies restantes : " + lives);
-        } else {
-            System.out.println("Tu ne peux pas utiliser cet objet");
+ // Méthode pour gagner ou perdre de la vie
+    public void setLives(int newLives) {
+        this.lives = newLives;
+        System.out.println("Vies ajustées à : " + lives);
+        if (lives == 0) {
+            this.getGamePanel().gameState.afficheGameOver();  // Gérer la fin du jeu ici
         }
-    } 
+    }
+    
+    public GamePanel getGamePanel() {
+        return this.gp;
+    }
+
+
+
   //pour ajouter les clés   
     public int getKeyCount() {
         return keyCount;
     }
 
     public void addKey() {
-        keyCount++;
-        if (keyCount >= 3) {
-            gp.gameState.afficheVictory();  // Trigger the victory condition
+        if (!justPickedUpKey) {  // Vérifier si le joueur vient de ramasser une clé
+            keyCount++;
+            justPickedUpKey = true;  // Marquer que le joueur vient de ramasser une clé
+            System.out.println("Nombre de clés: " + keyCount);
+            if (keyCount >= 3) {
+                System.out.println("+1 clé, condition pour gagner potentiellement vérifiée");
+            }
         }
     }
- 
     
     //l'impact de la potion sur le joueur
     public void setPotionEffect(boolean hasPotionEffect, long potionStartTime) {
@@ -120,7 +130,7 @@ public class Player extends Entity {
     public void useItem(String itemId) {
         for (int i = 0; i < inv.size(); i++) {
             gameObject item = inv.get(i);
-            if (item.getId().equals(itemId) && item instanceof Usable) {
+            if (item.getID().equals(itemId) && item instanceof Usable) {
                 System.out.println("Utilisation de l'objet avec ID: " + itemId);
                 Usable usableItem = (Usable) item;
                 usableItem.use(this);
@@ -132,7 +142,7 @@ public class Player extends Entity {
             }
         }
     }
-    
+   
     //les images pour le sprite
     private void getPlayerImage() {
         try {
@@ -189,17 +199,20 @@ public class Player extends Entity {
 
         // Vérification des collisions avec des objets
         gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
-        if (!collOb.nullObj()) {
-        	if (collOb.getId().startsWith("k")) {
-                addKey(); // Incrémente le nombre de clés
-            }else if (collOb.getId().equals("d")) {
-            	loseLife();
-               // gp.gameState.afficheGameOver(); // game over si il touche l'objet 
-            }else {
-            	addInv(collOb);
+        if (collOb != null && !collOb.isNullObject()) {  // Assurez-vous que l'objet n'est pas nul
+            if (collOb.getID() != null && collOb instanceof Usable) {  // Ajoutez cette vérification pour vous assurer que getID() ne renvoie pas null
+                if (collOb.getID().startsWith("k")) {
+                    addKey();
+                    gp.getObjectM().Objet_Map.remove(collOb.getID());
+                } else if (collOb.getID().equals("d")) {
+                    loseLife();
+                } else {
+                    addInv(collOb);
+                }
             }
-            gp.getObjectM().Objet_Map.remove(collOb.getId());
+            gp.getObjectM().Objet_Map.remove(collOb.getID());  // Cette ligne peut aussi provoquer une NPE si getID() est null
         }
+    }
 
         // Vérification des collisions avec les pnj
         /*
@@ -214,8 +227,7 @@ public class Player extends Entity {
             spriteCounter = 0;
         }
         */
-    }
-        
+    
     public void draw(Graphics2D g2) {
     	super.draw(g2);
 

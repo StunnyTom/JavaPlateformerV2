@@ -44,58 +44,36 @@ public class CollisionVerif {
         return collision;
     }
     
+    // Vérification des collisions avec des objets basée sur les positions x, y et des dimensions données :
     public gameObject checkCollisionObject(int newX, int newY, int l, int L, Rectangle solidArea) {
-        // Calculer les positions des tuiles en fonction de newX et newY
         int entityLeftObj = (newX + solidArea.x) / gp.ObjetSize;
         int entityRightObj = (newX + solidArea.x + solidArea.width - L) / gp.ObjetSize;
         int entityTopObj = (newY + solidArea.y + l) / gp.ObjetSize;
         int entityBottomObj = (newY + solidArea.y + solidArea.height) / gp.ObjetSize;
 
-        //boolean collisionDetected = false;
-
-        // Vérifier les collisions uniquement avec les objets
         gameObject C1 = ObjCollision(entityLeftObj, entityTopObj);
         gameObject C2 = ObjCollision(entityRightObj, entityTopObj);
         gameObject C3 = ObjCollision(entityLeftObj, entityBottomObj);
         gameObject C4 = ObjCollision(entityRightObj, entityBottomObj);
-        
-        if (!C1.nullObj()) {
-        	System.out.println("Collision avec un objet détectée ");
-        	return C1;
-        }
-        
-        if (!C2.nullObj()) {
-        	System.out.println("Collision avec un objet détectée ");
-        	return C2;
-        }
-        
-        if (!C3.nullObj()) {
-        	System.out.println("Collision avec un objet détectée ");
-        	return C3;
-        }
-        
-        if (!C4.nullObj()) {
-        	System.out.println("Collision avec un objet détectée ");
-        	return C4;
-        }
-        
-        return C1;
+
+        if (!C1.isNullObject()) return C1;
+        if (!C2.isNullObject()) return C2;
+        if (!C3.isNullObject()) return C3;
+        if (!C4.isNullObject()) return C4;
+
+        return new gameObject(false); // Retourner un gameObject "null"
     }
- 
+
     private gameObject ObjCollision(int col, int row) {
         if (col < 0 || row < 0 || col >= gp.maxScreenCol || row >= gp.maxScreenRow) {
-            gameObject newOb = new gameObject(false);
-            newOb.setId("0");
-            return newOb; // Hors des limites
+            return new gameObject(false); // Retourner un gameObject "null" pour les indices hors limites
         }
 
         String objId = gp.ObjectM.mapObjetnum[col][row];
         gameObject object = gp.ObjectM.Objet_Map.get(objId);
 
         if (object == null) {
-            gameObject newOb = new gameObject(false);
-            newOb.setId("0");
-            return newOb; // Aucun objet trouvé
+            return new gameObject(false); // Retourner un gameObject "null" si aucun objet n'est trouvé
         }
         return object;
     }
