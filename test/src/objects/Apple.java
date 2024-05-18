@@ -16,7 +16,7 @@ public class Apple extends gameObject implements Usable {
             System.out.println("Vies après utilisation de la pomme: " + player.getLives());
         } else {
             System.out.println("Tu ne peux pas utiliser cet objet, tu as toutes tes vies");
-            throw new IllegalStateException("Le joueur a toutes ses vies, impossible d'utiliser la pomme.");
+            
         }
     }
 

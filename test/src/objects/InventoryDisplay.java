@@ -79,33 +79,28 @@ public class InventoryDisplay extends JPanel {
             gameObject obj = inv.get(selectedObjectIndex);
             if (obj != null && entity instanceof Player) {
                 Player player = (Player) entity;
+                player.useItem(obj.getID()); // L'objet est utilisé ici
 
-                try {
-                    player.useItem(obj.getID());
-
-                    if (obj instanceof Usable && ((Usable) obj).isConsumable()) {
-                        inv.remove(selectedObjectIndex);
-                    }
-
-                    // Ajuster l'index sélectionné
-                    if (inv.size() == 0) {
-                        selectedObjectIndex = -1;
-                    } else if (selectedObjectIndex >= inv.size()) {
-                        selectedObjectIndex = inv.size() - 1;
-                    }
-                } catch (IllegalStateException e) {
-                    System.out.println(e.getMessage()); // Affiche le message d'erreur si l'utilisation est impossible
+                if (obj instanceof Usable && ((Usable) obj).isConsumable()) {
+                    inv.remove(selectedObjectIndex); // Supprime seulement si l'objet est consommable
                 }
 
-                repaint(); // Redessinez pour refléter les changements
+                // Ajuster l'index sélectionné
+                if (inv.size() == 0) {
+                    selectedObjectIndex = -1;
+                } else if (selectedObjectIndex >= inv.size()) {
+                    selectedObjectIndex = inv.size() - 1;
+                }
             } else {
                 System.out.println("L'objet à l'index sélectionné est null ou n'est pas utilisable.");
             }
         } else {
             System.out.println("Index sélectionné invalide: " + selectedObjectIndex);
         }
-    
+
+        repaint(); // Redessinez pour refléter les changements
     }
+
     
     
     

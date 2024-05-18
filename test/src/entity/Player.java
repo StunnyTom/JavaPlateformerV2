@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import objects.Apple;
 import objects.Key;
 import objects.Potion;
 import objects.Usable;
@@ -79,6 +80,16 @@ public class Player extends Entity {
     public int getMaxLives() {
         return maxLives;
     }
+    
+    // Méthode pour gagner une vie
+    public void gainLife() {
+        if (lives < maxLives) {
+            lives++;
+            System.out.println("Vies restantes : " + lives);
+        } else {
+            System.out.println("Tu ne peux pas utiliser cet objet");
+        }
+    } 
 
     // Méthode pour réduire le nombre de vies
     public void loseLife() {
@@ -136,15 +147,15 @@ public class Player extends Entity {
         this.collisionEnabled = enabled;
     }
   
-    //utilisation des items 
     public void useItem(String itemId) {
         for (int i = 0; i < inv.size(); i++) {
             gameObject item = inv.get(i);
             if (item.getID().equals(itemId) && item instanceof Usable) {
+                System.out.println("Utilisation de l'objet avec ID: " + itemId);
                 Usable usableItem = (Usable) item;
-                usableItem.use(this);  // Use the item directly
+                usableItem.use(this);
 
-                if (usableItem.isConsumable()) {
+                if (usableItem.isConsumable() && (item instanceof Apple) && (getLives() < getMaxLives())) {
                     inv.remove(i);
                 }
                 break;
