@@ -1,8 +1,7 @@
 package objects;
 
 import entity.Player;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+
 
 public class Potion extends gameObject implements Usable {
 	

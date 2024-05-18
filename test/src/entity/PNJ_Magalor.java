@@ -73,7 +73,8 @@ public class PNJ_Magalor extends PNJ {
     }
     
     private void initializeItemToGive() {
-    	 this.itemToGive = new Key();        try {
+    	 //this.itemToGive = new Key();       
+    	try {
             BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/cle.png"));
             itemToGive.setImage(itemImage);
             itemToGive.setID("2");

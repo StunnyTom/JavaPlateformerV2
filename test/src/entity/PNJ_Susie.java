@@ -62,7 +62,7 @@ public class PNJ_Susie extends PNJ {
     }
     
     private void initializeItemToGive() {
-    	 this.itemToGive = new Key();
+    	 //this.itemToGive = new Key();
         try {
             BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/cle.png"));
             itemToGive.setImage(itemImage);

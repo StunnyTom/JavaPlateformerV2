@@ -67,5 +67,7 @@ public class gameObject {
         return id == null || id.equals("0");
     }
 
+	
+
 
 }

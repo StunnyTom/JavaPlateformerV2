@@ -3,9 +3,12 @@ package entity;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.imageio.ImageIO;
 
-import objects.Apple;
+import objects.Key;
 import objects.Potion;
 import objects.Usable;
 import objects.gameObject;
@@ -22,7 +25,8 @@ public class Player extends Entity {
 	private Image heartImage;  // Image pour les cœurs
 	private  final int maxLives = 3;
 	private boolean justPickedUpKey = false;  // Nouvelle variable pour gérer l'état de ramassage de clé
-	
+	private boolean collisionEnabled = true; //pour gerer la collison avec l'item 
+	private Set<String> collectedKeys = new HashSet<>();  // Ensemble pour stocker les IDs des clés collectées
 	
     //on dessine le joueur
     public Player(GamePanel gp) {
@@ -86,7 +90,7 @@ public class Player extends Entity {
             }
         }
     }
-
+   
     
  // Méthode pour gagner ou perdre de la vie
     public void setLives(int newLives) {
@@ -108,13 +112,14 @@ public class Player extends Entity {
         return keyCount;
     }
 
-    public void addKey() {
-        if (!justPickedUpKey) {  // Vérifier si le joueur vient de ramasser une clé
-            keyCount++;
-            justPickedUpKey = true;  // Marquer que le joueur vient de ramasser une clé
+    public void addKey(String keyId) {
+        if (!collectedKeys.contains(keyId)) {  // Vérifier si la clé n'a pas déjà été collectée
+            collectedKeys.add(keyId);
+            keyCount++;  // Incrémenter le compteur seulement si la clé est nouvelle
             System.out.println("Nombre de clés: " + keyCount);
-            if (keyCount >= 3) {
-                System.out.println("+1 clé, condition pour gagner potentiellement vérifiée");
+            if (keyCount >= 8) {
+                System.out.println("Condition pour gagner vérifiée, toutes les clés collectées!");
+                // Implémentez la logique pour gagner ou passer au niveau suivant
             }
         }
     }
@@ -125,23 +130,28 @@ public class Player extends Entity {
         this.potionStartTime = potionStartTime;
     }
 
+    
+    // méthode pour gérer l'état des collisions
+    public void setCollisionEnabled(boolean enabled) {
+        this.collisionEnabled = enabled;
+    }
   
     //utilisation des items 
     public void useItem(String itemId) {
         for (int i = 0; i < inv.size(); i++) {
             gameObject item = inv.get(i);
             if (item.getID().equals(itemId) && item instanceof Usable) {
-                System.out.println("Utilisation de l'objet avec ID: " + itemId);
                 Usable usableItem = (Usable) item;
-                usableItem.use(this);
-                
-                if (usableItem.isConsumable() && (item instanceof Apple) && (getLives() < getMaxLives())) {
+                usableItem.use(this);  // Use the item directly
+
+                if (usableItem.isConsumable()) {
                     inv.remove(i);
                 }
                 break;
             }
         }
     }
+
    
     //les images pour le sprite
     private void getPlayerImage() {
@@ -170,6 +180,12 @@ public class Player extends Entity {
         } else {
             ySpeed = 0; // Arrêter le mouvement si collision
         }
+        
+        if (!collisionEnabled || !gp.verif.checkCollision(newX, newY, l, L, getSolidAir())) {
+            setScreenY(newY);  // Se déplacer librement en Y
+        } else {
+            ySpeed = 0;  // Arrêter le mouvement si collision et collisions activées
+        }
 
         // Mouvement sur l'axe X
         if (keyH.leftPressed) {
@@ -179,8 +195,8 @@ public class Player extends Entity {
             newX += speed;
         }
 
-        if (!gp.verif.checkCollision(newX, getScreenY(), l, L, getSolidAir())) { // Collision check pour l'axe X
-            setScreenX(newX);
+        if (!collisionEnabled || !gp.verif.checkCollision(newX, getScreenY(), l, L, getSolidAir())) {
+            setScreenX(newX);  // Se déplacer librement en X
         }
         
         //utilisation de la potion sur le joueur
@@ -195,25 +211,31 @@ public class Player extends Entity {
                 ySpeed = -3; // 
             }
         }
-         
-
+        
         // Vérification des collisions avec des objets
         gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
-        if (collOb != null && !collOb.isNullObject()) {  // Assurez-vous que l'objet n'est pas nul
-            if (collOb.getID() != null && collOb instanceof Usable) {  // Ajoutez cette vérification pour vous assurer que getID() ne renvoie pas null
-                if (collOb.getID().startsWith("k")) {
-                    addKey();
-                    gp.getObjectM().Objet_Map.remove(collOb.getID());
-                } else if (collOb.getID().equals("d")) {
-                    loseLife();
-                } else {
-                    addInv(collOb);
-                }
+        if (!collOb.isNullObject()) {
+        	if (collOb instanceof Key) {
+        		 ((Usable) collOb).use(this);  // Utiliser la clé qui appelle addKey
+        	    gp.getObjectM().Objet_Map.remove(collOb.getID());  // Retirer la clé de la carte
+        	}else if (collOb.getID().equals("d")) {
+            	loseLife();
+               // gp.gameState.afficheGameOver(); // game over si il touche l'objet 
+            }else {
+            	addInv(collOb);
             }
-            gp.getObjectM().Objet_Map.remove(collOb.getID());  // Cette ligne peut aussi provoquer une NPE si getID() est null
+            gp.getObjectM().Objet_Map.remove(collOb.getID());
         }
+    
+ // Réinitialiser justPickedUpKey si aucune clé n'est touchée dans cette mise à jour
+    if (!justPickedUpKey || Math.abs(newX - getScreenX()) > gp.tileSize || Math.abs(newY - getScreenY()) > gp.tileSize) {
+        justPickedUpKey = false;
     }
-
+         
+    }
+/*
+      
+*/
         // Vérification des collisions avec les pnj
         /*
         if (gp.verif.checkCollisionPNJ(newX, newY, l, L, getSolidAir())) {
@@ -234,8 +256,7 @@ public class Player extends Entity {
         // Dessiner le nombre de clés en haut à droite de l'écran
         g2.setFont(new Font("Arial", Font.PLAIN, 20));
         g2.setColor(Color.WHITE);
-        g2.drawString("Clés : " + getKeyCount(), gp.maxScreenCol * gp.tileSize - 250, 30);
-     
+        g2.drawString("Clés : " + collectedKeys.size(), gp.maxScreenCol * gp.tileSize - 250,30);
         // Dessiner les cœurs en haut à gauche de l'écran
         int heartX = 850; // Position X initiale pour les cœurs
         int heartY = 0; // Position Y initiale pour les cœurs

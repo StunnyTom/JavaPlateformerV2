@@ -10,20 +10,18 @@ public class Apple extends gameObject implements Usable {
 
     @Override
     public void use(Player player) {
+        // Vérifie si le joueur a moins de vies maximales
         if (player.getLives() < player.getMaxLives()) {
-        	 player.setLives(player.getLives() + 1); // Directement modifier les vies du joueur
-             System.out.println("Vies après utilisation de la pomme: " + player.getLives());
-         } else {
-             System.out.println("Tu ne peux pas utiliser cet objet, tu as toutes tes vies");
-         }
-     }
+            player.setLives(player.getLives() + 1); // Ajoute une vie
+            System.out.println("Vies après utilisation de la pomme: " + player.getLives());
+        } else {
+            System.out.println("Tu ne peux pas utiliser cet objet, tu as toutes tes vies");
+            throw new IllegalStateException("Le joueur a toutes ses vies, impossible d'utiliser la pomme.");
+        }
+    }
 
     @Override
     public boolean isConsumable() {
         return true;
     }
-
-
-
-
 }

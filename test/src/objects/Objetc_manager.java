@@ -35,6 +35,7 @@ public class Objetc_manager {
         	instObjet(new Epee());
         	instObjet(new Dead());
         	instObjet(new Apple());
+        	instObjet(new Etoile_Collision());
         	
         	
         } catch (Exception e) {
@@ -43,6 +44,7 @@ public class Objetc_manager {
     }
 
     // Pour appeler la map + lire le fichier txt et le translater
+
     public void loadMap(String filePath) {
         try {
             InputStream is = getClass().getResourceAsStream(filePath);
@@ -62,7 +64,7 @@ public class Objetc_manager {
                     if (objChar == 'k') {
                         String uniqueKeyId = "k" + keyCounter++;
                         mapObjetnum[col][row] = uniqueKeyId; // Utilisation de l'identifiant unique
-                        Objet_Map.put(uniqueKeyId, new Key()); // Créer une clé avec un identifiant unique
+                        Objet_Map.put(uniqueKeyId, new Key(uniqueKeyId)); // Créer une clé avec un identifiant unique
                     } else {
                         mapObjetnum[col][row] = String.valueOf(objChar);
                     }
@@ -75,6 +77,7 @@ public class Objetc_manager {
             e.printStackTrace();
         }
     }
+
 
     public void draw(Graphics2D g2) {
         int worldCol = 0;

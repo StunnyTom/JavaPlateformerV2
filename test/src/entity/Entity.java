@@ -39,7 +39,7 @@ public class Entity extends Generateur {
 				this.getInv().add(o);
 	            System.out.println("Objet ajouté à l'inventaire.");
 	        }else {
-	            System.out.println("Objet déjà dans l'inventaire.");
+	          //  System.out.println("Objet déjà dans l'inventaire.");
 	        }
 		}else {
 	        System.out.println("Impossible : inventaire plein");
