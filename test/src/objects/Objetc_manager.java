@@ -97,6 +97,10 @@ public class Objetc_manager {
                             gp.ObjetSize, null);
                 }
             }
+            
+            
+            
+            
 
             worldCol++;
             if (worldCol == gp.maxScreenCol) {
