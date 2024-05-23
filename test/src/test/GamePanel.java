@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.*;
 
@@ -17,6 +18,7 @@ import entity.PNJ_Magalor;
 import entity.PNJ_Susie;
 import entity.PNJ_bandana;
 import objects.Objetc_manager;
+import objects.gameObject;
 import tiles.Tiles_manger;
 import generation.Generateur;
 
@@ -54,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public CollisionVerif verif = new CollisionVerif(this); // pour la collision 
 
  	public ArrayList<Generateur> Genlist = new ArrayList<>();
+ 	public Map<String, Generateur> genMap;
  	//public PNJ_bandana pnj_bandana;
  	//public PNJ_Magalor pnj_magalor;
  	//public PNJ_Susie pnj_susie;
@@ -85,7 +88,6 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setFocusable(true);
 		
 		//ObjectM.loadMap("/maps_spawn/maps1.txt"); // Remplacez par le chemin réel du fichier
-    
 		
 		this.Genlist.add(new PNJ_bandana());
 		this.Genlist.add(new PNJ_Magalor());
@@ -94,6 +96,10 @@ public class GamePanel extends JPanel implements Runnable{
 	    //pnj_bandana = new PNJ_bandana(this);
 	    //pnj_magalor = new PNJ_Magalor(this);
 	    //pnj_susie = new PNJ_Susie(this, player);
+	}
+	
+	public void fillMap() {
+		
 	}
 	
 	public Player getPlayer() {

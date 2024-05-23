@@ -22,13 +22,22 @@ public class Generateur {
 	protected int screenX;
 	protected int screenY;
 
+	protected boolean actif;
 	
 	public static GamePanel getGP() {
 		return gp;
 	}
 	
 	public void setGP(GamePanel gp) {
-		this.gp = gp;
+		Generateur.gp = gp;
+	}
+	
+	public boolean getActif() {
+		return this.actif;
+	}
+	
+	public void setActif(boolean act) {
+		actif = act;
 	}
 	
 	public int getScreenX() {
