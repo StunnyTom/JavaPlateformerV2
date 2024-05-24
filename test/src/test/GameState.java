@@ -8,7 +8,7 @@ public class GameState {
     private GamePanel gp;
     private boolean isGameOver = false;
     private boolean isVictory = false;
-    public int commandNum = 0; // Default initialization
+    public int commandNum = 0; 
 
     public GameState(GamePanel gp) {
         this.gp = gp;

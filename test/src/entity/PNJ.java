@@ -39,7 +39,7 @@ public abstract class PNJ extends Entity {
         if (itemToGive != null && itemToGive.getImage() != null) {
             if (!player.getInv().contains(itemToGive)) {
                 player.getInv().add(itemToGive);
-                System.out.println("Objet ajouté à l'inventaire : " + itemToGive.getId());
+                System.out.println("Objet ajouté à l'inventaire : " + itemToGive.getID());
                 itemToGive = null;  // Assurez-vous que l'objet ne peut être donné qu'une fois
             } else {
                 System.out.println("L'objet existe déjà dans l'inventaire.");

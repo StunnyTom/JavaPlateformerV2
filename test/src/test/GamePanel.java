@@ -18,7 +18,6 @@ import entity.PNJ_Magalor;
 import entity.PNJ_Susie;
 import entity.PNJ_bandana;
 import objects.Objetc_manager;
-import objects.gameObject;
 import tiles.Tiles_manger;
 import generation.Generateur;
 

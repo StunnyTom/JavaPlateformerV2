@@ -3,12 +3,8 @@ package entity;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import javax.imageio.ImageIO;
 import javax.swing.Timer;
-import objects.gameObject;
+import objects.Epee;
 
 public class PNJ_bandana extends PNJ {
     protected Timer dialogueTimer;
@@ -20,19 +16,8 @@ public class PNJ_bandana extends PNJ {
         dialogueTimer.setRepeats(false); // Le timer ne se répète pas
     
     
-    // Initialisation de l'objet à donner
-    itemToGive = new gameObject(false);
-    try {
-        InputStream is = getClass().getResourceAsStream("/objects/epe.png");
-        if (is == null) {
-            throw new RuntimeException("Cannot find resource: /objects/epe.png");
-        }
-        BufferedImage itemImage = ImageIO.read(is);
-        itemToGive.setImage(itemImage);
-        itemToGive.setID("e"); // Un identifiant unique pour cet objet
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
+     // Initialisation de l'objet à donner avec la classe Epee existante
+        itemToGive = new Epee(); // Utilisation de la classe Epee déjà définie
 }
 
     // Gère la boîte de dialogue propre à chaque PNJ

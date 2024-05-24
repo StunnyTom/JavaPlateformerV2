@@ -25,14 +25,17 @@ public class Objetc_manager {
     }
 
     public void instObjet(gameObject objects) {
-    	Objet_Map.put(objects.getId(), objects);
+    	Objet_Map.put(objects.getID(), objects);
     }
 
     public void getObjetImage() {
         try {
             //instancier d'autre objets 
         	instObjet(new Potion());
-        	instObjet(new Epe());
+        	instObjet(new Epee());
+        	instObjet(new Dead());
+        	instObjet(new Apple());
+        	instObjet(new Etoile_Collision());
         	
         	
         } catch (Exception e) {
@@ -41,6 +44,7 @@ public class Objetc_manager {
     }
 
     // Pour appeler la map + lire le fichier txt et le translater
+
     public void loadMap(String filePath) {
         try {
             InputStream is = getClass().getResourceAsStream(filePath);
@@ -74,6 +78,7 @@ public class Objetc_manager {
         }
     }
 
+
     public void draw(Graphics2D g2) {
         int worldCol = 0;
         int worldRow = 0;
@@ -92,6 +97,10 @@ public class Objetc_manager {
                             gp.ObjetSize, null);
                 }
             }
+            
+            
+            
+            
 
             worldCol++;
             if (worldCol == gp.maxScreenCol) {

@@ -51,7 +51,7 @@ public class KeyHandler implements KeyListener{
         }
         
         // Suppression de l'objet sélectionné avec la touche 'Espace'
-        if (code == KeyEvent.VK_SPACE) {
+        if (code == KeyEvent.VK_I) {
             inventoryDisplay.removeSelectedObject();
         }
 	}
