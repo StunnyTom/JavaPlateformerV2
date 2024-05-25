@@ -2,10 +2,13 @@ package test;
 
 import tiles.Tile;
 import java.awt.Rectangle;
+
+import entity.Player;
 import generation.Generateur;
 
 public class CollisionVerif {
     GamePanel gp;
+	private Object player;
     public CollisionVerif(GamePanel gp) {
         this.gp = gp;
     }
@@ -72,7 +75,9 @@ public class CollisionVerif {
         if (object == null) {
             return null; // Retourner un gameObject "null" si aucun objet n'est trouvé
         }
-        System.out.println(object);
+        System.out.println("collision avec " + object);
         return object;
     }
+    
+ 
 }

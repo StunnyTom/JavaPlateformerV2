@@ -41,7 +41,7 @@ public class PNJ_Susie extends PNJ {
             boolean hasItem1 = false; // l'id 1 est d'office a faux 
             
             for(gameObject item : inventory) { // boucle dans mon inventaire
-                if (item.getID().equals("e")) {
+                if (item.getID().equals("p")) {
                     hasItem1 = true;
                     break; // Dès que l'ID 1 est trouvé, arrêtez la recherche
                 }
@@ -65,7 +65,7 @@ public class PNJ_Susie extends PNJ {
         try {
             BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/cle.png"));
             itemToGive.setImage(itemImage);
-            itemToGive.setID("3");
+            itemToGive.setID("e");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -4,7 +4,7 @@ import test.GamePanel;
 
 /*
  * //ESSAYER Dans METTRE PLUSIEURS SUR LA MEME MAPS 
- * Impossible de le tuer sauf avec l'etoile invincible
+ * Impossible de le tuer 
  * on perd juste de la vie si on le touche 
  */
 public class Monster_Nuage extends Monster{
