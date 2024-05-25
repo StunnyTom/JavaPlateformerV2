@@ -22,5 +22,11 @@ public class Monster_Bomb extends Monster {
         // Par exemple, peut-être que le monstre attaque le joueur ou déclenche un événement spécial
         System.out.println("collision");
     }
+
+	@Override
+	public void checkPlayerInteraction() {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

@@ -12,8 +12,11 @@ public class Monster_Nuage extends Monster{
 		 super(gp, "/img_monster/monstre_nuage.png", 10,0); 
 	     initializePosition('N');
 		}
-	
 		
-
+		@Override
+		public void checkPlayerInteraction() {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 

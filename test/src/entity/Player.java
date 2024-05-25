@@ -245,7 +245,7 @@ public class Player extends Entity {
         
         // Vérification des collisions avec des objets
         Generateur collOb = gp.verif.checkCollisionGen(newX, newY, l, L, getSolidAir());
-        if (collOb!=null && !(collOb instanceof PNJ)) {
+        if (collOb!=null && (collOb instanceof gameObject)) {
         	if (collOb instanceof Key) {
         		 ((Usable) collOb).use(this);  // Utiliser la clé qui appelle addKey
         	}else if (collOb.getID().equals("d")) {
@@ -263,6 +263,9 @@ public class Player extends Entity {
         	PNJ pnj = (PNJ) collOb;
         	pnj.setCollisionWithPlayer(true);
         	pnj.triggerDialog();
+        } else if (collOb instanceof Monster) {
+        	Monster mon = (Monster) collOb;
+        	mon.checkPlayerInteraction();
         }
     
  // Réinitialiser justPickedUpKey si aucune clé n'est touchée dans cette mise à jour

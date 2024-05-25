@@ -6,5 +6,9 @@ a a a a a a a a a a a a a a a a a a a a a
 a a a a a a a a a a a a a a a a a a a a b
 a a a a a a a a a a a a a a a a a a a a a 
 N N a a a a a a a a a a a a a a a a a a a 
+<<<<<<< HEAD
 a a N N N a a a a N N N N a a a a a a a a 
 
+=======
+a a N N N a a a a N N N N a a a a a a a a 
+>>>>>>> branch 'test' of git@github.com:StunnyTom/JavaPlateformerV2.git
