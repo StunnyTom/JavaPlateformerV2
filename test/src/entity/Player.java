@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import generation.Generateur;
 import objects.Apple;
+import objects.Dead;
 import objects.Key;
 import objects.Potion;
 import objects.Usable;
@@ -239,35 +240,46 @@ public class Player extends Entity {
         
         // Vérification des collisions avec des objets
         Generateur collOb = gp.verif.checkCollisionGen(newX, newY, l, L, getSolidAir());
-        if (collOb!=null && !(collOb instanceof PNJ)) {
-        	if (collOb instanceof Key) {
-        		 ((Usable) collOb).use(this);  // Utiliser la clé qui appelle addKey
-        	}else if (collOb.getID().equals("d")) {
-            	loseLife();
-               // gp.gameState.afficheGameOver(); // game over si il touche l'objet 
-            }else {
-            	addInv((gameObject) collOb);
+        if (collOb != null ) {
+            if (collOb.getID().equals("d")) {
+                loseLife();  // Perdre une vie directement
+                // Important : Ne rien faire d'autre, ne pas ajouter à l'inventaire
+            } else if (collOb instanceof Key) {
+                ((Usable) collOb).use(this);  // Utiliser la clé
+            } else {
+                // Ajouter d'autres objets à l'inventaire si nécessaire
+                addInv((gameObject) collOb);
             }
-        	String key = collOb.getID();
+      
+            String key = collOb.getID();
             gp.genMap.remove(key);
             System.out.println(gp.Genlist);
             gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
             //gp.Genlist.remove(Character.getNumericValue(key.charAt(key.length()-1))-1);
+        
         } else if (collOb instanceof PNJ) {
         	PNJ pnj = (PNJ) collOb;
         	pnj.setCollisionWithPlayer(true);
         	pnj.triggerDialog();
         }
+        else if (collOb instanceof Monster_Bomb) {
+            // Gestion spécifique pour Monster_Bomb
+            handleMonsterBomb((Monster_Bomb) collOb);
     
  // Réinitialiser justPickedUpKey si aucune clé n'est touchée dans cette mise à jour
     if (!justPickedUpKey || Math.abs(newX - getScreenX()) > gp.tileSize || Math.abs(newY - getScreenY()) > gp.tileSize) {
         justPickedUpKey = false;
     }
-         
+        }    
     }
 
     
-    public void draw(Graphics2D g2) {
+    private void handleMonsterBomb(Monster_Bomb collOb) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void draw(Graphics2D g2) {
 	    // On dessine les images
 	    g2.drawImage(image, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
 	
