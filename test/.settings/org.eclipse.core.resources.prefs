@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 eclipse.preferences.version=1
 encoding//src/entity/Entity.java=UTF-8
 encoding//src/entity/Player.java=UTF-8
@@ -6,12 +5,3 @@ encoding//src/objects/Objetc_manager.java=UTF-8
 encoding//src/test/CollisionVerif.java=UTF-8
 encoding//src/test/GamePanel.java=UTF-8
 encoding//src/tiles/Tiles_manger.java=UTF-8
-=======
-eclipse.preferences.version=1
-encoding//src/entity/Entity.java=UTF-8
-encoding//src/entity/Player.java=UTF-8
-encoding//src/objects/Objetc_manager.java=UTF-8
-encoding//src/test/CollisionVerif.java=UTF-8
-encoding//src/test/GamePanel.java=UTF-8
-encoding//src/tiles/Tiles_manger.java=UTF-8
->>>>>>> branch 'test' of git@github.com:StunnyTom/JavaPlateformerV2.git
