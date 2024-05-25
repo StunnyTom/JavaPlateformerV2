@@ -24,6 +24,7 @@ import objects.Etoile;
 import objects.Etoile_Collision;
 import objects.Potion;
 import entity.Monster_Bomb;
+import entity.Monster_Nuage;
 import entity.PNJ_Magalor;
 import entity.PNJ_Marchand;
 import entity.PNJ_bandana;
@@ -97,7 +98,8 @@ public class Tiles_manger {
         Gen_Map.put("W", PNJ_Marchand.class);
         
        
-        Gen_Map.put("l", Monster_Bomb.class);
+        Gen_Map.put("L", Monster_Bomb.class);
+        Gen_Map.put("N", Monster_Nuage.class);
     }
     
     private void addGenToGamePanel(String key) {

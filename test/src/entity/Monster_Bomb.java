@@ -7,7 +7,7 @@ public class Monster_Bomb extends Monster {
    
     public Monster_Bomb(GamePanel gp) {
         super(gp, "/img_monster/bomb.png", 5, 200);
-        initializePosition('l');
+        initializePosition('L');
     }
 
     @Override
