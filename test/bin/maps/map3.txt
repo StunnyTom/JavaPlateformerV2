@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+a a a a a a a a a a a a a a a a a a a a a 
+a a a a a a a a a a a a a a a a a a a a a 
+a a a a a a a a a a a a a a a a a a a a a 
+a a a a a a a a a a a a a a a a a a a a a
+a a a a a a a a a a a a a a a a a a a a a 
+a a a a a a a a a a a a a a a a a a a a a 
+a a a a a a a a a a a a a a a a a a a a a 
+a a a a a a a a a a a a a a a a a a a a a 
+e e e e e e e e e e e e e e e e e e e e e 
+c c c c c c c c c c c c c c c c c c c c c 
+=======
 a a a a a a a a a a a a a a a a a a a a a a
 a a a a a a a a a a a a a a a a a a a a a a
 a a a a a a a a a a a a a a a a a a a a a a
@@ -8,3 +20,4 @@ a a a a a a a a a a a a a a a a a a a a a a
 a a a a a a a a a a a a a a a a a a a a a a
 a a k a a a a a a a a a a a a a a a a a a a
 e e e e e e e e e e e e e e e e e e e e e e
+>>>>>>> branch 'test' of git@github.com:StunnyTom/JavaPlateformerV2.git
