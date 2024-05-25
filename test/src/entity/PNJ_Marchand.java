@@ -24,7 +24,7 @@ public class PNJ_Marchand extends PNJ {
     private void addItemsToInventory() {
         // Exemple d'ajout d'items avec des valeurs fictives appropriées pour les paramètres
         pnjInventory.add(new gameObject(gp, "Potion", "p", "/objects/potion.png", false));
-        pnjInventory.add(new gameObject(gp, "Épée", "v", "/objects/epe.png", true));
+        pnjInventory.add(new gameObject(gp, "Épée", "e", "/objects/epe.png", true));
        
     }
 

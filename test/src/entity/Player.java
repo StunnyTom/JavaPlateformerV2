@@ -280,8 +280,12 @@ public class Player extends Entity {
 	}
 
 	public void draw(Graphics2D g2) {
-	    // On dessine les images
-	    g2.drawImage(image, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
+		super.draw(g2);
+		
+		 // On dessine les images
+	     g2.setFont(new Font("Arial", Font.PLAIN, 20));
+	        g2.setColor(Color.WHITE);
+	        g2.drawString("Clés : " + collectedKeys.size(), gp.maxScreenCol * gp.tileSize - 250,30);
 	
 	    // Dessiner le nombre de clés en haut à droite de l'écran
 	    g2.setFont(new Font("Arial", Font.PLAIN, 20));
