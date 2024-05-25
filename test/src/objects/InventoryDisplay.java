@@ -79,6 +79,7 @@ public class InventoryDisplay extends JPanel {
             gameObject obj = inv.get(selectedObjectIndex);
             if (obj != null && entity instanceof Player) {
                 Player player = (Player) entity;
+                System.out.println("Id en arg : " + obj.getID());
                 player.useItem(obj.getID()); // L'objet est utilisé ici
 
                 if (obj instanceof Usable && ((Usable) obj).isConsumable()) {

@@ -34,7 +34,7 @@ public class Entity extends Generateur {
 	protected Rectangle solidAir; //stocker un rectangle invisible ou abstrait avec x,y, largeur, hauteur
 	protected boolean collisionOn = false;
 	
-	private final int taille_inv = 9;
+	private final int taille_inv = 10;
 	
 	public void addInv(gameObject collOb) {
 		if (getInv() == null) {
