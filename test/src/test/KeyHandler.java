@@ -45,13 +45,13 @@ public class KeyHandler implements KeyListener{
 
 		// Sélection des objets de l'inventaire avec les touches numériques (0 à 9)
         if (code >= KeyEvent.VK_0 && code <= KeyEvent.VK_9) {
-            selectedObjectIndex = code - KeyEvent.VK_0 - 1; // Soustraire le code de la touche numérique pour obtenir l'index (0-9)
+            selectedObjectIndex = code - KeyEvent.VK_0 - 1; // Saoustraire le code de la touche numérique pour obtenir l'index (0-9)
             System.out.println(selectedObjectIndex);
             inventoryDisplay.setSelectedObjectIndex(selectedObjectIndex);
         }
         
         // Suppression de l'objet sélectionné avec la touche 'Espace'
-        if (code == KeyEvent.VK_I) {
+        if (code == KeyEvent.VK_SPACE) {
             inventoryDisplay.removeSelectedObject();
         }
 	}

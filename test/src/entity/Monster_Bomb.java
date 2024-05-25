@@ -6,7 +6,7 @@ public class Monster_Bomb extends Monster {
     private boolean isVisible = true;
    
     public Monster_Bomb(GamePanel gp) {
-        super(gp, "/img_monster/bomb.png", 5, 200);
+        super(gp, "/img_monster/bomb.png", 5, 0);
         initializePosition('L');
     }
 

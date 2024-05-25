@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import objects.Apple;
+import objects.Epee;
+import objects.Usable;
 import objects.gameObject;
 import test.GamePanel;
 
@@ -21,10 +24,9 @@ public class PNJ_Marchand extends PNJ {
 
     private void addItemsToInventory() {
         // Exemple d'ajout d'items avec des valeurs fictives appropriées pour les paramètres
-        pnjInventory.add(new gameObject(gp, "Potion", "p", "/objects/potion.png", false));
-        pnjInventory.add(new gameObject(gp, "Épée", "e", "/objects/epe.png", true));
+        pnjInventory.add(new Apple(gp));
+        pnjInventory.add(new Epee(gp));
     }
-
 
     public void showPNJInventoryConsole() {
         if (System.currentTimeMillis() - lastCollisionTime > COLLISION_COOLDOWN) {
@@ -49,10 +51,15 @@ public class PNJ_Marchand extends PNJ {
             "Inventaire du Marchand", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
         
         if (selected >= 0) {
-            gp.getPlayer().addInv(pnjInventory.get(selected));
+            gameObject item = pnjInventory.get(selected);
+            gp.getPlayer().addInv(item); // Ajoutez l'objet sans vérifier s'il est Usable
+            System.out.println("Objet ajouté à l'inventaire : " + item.getNom());
+        }else {
+            System.out.println("L'objet sélectionné n'est pas utilisable car il n'implémente pas Usable: ");
         }
-    }
 
+         
+    }
    
     // Getters et setters
     public long getLastCollisionTime() {

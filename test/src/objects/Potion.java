@@ -24,15 +24,18 @@ public class Potion extends gameObject implements Usable {
     	 if (usesRemaining > 0) {
     	        System.out.println("tu peux sauter plus haut pendant 10 secondes");
     	        player.setPotionEffect(true, System.currentTimeMillis());
-    	        usesRemaining--; // Décrémente le compteur d'utilisations
-    	        if (usesRemaining == 0) {
+    	        
+    	        //pour decrementer les items 
+    	        if (usesRemaining == 1) {
+    	            usesRemaining--;
     	            System.out.println("La potion est maintenant épuisée.");
+    	        } else {
+    	            usesRemaining--;
     	        }
     	    } else {
     	        System.out.println("La potion est épuisée et ne peut plus être utilisée.");
-    	    
     	    }
-    }
+    	}
     
     @Override
     public boolean isConsumable() { 
