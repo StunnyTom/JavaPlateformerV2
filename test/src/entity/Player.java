@@ -7,10 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
-
 import generation.Generateur;
 import objects.Apple;
-import objects.Dead;
 import objects.Key;
 import objects.Potion;
 import objects.Usable;
@@ -63,6 +61,11 @@ public class Player extends Entity {
         L = 25;
         speed = 2;
         setInv(new ArrayList<gameObject>());
+        /* POUR DIRECT AVOIR LES 7 CLé
+        for (int i = 0; i < 7; i++) {
+            collectedKeys.add("Key" + i);  // Ajouter des identifiants de clés fictifs
+        }
+        */
     }
     
     // Charger l'image du cœur
@@ -128,9 +131,10 @@ public class Player extends Entity {
             collectedKeys.add(keyId);
             keyCount++;  // Incrémenter le compteur seulement si la clé est nouvelle
             System.out.println("Nombre de clés: " + keyCount);
-            if (keyCount >= 8) {
-                System.out.println("Condition pour gagner vérifiée, toutes les clés collectées!");
-                // Implémentez la logique pour gagner ou passer au niveau suivant
+            if (keyCount == 8) {
+                System.out.println(" toutes les clés collectées!");
+                gp.gameState.afficheVictory();  // Déclencher l'état de victoire
+            
             }
         }
     }
@@ -240,44 +244,33 @@ public class Player extends Entity {
         
         // Vérification des collisions avec des objets
         Generateur collOb = gp.verif.checkCollisionGen(newX, newY, l, L, getSolidAir());
-        if (collOb != null ) {
-            if (collOb.getID().equals("d")) {
-                loseLife();  // Perdre une vie directement
-                // Important : Ne rien faire d'autre, ne pas ajouter à l'inventaire
-            } else if (collOb instanceof Key) {
-                ((Usable) collOb).use(this);  // Utiliser la clé
-            } else {
-                // Ajouter d'autres objets à l'inventaire si nécessaire
-                addInv((gameObject) collOb);
+        if (collOb!=null && !(collOb instanceof PNJ)) {
+        	if (collOb instanceof Key) {
+        		 ((Usable) collOb).use(this);  // Utiliser la clé qui appelle addKey
+        	}else if (collOb.getID().equals("d")) {
+            	loseLife();
+               // gp.gameState.afficheGameOver(); // game over si il touche l'objet 
+            }else {
+            	addInv((gameObject) collOb);
             }
-      
-            String key = collOb.getID();
+        	String key = collOb.getID();
             gp.genMap.remove(key);
             System.out.println(gp.Genlist);
             gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
             //gp.Genlist.remove(Character.getNumericValue(key.charAt(key.length()-1))-1);
-        
         } else if (collOb instanceof PNJ) {
         	PNJ pnj = (PNJ) collOb;
         	pnj.setCollisionWithPlayer(true);
         	pnj.triggerDialog();
         }
-        else if (collOb instanceof Monster_Bomb) {
-            // Gestion spécifique pour Monster_Bomb
-            handleMonsterBomb((Monster_Bomb) collOb);
     
  // Réinitialiser justPickedUpKey si aucune clé n'est touchée dans cette mise à jour
     if (!justPickedUpKey || Math.abs(newX - getScreenX()) > gp.tileSize || Math.abs(newY - getScreenY()) > gp.tileSize) {
         justPickedUpKey = false;
     }
-        }    
+         
     }
-
-    
-    private void handleMonsterBomb(Monster_Bomb collOb) {
-		// TODO Auto-generated method stub
-		
-	}
+   
 
 	public void draw(Graphics2D g2) {
 		super.draw(g2);
@@ -286,12 +279,8 @@ public class Player extends Entity {
 	     g2.setFont(new Font("Arial", Font.PLAIN, 20));
 	        g2.setColor(Color.WHITE);
 	        g2.drawString("Clés : " + collectedKeys.size(), gp.maxScreenCol * gp.tileSize - 250,30);
-	
-	    // Dessiner le nombre de clés en haut à droite de l'écran
-	    g2.setFont(new Font("Arial", Font.PLAIN, 20));
-	    g2.setColor(Color.WHITE);
-	    g2.drawString("Clés : " , gp.maxScreenCol * gp.tileSize - 250, 30);
-	
+
+	        
 	    for (int i = 0; i < lives; i++) {
 	        g2.drawImage(heartImage, heartX + (i * heartSpacing), heartY, gp.tileSize, gp.tileSize, null);
 	    }

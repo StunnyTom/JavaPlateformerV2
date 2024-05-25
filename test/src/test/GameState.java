@@ -22,6 +22,7 @@ public class GameState {
 
     public void afficheVictory() {
         isVictory = true;
+        JOptionPane.showMessageDialog(null, "Félicitations ! tu as collecté toutes les clés et terminé le jeu.");
     }
 
     public void retryGame() {
