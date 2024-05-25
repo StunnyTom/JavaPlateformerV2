@@ -31,7 +31,7 @@ public class Entity extends Generateur {
 	protected int padding;
 	
 	//pour les collision 
-	private Rectangle solidAir; //stocker un rectangle invisible ou abstrait avec x,y, largeur, hauteur
+	protected Rectangle solidAir; //stocker un rectangle invisible ou abstrait avec x,y, largeur, hauteur
 	protected boolean collisionOn = false;
 	
 	private final int taille_inv = 9;

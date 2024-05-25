@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-
-import objects.Key;
 import objects.gameObject;
 import test.GamePanel;
 
@@ -17,7 +15,7 @@ public class PNJ_Susie extends PNJ {
 
     public PNJ_Susie(GamePanel gp) {
     	super(gp,"/img_npj/susie_pnj.png", 15);
-        //initializePosition('s'); // 'p' pour le point de spawn de Susie
+        initializePosition('S'); // 'p' pour le point de spawn de Susie
         this.player = gp.getPlayer();
     }
     

@@ -16,20 +16,26 @@ import objects.Usable;
 import objects.gameObject;
 import test.GamePanel;
 import test.KeyHandler;
-import java.io.File;
+
 
 public class Player extends Entity {    
     KeyHandler keyH;
     private int keyCount = 0;  // Nombre de clés
 	private boolean hasPotionEffect = false;
 	private long potionStartTime;
-	private int lives = 3;
 	private Image heartImage;  // Image pour les cœurs
-	private  final int maxLives = 3;
 	private boolean justPickedUpKey = false;  // Nouvelle variable pour gérer l'état de ramassage de clé
 	private boolean collisionEnabled = true; //pour gerer la collison avec l'item 
 	private Set<String> collectedKeys = new HashSet<>();  // Ensemble pour stocker les IDs des clés collectées
 	
+	
+	// Dessiner les cœurs en haut à gauche de l'écran
+    private int lives = 3; // Nombre de vies du joueur
+    private  final int maxLives = 3;
+    int heartX = 850; // Position X initiale pour les cœurs
+    int heartY = 0; // Position Y initiale pour les cœurs
+    int heartSpacing = 50; // Espacement entre les cœurs
+    
     //on dessine le joueur
     public Player(GamePanel gp) {
     	super(gp);
@@ -240,39 +246,21 @@ public class Player extends Entity {
     }
          
     }
-/*
-      
-*/
-        // Vérification des collisions avec les pnj
-        /*
-        if (gp.verif.checkCollisionPNJ(newX, newY, l, L, getSolidAir())) {
-            //System.out.println("collision pnj");
-        }
 
-        // Gestion de l'animation sprite
-        spriteCounter++;
-        if (spriteCounter > 25) {
-            spriteNum = spriteNum == 1 ? 2 : 1;
-            spriteCounter = 0;
-        }
-        */
     
     public void draw(Graphics2D g2) {
-    	super.draw(g2);
-
-        // Dessiner le nombre de clés en haut à droite de l'écran
-        g2.setFont(new Font("Arial", Font.PLAIN, 20));
-        g2.setColor(Color.WHITE);
-        g2.drawString("Clés : " + collectedKeys.size(), gp.maxScreenCol * gp.tileSize - 250,30);
-        // Dessiner les cœurs en haut à gauche de l'écran
-        int heartX = 850; // Position X initiale pour les cœurs
-        int heartY = 0; // Position Y initiale pour les cœurs
-        int heartSpacing = 50; // Espacement entre les cœurs
-
-        for (int i = 0; i < lives; i++) {
-            g2.drawImage(heartImage, heartX + (i * heartSpacing), heartY, gp.tileSize, gp.tileSize, null);
-        }
-    }
+	    // On dessine les images
+	    g2.drawImage(image, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
+	
+	    // Dessiner le nombre de clés en haut à droite de l'écran
+	    g2.setFont(new Font("Arial", Font.PLAIN, 20));
+	    g2.setColor(Color.WHITE);
+	    g2.drawString("Clés : " , gp.maxScreenCol * gp.tileSize - 250, 30);
+	
+	    for (int i = 0; i < lives; i++) {
+	        g2.drawImage(heartImage, heartX + (i * heartSpacing), heartY, gp.tileSize, gp.tileSize, null);
+	    }
+	}
 
 
 }

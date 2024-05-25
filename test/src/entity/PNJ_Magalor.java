@@ -4,9 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-
 import objects.Key;
-import objects.gameObject;
 import test.GamePanel;
 
 public class PNJ_Magalor extends PNJ {
@@ -17,7 +15,7 @@ public class PNJ_Magalor extends PNJ {
 
     public PNJ_Magalor(GamePanel gp) {
         super(gp, "/img_npj/PNJ_Magalor.png", 50);
-        initializePosition('m'); // 'p' pour le point de spawn de Test_Bandana
+        initializePosition('M'); // 'p' pour le point de spawn de Test_Bandana
     }
 
     public void triggerDialog() {

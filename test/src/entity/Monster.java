@@ -1,91 +1,132 @@
 package entity;
 
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStream;
 import javax.imageio.ImageIO;
-import objects.gameObject;
 import test.GamePanel;
 
 public class Monster extends Entity {
-	public Monster(GamePanel gp) {
-		
+    GamePanel gp;
+    BufferedImage spriteImage;
+    private boolean isCollisionWithPlayer = false;
+    private boolean isVisible = true; // Default visibility
+    private boolean isCollidable = true; // Default collidability
+
+    protected int stepsCount = 0; // Compteur de pas commun
+    protected int maxSteps;   // Maximum de pas avant de changer de direction
+    protected boolean movingRight = true; // Direction initiale
+
+    public Monster(GamePanel gp, String imagePath, int padding, int maxSteps) {
         super(gp);
-        setDefaultValues();
-        
+        this.padding = padding;
+        this.maxSteps = maxSteps;
+        loadSpriteImage(imagePath);
+    }
+
+    private void loadSpriteImage(String imagePath) {
+        try {
+            InputStream is = getClass().getResourceAsStream(imagePath);
+            if (is == null) {
+                throw new RuntimeException("Image not found: " + imagePath);
+            }
+            spriteImage = ImageIO.read(is);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to load image: " + imagePath, e);
+        }
+    }
+
+    protected void updateMovement(int speed) {
+        if (movingRight) {
+            if (stepsCount < maxSteps) {
+                screenX += speed;
+                stepsCount++;
+            } else {
+                movingRight = false;
+                stepsCount = 0;
+            }
+        } else {
+            if (stepsCount < maxSteps) {
+                screenX -= speed;
+                stepsCount++;
+            } else {
+                movingRight = true;
+                stepsCount = 0;
+            }
+        }
+        updateSolidArea();
+    }
+
+    protected void updateSolidArea() {
+        if (solidAir == null) {
+            solidAir = new Rectangle();
+        }
+        solidAir.setLocation(screenX - padding, screenY - padding);
+        solidAir.setSize(gp.tileSize + 2 * padding, gp.tileSize + 2 * padding);
+    }
+
+
+    @Override
+    public void draw(Graphics2D g2) {
+        if (spriteImage != null && isVisible) {
+            g2.drawImage(spriteImage, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
+        }
+    }
+
+
+    protected void initializePosition(char identifier) {
         File nameMap = new File(gp.currentMap);
-        Point x;
-		try {
-			x = Entity.findSpawnPoints('b', nameMap.getName())[0];
-			setScreenX((int) (gp.tileSize * x.getY()));
-	        setScreenY((int) (gp.tileSize * x.getX()));
-	        this.setImage(ImageIO.read(getClass().getResourceAsStream("/mobs/bomb.png"))); 
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        setSolidAir(new Rectangle(16, -10, gp.tileSize, gp.tileSize));
+        try {
+            Point[] spawnPoints = Entity.findSpawnPoints(identifier, nameMap.getName());
+            if (spawnPoints.length > 0) {
+                Point x = spawnPoints[0];
+                screenX = (int) (gp.tileSize * x.getY());
+                screenY = (int) (gp.tileSize * x.getX());
+                this.setSolidAir(new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding));
+            } else {
+                System.err.println("Aucun point de spawn trouvé pour l'identifiant: " + identifier);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-	
-	public void setDefaultValues() {
-        l = 20;
-        L = 25;
-        speed = 1;
-        setInv(new ArrayList<gameObject>());
+    public boolean isCollisionWithPlayer() {
+        return isCollisionWithPlayer;
     }
-	
+
+    public void setCollisionWithPlayer(boolean isCollisionWithPlayer) {
+        this.isCollisionWithPlayer = isCollisionWithPlayer;
+    }
+
 	public void update() {
-	    int newX = getScreenX() + 1, newY = getScreenY();
-
-	    // Appliquer la gravité
-	    ySpeed += GRAVITY;
-	    newY += ySpeed;
-
-	    // Collision check pour l'axe Y
-	    if (!gp.verif.checkCollision(getScreenX(), newY, l, L, getSolidAir())) {
-	        setScreenY(newY);
-	    } else {
-	        ySpeed = 0; // Arrêter le mouvement si collision
-	    }
-
-	    // Collision check pour l'axe X
-	    if (!gp.verif.checkCollision(newX, getScreenX(), l, L, getSolidAir())) {
-	        setScreenX(newX);
-	    }
-
-	    /*
-	    // Vérification des collisions avec des objets
-	    gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
-	    if (!collOb.nullObj()) {
-	        addInv(collOb); // Ramasser l'objet en cas de collision
-
-	        // Suppression de l'objet de la carte
-	        Map<String, gameObject> objectMap = gp.getObjectM().Objet_Map;
-
-	        String objectId = collOb.getId();
-	        
-	        if (objectMap.containsKey(objectId)) {
-	            objectMap.remove(objectId);
-	        }
-	        
-	        Iterator<gameObject> li = getInv().iterator();
-	        
-	        while (li.hasNext()) {
-	            System.out.println(li.next());
-	        }
-	    }
-*/
-	    // Gestion de l'animation sprite
-	    spriteCounter++;
-	    if (spriteCounter > 25) {
-	        spriteNum = spriteNum == 1 ? 2 : 1;
-	        spriteCounter = 0;
-	    }
+		// TODO Auto-generated method stub
+		
 	}
 
-	
-	
+	public void setVisible(boolean isVisible) {
+	    this.isVisible = isVisible;
+	}
+
+	public void setCollidable(boolean isCollidable) {
+	    this.isCollidable = isCollidable;
+	}
+
+	public boolean getIsVisible() {
+	    return isVisible;
+	}
+
+	public boolean getIsCollidable() {
+	    return isCollidable;
+	}
+
+
+
 }
+
+
+    
+      
+	
+	

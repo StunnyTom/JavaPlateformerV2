@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
-
 import generation.Generateur;
 import objects.Key;
 import objects.Apple;
@@ -22,8 +21,9 @@ import objects.Dead;
 import objects.Epee;
 import objects.Etoile_Collision;
 import objects.Potion;
-import objects.gameObject;
+import entity.Monster_Bomb;
 import entity.PNJ_Magalor;
+import entity.PNJ_Marchand;
 import entity.PNJ_bandana;
 import entity.PNJ_Susie;
 import entity.Player;
@@ -80,16 +80,19 @@ public class Tiles_manger {
         
         Gen_Map.put("z", Player.class);
         Gen_Map.put("k", Key.class);
-        Gen_Map.put("p", Apple.class);
-        Gen_Map.put("e", Etoile_Collision.class);
-        Gen_Map.put("w", Potion.class);
-        Gen_Map.put("s", Epee.class);
+        Gen_Map.put("v", Apple.class);
+        Gen_Map.put("i", Etoile_Collision.class);
+        Gen_Map.put("p", Potion.class);
+        Gen_Map.put("e", Epee.class);
         Gen_Map.put("d", Dead.class);
         
-        Gen_Map.put("m", PNJ_Magalor.class);
+        Gen_Map.put("M", PNJ_Magalor.class);
         Gen_Map.put("b", PNJ_bandana.class);
-        Gen_Map.put("u", PNJ_Susie.class);
+        Gen_Map.put("S", PNJ_Susie.class);
+        Gen_Map.put("W", PNJ_Marchand.class);
+        
        
+        Gen_Map.put("l", Monster_Bomb.class);
     }
     
     private void addGenToGamePanel(String key) {
@@ -220,8 +223,8 @@ public class Tiles_manger {
 
     public void loadSpawnMap(String filePath) {
         try {
-        	gp.mapGenNum = new String [gp.maxWorldCol][gp.maxWorldRow];
-        	gp.elaguerGen();
+            gp.mapGenNum = new String [gp.maxWorldCol][gp.maxWorldRow];
+            gp.elaguerGen();
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line;
@@ -232,16 +235,17 @@ public class Tiles_manger {
                 String[] characters = line.split(" ");
                 col = 0;
                 while (col < gp.maxWorldCol && col < characters.length) {
-                	String tileChar = characters[col];
-                	if (!tileChar.equals("a") && !tileChar.equals("z")) {
-                		addGenToGamePanel(tileChar);
-                		String uniqueKeyId = "" + tileChar + keyCounter++;
+                    String tileChar = characters[col];
+                    if (!tileChar.equals("a") && !tileChar.equals("z")) {
+                        addGenToGamePanel(tileChar);
+                        String uniqueKeyId = "" + tileChar + keyCounter++;
                         gp.mapGenNum[col][row] = uniqueKeyId; // Utilisation de l'identifiant unique
-                        gp.genMap.put(uniqueKeyId,gp.Genlist.get(gp.Genlist.size() - 1));
-                        gp.Genlist.get(gp.Genlist.size() - 1).setID(uniqueKeyId);
-                        System.out.println(uniqueKeyId);
-                        //gp.genMap.put(uniqueKeyId, new Key(uniqueKeyId)); // Créer une clé avec un identifiant unique
-                	}
+                        if (!gp.Genlist.isEmpty() && gp.Genlist.size() > 1) {
+                            gp.genMap.put(uniqueKeyId, gp.Genlist.get(gp.Genlist.size() - 1));
+                            gp.Genlist.get(gp.Genlist.size() - 1).setID(uniqueKeyId);
+                            System.out.println(uniqueKeyId);
+                        }
+                    }
                     col++;
                 }
                 row++;
@@ -250,6 +254,7 @@ public class Tiles_manger {
             e.printStackTrace();
         }
     }
+
 
     public void draw(Graphics2D g2) {
         int worldCol = 0;

@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import javax.swing.Timer;
@@ -20,7 +21,6 @@ public class PNJ_bandana extends PNJ {
      // Initialisation de l'objet à donner avec la classe Epee existante
         itemToGive = new Epee(gp); // Utilisation de la classe Epee déjà définie
 }
-
     // Gère la boîte de dialogue propre à chaque PNJ
     public void drawDialogue(Graphics2D g2) {
         String text = "Bonjour, je suis Bandana ! Je te donne cette épée pour vaincre le monstre.";
@@ -33,21 +33,32 @@ public class PNJ_bandana extends PNJ {
         g2.fillRect(boxX, boxY, boxWidth, boxHeight); // Dessiner le rectangle
         g2.setColor(Color.WHITE);
 
+        // Définir une police plus petite
+        g2.setFont(new Font("Arial", Font.PLAIN, 12));
         FontMetrics fm = g2.getFontMetrics();
         int lineHeight = fm.getHeight();
-        int x = boxX + 3; // Marge interne pour le texte
+        int x = boxX + 10; // Marge interne pour le texte
         int y = boxY + lineHeight;
 
-        for (String line : text.split(" ")) {
-            String testLine = line + " ";
+        // Diviser le texte en mots pour gérer le retour à la ligne
+        String[] words = text.split(" ");
+        String currentLine = "";
+
+        for (String word : words) {
+            String testLine = currentLine + word + " ";
             int lineWidth = fm.stringWidth(testLine);
+
             if (x + lineWidth > boxX + boxWidth - 10) {
-                x = boxX + 10; // Réinitialise la position x pour la ligne suivante
+                g2.drawString(currentLine, x, y); // Dessine la ligne actuelle
+                currentLine = word + " "; // Commence une nouvelle ligne avec le mot actuel
                 y += lineHeight; // Passe à la ligne suivante
+                x = boxX + 10; // Réinitialise la position x pour la nouvelle ligne
+            } else {
+                currentLine += word + " ";
             }
-            g2.drawString(testLine, x, y);
-            x += lineWidth;
         }
+        // Dessiner la dernière ligne
+        g2.drawString(currentLine, x, y);
     }
 
     @Override

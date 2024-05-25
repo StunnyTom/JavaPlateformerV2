@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import javax.swing.JOptionPane;
+
 public class GameState {
     private GamePanel gp;
     private boolean isGameOver = false;
@@ -30,6 +32,14 @@ public class GameState {
 
     public boolean isGameOver() {
         return isGameOver || isVictory;
+    }
+    
+    public void setGameOver(boolean gameOver) {
+        this.isGameOver = gameOver;
+        if (gameOver) {
+        	//System.out.println("Le jeu est terminé.");
+            JOptionPane.showMessageDialog(null, "Game Over! Vous avez perdu toutes vos vies.");
+        }
     }
 
     public void drawGameOverScreen(Graphics2D g2) {
