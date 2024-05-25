@@ -142,6 +142,7 @@ public class Player extends Entity {
     public void useItem(String itemId) {
         for (int i = 0; i < inv.size(); i++) {
             gameObject item = inv.get(i);
+            System.out.println(item.getID() + " = " + itemId + "\nUsable ? "+ (item instanceof Usable));
             if (item.getID().equals(itemId) && item instanceof Usable) {
                 System.out.println("Utilisation de l'objet avec ID: " + itemId);
                 Usable usableItem = (Usable) item;

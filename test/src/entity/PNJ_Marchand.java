@@ -8,7 +8,6 @@ import objects.gameObject;
 import test.GamePanel;
 
 public class PNJ_Marchand extends PNJ {
-	private Player player;
     private ArrayList<gameObject> pnjInventory = new ArrayList<>();
     private long lastCollisionTime = 0; // Temps de la dernière collision
     public static final long COLLISION_COOLDOWN = 10000; // Délai de 10 secondes
@@ -17,7 +16,6 @@ public class PNJ_Marchand extends PNJ {
     public PNJ_Marchand(GamePanel gp) {
         super(gp, "/img_npj/marchadn.png", 15);
         initializePosition('W');
-        this.player = gp.getPlayer();
         addItemsToInventory();
     }
 
@@ -25,7 +23,6 @@ public class PNJ_Marchand extends PNJ {
         // Exemple d'ajout d'items avec des valeurs fictives appropriées pour les paramètres
         pnjInventory.add(new gameObject(gp, "Potion", "p", "/objects/potion.png", false));
         pnjInventory.add(new gameObject(gp, "Épée", "e", "/objects/epe.png", true));
-       
     }
 
 
@@ -40,20 +37,20 @@ public class PNJ_Marchand extends PNJ {
                 }
             }
             lastCollisionTime = System.currentTimeMillis();
+            this.selectItemFromInventory();
         }
     }
 
 
  // Méthode pour afficher l'inventaire et permettre la sélection
-    public gameObject selectItemFromInventory() {
+    public void selectItemFromInventory() {
         String[] options = pnjInventory.stream().map(gameObject::getNom).toArray(String[]::new);
         int selected = JOptionPane.showOptionDialog(null, "Choisissez un objet à acheter:",
             "Inventaire du Marchand", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
         
         if (selected >= 0) {
-            return pnjInventory.get(selected);
+            gp.getPlayer().addInv(pnjInventory.get(selected));
         }
-        return null;
     }
 
    
@@ -73,6 +70,6 @@ public class PNJ_Marchand extends PNJ {
 	@Override
 	public void triggerDialog() {
 		// TODO Auto-generated method stub
-		
+		this.showPNJInventoryConsole();
 	}
 }
