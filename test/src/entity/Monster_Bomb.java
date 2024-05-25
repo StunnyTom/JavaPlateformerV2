@@ -25,11 +25,12 @@ public class Monster_Bomb extends Monster {
           }
 
         long currentTime = System.currentTimeMillis();
-        if (isPlayerNear()) {
-            if (gp.getPlayer().isInvincible()) {
+        if (isPlayerNear()) { // si le joueur est proche du monstre
+            if (gp.getPlayer().isInvincible()) { // si le joueur a l'item invicible
                 this.setVisible(false); // Rendre le monstre invisible/disparaître
                 System.out.println("Le monstre a disparu car le joueur est invincible.");
                 return; // Arrêter l'exécution de la méthode si le monstre disparaît
+            
             } else if (currentTime - lastCollisionTime > COLLISION_PAUSE) {
                 // Le joueur perd une vie si pas invincible et temps écoulé depuis dernière collision
                 gp.getPlayer().loseLife();

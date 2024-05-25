@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import javax.swing.*;
-
 import entity.Monster;
-import entity.Monster_Volant;
 import entity.Player;
 import objects.InventoryDisplay;
 import tiles.Tiles_manger;
@@ -87,6 +85,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void addGen(Generateur g) {
 		this.Genlist.add(g);
 	}
+	
 	
 	public void elaguerGen() {
 		if(Genlist.size() != 0) {

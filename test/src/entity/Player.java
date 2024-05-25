@@ -191,6 +191,9 @@ public class Player extends Entity {
     }
     
     public void update() {
+    	 if (gp.gameState.isGameOver()) {
+    	        return; // Ne rien faire si le jeu est terminé
+    	    }
         int newX = getScreenX(), newY = getScreenY();
         ySpeed += GRAVITY; // Appliquer la gravité
         newY += ySpeed;
