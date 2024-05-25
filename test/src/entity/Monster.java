@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import test.GamePanel;
 
 public class Monster extends Entity {
-    GamePanel gp;
+   
     BufferedImage spriteImage;
     private boolean isCollisionWithPlayer = false;
     private boolean isVisible = true; // Default visibility
@@ -22,14 +22,11 @@ public class Monster extends Entity {
         super(gp);
         this.padding = padding;
         this.maxSteps = maxSteps;
-        loadSpriteImage(imagePath);
-    }
-
-    private void loadSpriteImage(String imagePath) {
+     
         try {
             InputStream is = getClass().getResourceAsStream(imagePath);
             if (is == null) {
-                throw new RuntimeException("Image not found: " + imagePath);
+            	 throw new RuntimeException("Pas accès au lieu du monstre: " + imagePath);
             }
             spriteImage = ImageIO.read(is);
         } catch (Exception e) {
@@ -75,7 +72,6 @@ public class Monster extends Entity {
         }
     }
 
-
     protected void initializePosition(char identifier) {
         File nameMap = new File(gp.currentMap);
         try {
@@ -86,12 +82,13 @@ public class Monster extends Entity {
                 screenY = (int) (gp.tileSize * x.getX());
                 this.setSolidAir(new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding));
             } else {
-                System.err.println("Aucun point de spawn trouvé pour l'identifiant: " + identifier);
+                //System.err.println("Aucun point de spawn trouvé pour l'identifiant: " + identifier);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
     public boolean isCollisionWithPlayer() {
         return isCollisionWithPlayer;
     }
