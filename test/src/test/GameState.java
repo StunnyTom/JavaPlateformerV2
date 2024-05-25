@@ -46,6 +46,8 @@ public class GameState {
         y += gp.tileSize * 2;
         g2.setColor(Color.white);
         g2.drawString(retryText, x, y);
+        
+        //this.gp.displayInv = null;
     }
 
     public int getXForCenteredText(String text, Graphics2D g2) {

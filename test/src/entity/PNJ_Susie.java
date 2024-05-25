@@ -15,10 +15,10 @@ public class PNJ_Susie extends PNJ {
 	private long lastCollisionTime = 0; // Temps de la dernière collision
     private static final long COLLISION_COOLDOWN = 10000; // Délai de 10 secondes
 
-    public PNJ_Susie(GamePanel gp,Player player) {
+    public PNJ_Susie(GamePanel gp) {
     	super(gp,"/img_npj/susie_pnj.png", 15);
-        initializePosition('s'); // 'p' pour le point de spawn de Susie
-        this.player = player;
+        //initializePosition('s'); // 'p' pour le point de spawn de Susie
+        this.player = gp.getPlayer();
     }
     
     //PERMET DE VOIR UNIQUEMENT L'INVENTAIRE DU JOUEUR
@@ -37,7 +37,7 @@ public class PNJ_Susie extends PNJ {
     }*/
     
     //fonction qui permet de voir dans l'inventaire du joueur 
-    public void showInventoryDialog() {
+    public void triggerDialog() {
         if (System.currentTimeMillis() - getLastCollisionTime() > getCollisionCooldown()) { // me permet de plus avoir de collision avec mon pnj pendant 10 secondes 
             ArrayList<gameObject> inventory = this.player.getInv(); //permet d'acceder a l'inventaire de mon joueur
             boolean hasItem1 = false; // l'id 1 est d'office a faux 

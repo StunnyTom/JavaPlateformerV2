@@ -32,6 +32,8 @@ public abstract class PNJ extends Entity {
         }
     }
     
+    public abstract void triggerDialog();
+    
     //ajouter un objet dans l'inventaire
     public void AddItemToPlayer(Player player) {
         if (itemToGive != null && itemToGive.getImage() != null) {
@@ -65,9 +67,7 @@ public abstract class PNJ extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-        if (getImage() != null) {
-            g2.drawImage(getImage(), screenX, screenY, gp.tileSize, gp.tileSize, null);
-        }
+        super.draw(g2);
        
     }
 

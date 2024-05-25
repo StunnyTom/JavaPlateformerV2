@@ -225,8 +225,13 @@ public class Player extends Entity {
             }
         	String key = collOb.getID();
             gp.genMap.remove(key);
-            gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1))-1, new Generateur(gp));
+            System.out.println(gp.Genlist);
+            gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
             //gp.Genlist.remove(Character.getNumericValue(key.charAt(key.length()-1))-1);
+        } else if (collOb instanceof PNJ) {
+        	PNJ pnj = (PNJ) collOb;
+        	pnj.setCollisionWithPlayer(true);
+        	pnj.triggerDialog();
         }
     
  // Réinitialiser justPickedUpKey si aucune clé n'est touchée dans cette mise à jour

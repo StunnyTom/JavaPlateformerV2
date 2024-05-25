@@ -58,9 +58,10 @@ public class PNJ_bandana extends PNJ {
         }
     }
  // Appeler cette méthode quand il y a une collision
-    public void triggerDialogue() {
+    public void triggerDialog() {
         isCollisionWithPlayer = true;
         dialogueTimer.restart(); // Redémarrez le timer chaque fois qu'il y a une collision
+        this.AddItemToPlayer(gp.getPlayer());
     }
 }
 

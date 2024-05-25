@@ -20,7 +20,7 @@ public class PNJ_Magalor extends PNJ {
         initializePosition('m'); // 'p' pour le point de spawn de Test_Bandana
     }
 
-    public void triggerDialogue() {
+    public void triggerDialog() {
         if (!hasDialogStarted && attemptsLeft > 0) {
             hasDialogStarted = true;
             String question = "";
@@ -44,7 +44,7 @@ public class PNJ_Magalor extends PNJ {
             String playerResponse = JOptionPane.showInputDialog(null, question, "Question Mathématique", JOptionPane.QUESTION_MESSAGE);
 
             if (playerResponse != null && playerResponse.equals(correctAnswer)) {
-                JOptionPane.showMessageDialog(null, "Correct! Vous avez réussi. Question suivantes : ");
+                JOptionPane.showMessageDialog(null, "Correct! Vous avez réussi. Question suivante : ");
                 if (currentQuestion < 3) {
                     currentQuestion++;
                     attemptsLeft = 3;
@@ -74,7 +74,7 @@ public class PNJ_Magalor extends PNJ {
     }
     
     private void initializeItemToGive() {
-    	 //this.itemToGive = new Key();       
+    	this.itemToGive = new Key(gp);       
     	try {
             BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/cle.png"));
             itemToGive.setImage(itemImage);

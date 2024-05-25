@@ -33,6 +33,7 @@ public class Key extends gameObject implements Usable {
     }
     
     public void draw(Graphics2D g2) {
+    	//System.out.println(this.getID());
     	super.draw(g2);
     }
 }

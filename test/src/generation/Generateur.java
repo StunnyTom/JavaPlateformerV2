@@ -36,11 +36,11 @@ public class Generateur {
 		return gp;
 	}
 	
-	public void setCoordonnees() {
+	public void setCoordonnees(int cpt) {
 		File nameMap = new File(gp.currentMap);
 		Point x;
 		try {
-			x = findSpawnPoints(getID().charAt(0), nameMap.getName())[0];
+			x = findSpawnPoints(getID().charAt(0), nameMap.getName())[cpt];
 			setScreenX((int) (gp.tileSize * x.getY()));
 	        setScreenY((int) (gp.tileSize * x.getX()));
 	

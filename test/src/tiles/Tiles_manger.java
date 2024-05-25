@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 
@@ -87,7 +88,7 @@ public class Tiles_manger {
         
         Gen_Map.put("m", PNJ_Magalor.class);
         Gen_Map.put("b", PNJ_bandana.class);
-        Gen_Map.put("S", PNJ_Susie.class);
+        Gen_Map.put("u", PNJ_Susie.class);
        
     }
     
@@ -97,12 +98,23 @@ public class Tiles_manger {
             try {
                 Generateur generateur = clazz.getDeclaredConstructor(GamePanel.class).newInstance(gp);
                 generateur.setID(key);
-                generateur.setCoordonnees();
+                int cpt = countOccurrences(gp.Genlist, generateur.getClass());
+                generateur.setCoordonnees(cpt);
                 gp.addGen(generateur);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+    
+    public static <T> int countOccurrences(List<?> list, Class<T> clazz) {
+        int count = 0;
+        for (Object obj : list) {
+            if (clazz.isInstance(obj)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public void checkAndChangeMapOnPosition() {
