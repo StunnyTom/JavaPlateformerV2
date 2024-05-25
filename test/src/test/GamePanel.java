@@ -52,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public CollisionVerif verif = new CollisionVerif(this); // pour la collision 
 
     public GameState gameState; // Ajout de l'attribut gameState
+	public Object player;
 	
 	//constructeur de panel 
 	public GamePanel() {
