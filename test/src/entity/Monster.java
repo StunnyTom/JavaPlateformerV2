@@ -7,7 +7,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 import test.GamePanel;
 
-public class Monster extends Entity {
+public abstract class Monster extends Entity {
    
     BufferedImage spriteImage;
     private boolean isCollisionWithPlayer = false;
@@ -34,6 +34,8 @@ public class Monster extends Entity {
             throw new RuntimeException("Failed to load image: " + imagePath, e);
         }
     }
+    
+    public abstract void checkPlayerInteraction();
 
     protected void updateMovement(int speed) {
         if (movingRight) {

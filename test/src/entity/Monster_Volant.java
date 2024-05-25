@@ -39,10 +39,10 @@ import java.util.Random;
 		        long currentTime = System.currentTimeMillis();
 		        if (this.collidable && !interactionInProgress && currentTime - lastCollisionTime > COLLISION_COOLDOWN) {
 		            interactionInProgress = true; // Définir le flag lors de l'interaction
-		            if (!((Entity) this.gp.player).getInv().isEmpty()) {
+		            if (!gp.getPlayer().getInv().isEmpty()) {
 		                Random rand = new Random();
-		                int randomIndex = rand.nextInt(((Entity) this.gp.player).getInv().size());
-		                gameObject item = ((Entity) this.gp.player).getInv().remove(randomIndex);
+		                int randomIndex = rand.nextInt(gp.getPlayer().getInv().size());
+		                gameObject item = gp.getPlayer().getInv().remove(randomIndex);
 		                JOptionPane.showMessageDialog(null, "Je te vole ton objet: " + item.getNom(), "Attention", JOptionPane.INFORMATION_MESSAGE);
 		            } else {
 		                JOptionPane.showMessageDialog(null, "Je ne te vole rien ton inv est vide!", "Attention", JOptionPane.WARNING_MESSAGE);

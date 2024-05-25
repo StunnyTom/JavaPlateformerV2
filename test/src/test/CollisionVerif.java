@@ -72,6 +72,7 @@ public class CollisionVerif {
         if (object == null) {
             return null; // Retourner un gameObject "null" si aucun objet n'est trouvé
         }
+        System.out.println(object);
         return object;
     }
 }
