@@ -13,6 +13,8 @@ public class Monster_Nuage extends Monster{
 	     initializePosition('N');
 		}
 		
+		
+		
 
 	}
 

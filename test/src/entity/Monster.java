@@ -11,7 +11,7 @@ public class Monster extends Entity {
    
     BufferedImage spriteImage;
     private boolean isCollisionWithPlayer = false;
-    private boolean isVisible = true; // Default visibility
+    protected boolean isVisible = true; // Default visibility
     private boolean isCollidable = true; // Default collidability
 
     protected int stepsCount = 0; // Compteur de pas commun

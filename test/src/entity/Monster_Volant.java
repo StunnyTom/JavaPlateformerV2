@@ -3,9 +3,7 @@
 	import test.GamePanel;
 
 import javax.swing.JOptionPane;
-	import objects.gameObject;
-
-import java.awt.Graphics2D;
+import objects.gameObject;
 import java.util.Random;
 
 	/* Ce monstre, vole tout simplement un objet au hasard dans l'inventaire de mon joueur */

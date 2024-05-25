@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import javax.swing.*;
+
+import entity.Monster;
+import entity.Monster_Volant;
 import entity.Player;
 import objects.InventoryDisplay;
 import tiles.Tiles_manger;
@@ -107,12 +110,17 @@ public class GamePanel extends JPanel implements Runnable{
 	        gameThread = null;
 	    }
 	}
+
 	
 		@SuppressWarnings("unused")
 		public void update() {
 		    // Mettre à jour le joueur en premier pour prendre en compte les nouvelles positions
 		    if (!gameState.isGameOver()) {
 		    	 getPlayer().update();
+		    	 for (Generateur generateur : Genlist) {
+		             if (generateur instanceof Monster) {
+		                 ((Monster) generateur).update();  // Mettre à jour chaque monstre.
+		             }
 		    }
 
 		    // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
@@ -124,6 +132,7 @@ public class GamePanel extends JPanel implements Runnable{
 		    if (!gameState.isGameOver()) {
 		    	tileM.checkAndChangeMapOnPosition(); // Vérifie si le joueur a atteint la position spécifique pour le changement de carte
 		    }	
+		}
 		}
 
 		public void paintComponent(Graphics g) {
