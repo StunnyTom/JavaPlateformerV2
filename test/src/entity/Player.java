@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import generation.Generateur;
 import objects.Apple;
 import objects.Key;
 import objects.Potion;
@@ -31,24 +32,12 @@ public class Player extends Entity {
 	
     //on dessine le joueur
     public Player(GamePanel gp) {
-        Player.gp = gp;
+    	super(gp);
         this.keyH = null;
         setDefaultValues();
         getPlayerImage();
         loadHeartImage();  // Charger l'image du cœur
         
-        File nameMap = new File(gp.currentMap);
-        Point x;
-		try {
-			x = Entity.findSpawnPoints('z', nameMap.getName())[0];
-			setScreenX((int) (gp.tileSize * x.getY()));
-	        setScreenY((int) (gp.tileSize * x.getX()));
-	
-	        System.out.println(getScreenX());
-	        System.out.println(getScreenY());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
         setSolidAir(new Rectangle(16, -10, gp.tileSize, gp.tileSize));        
     }
     
@@ -224,18 +213,20 @@ public class Player extends Entity {
         }
         
         // Vérification des collisions avec des objets
-        gameObject collOb = gp.verif.checkCollisionObject(newX, newY, l, L, getSolidAir());
-        if (!collOb.isNullObject()) {
+        Generateur collOb = gp.verif.checkCollisionGen(newX, newY, l, L, getSolidAir());
+        if (collOb!=null) {
         	if (collOb instanceof Key) {
         		 ((Usable) collOb).use(this);  // Utiliser la clé qui appelle addKey
-        	    gp.getObjectM().Objet_Map.remove(collOb.getID());  // Retirer la clé de la carte
         	}else if (collOb.getID().equals("d")) {
             	loseLife();
                // gp.gameState.afficheGameOver(); // game over si il touche l'objet 
             }else {
-            	addInv(collOb);
+            	addInv((gameObject) collOb);
             }
-            gp.getObjectM().Objet_Map.remove(collOb.getID());
+        	String key = collOb.getID();
+            gp.genMap.remove(key);
+            gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1))-1, new Generateur(gp));
+            //gp.Genlist.remove(Character.getNumericValue(key.charAt(key.length()-1))-1);
         }
     
  // Réinitialiser justPickedUpKey si aucune clé n'est touchée dans cette mise à jour

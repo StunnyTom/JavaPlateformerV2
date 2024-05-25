@@ -1,6 +1,9 @@
 package objects;
 
+import java.awt.Graphics2D;
+
 import entity.Player;
+import test.GamePanel;
 
 
 public class Potion extends gameObject implements Usable {
@@ -8,8 +11,8 @@ public class Potion extends gameObject implements Usable {
     private static final int POTION_EFFECT_DURATION = 10000; // une durée de 10 secondes 
     private static final double BOOSTED_JUMP_SPEED = -5; // permet de sauter plus haut 
 
-    public Potion() {
-        super("potion", "p", "/objects/potion.png", true);
+    public Potion(GamePanel gp) {
+        super(gp, "potion", "p", "/objects/potion.png", true);
     }
 
 
@@ -33,6 +36,8 @@ public class Potion extends gameObject implements Usable {
     }
     
     
-  
+    public void draw(Graphics2D g2) {
+    	super.draw(g2);
+    }
 
 }

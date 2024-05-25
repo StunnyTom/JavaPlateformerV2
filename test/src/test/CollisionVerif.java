@@ -4,6 +4,8 @@ import tiles.Tile;
 import objects.gameObject;
 import java.awt.Rectangle;
 
+import generation.Generateur;
+
 
 
 public class CollisionVerif {
@@ -45,35 +47,35 @@ public class CollisionVerif {
     }
     
     // Vérification des collisions avec des objets basée sur les positions x, y et des dimensions données :
-    public gameObject checkCollisionObject(int newX, int newY, int l, int L, Rectangle solidArea) {
+    public Generateur checkCollisionGen(int newX, int newY, int l, int L, Rectangle solidArea) {
         int entityLeftObj = (newX + solidArea.x) / gp.ObjetSize;
         int entityRightObj = (newX + solidArea.x + solidArea.width - L) / gp.ObjetSize;
         int entityTopObj = (newY + solidArea.y + l) / gp.ObjetSize;
         int entityBottomObj = (newY + solidArea.y + solidArea.height) / gp.ObjetSize;
 
-        gameObject C1 = ObjCollision(entityLeftObj, entityTopObj);
-        gameObject C2 = ObjCollision(entityRightObj, entityTopObj);
-        gameObject C3 = ObjCollision(entityLeftObj, entityBottomObj);
-        gameObject C4 = ObjCollision(entityRightObj, entityBottomObj);
+        Generateur C1 = GenCollision(entityLeftObj, entityTopObj);
+        Generateur C2 = GenCollision(entityRightObj, entityTopObj);
+        Generateur C3 = GenCollision(entityLeftObj, entityBottomObj);
+        Generateur C4 = GenCollision(entityRightObj, entityBottomObj);
 
-        if (!C1.isNullObject()) return C1;
-        if (!C2.isNullObject()) return C2;
-        if (!C3.isNullObject()) return C3;
-        if (!C4.isNullObject()) return C4;
+        if (C1!=null) return C1;
+        if (C2!=null) return C2;
+        if (C3!=null) return C3;
+        if (C4!=null) return C4;
 
-        return new gameObject(false); // Retourner un gameObject "null"
+        return null; // Retourner un gameObject "null"
     }
 
-    private gameObject ObjCollision(int col, int row) {
+    private Generateur GenCollision(int col, int row) {
         if (col < 0 || row < 0 || col >= gp.maxScreenCol || row >= gp.maxScreenRow) {
-            return new gameObject(false); // Retourner un gameObject "null" pour les indices hors limites
+            return null; // Retourner un gameObject "null" pour les indices hors limites
         }
 
-        String objId = gp.ObjectM.mapObjetnum[col][row];
-        gameObject object = gp.ObjectM.Objet_Map.get(objId);
+        String objId = gp.mapGenNum[col][row];
+        Generateur object = gp.genMap.get(objId);
 
         if (object == null) {
-            return new gameObject(false); // Retourner un gameObject "null" si aucun objet n'est trouvé
+            return null; // Retourner un gameObject "null" si aucun objet n'est trouvé
         }
         return object;
     }

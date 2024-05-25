@@ -4,9 +4,14 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import generation.Generateur;
 import objects.gameObject;
+import test.GamePanel;
 
 public class Entity extends Generateur {
 	
+	public Entity(GamePanel gp) {
+		super(gp);
+	}
+
 	//variable 
     protected int l;
     protected int L;
@@ -31,12 +36,12 @@ public class Entity extends Generateur {
 	
 	private final int taille_inv = 9;
 	
-	public void addInv(gameObject o) {
+	public void addInv(gameObject collOb) {
 		if (getInv() == null) {
 			inv = new ArrayList<>();
 		} if (getInv().size() < taille_inv) {
-			if (!inv.contains(o)) {
-				this.getInv().add(o);
+			if (!inv.contains(collOb)) {
+				this.getInv().add(collOb);
 	            System.out.println("Objet ajouté à l'inventaire.");
 	        }else {
 	          //  System.out.println("Objet déjà dans l'inventaire.");

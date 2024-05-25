@@ -31,11 +31,11 @@ public class Objetc_manager {
     public void getObjetImage() {
         try {
             //instancier d'autre objets 
-        	instObjet(new Potion());
-        	instObjet(new Epee());
-        	instObjet(new Dead());
-        	instObjet(new Apple());
-        	instObjet(new Etoile_Collision());
+        	instObjet(new Potion(gp));
+        	instObjet(new Epee(gp));
+        	instObjet(new Dead(gp));
+        	instObjet(new Apple(gp));
+        	instObjet(new Etoile_Collision(gp));
         	
         	
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public class Objetc_manager {
                     if (objChar == 'k') {
                         String uniqueKeyId = "k" + keyCounter++;
                         mapObjetnum[col][row] = uniqueKeyId; // Utilisation de l'identifiant unique
-                        Objet_Map.put(uniqueKeyId, new Key(uniqueKeyId)); // Créer une clé avec un identifiant unique
+                        Objet_Map.put(uniqueKeyId, new Key(gp)); // Créer une clé avec un identifiant unique
                     } else {
                         mapObjetnum[col][row] = String.valueOf(objChar);
                     }

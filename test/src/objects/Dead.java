@@ -1,11 +1,14 @@
 package objects;
 
+import java.awt.Graphics2D;
+
 import entity.Player;
+import test.GamePanel;
 
 public class Dead extends gameObject implements Usable {
     
-    public Dead() {
-        super("Mort", "d", "/objects/eclair.png", true);
+    public Dead(GamePanel gp) {
+        super(gp,"Mort", "d", "/objects/eclair.png", true);
     }
 
     @Override
@@ -22,5 +25,9 @@ public class Dead extends gameObject implements Usable {
     @Override
     public boolean isConsumable() {
         return true;  // L'éclair est consommé après utilisation
+    }
+    
+    public void draw(Graphics2D g2) {
+    	super.draw(g2);
     }
 }

@@ -9,7 +9,6 @@ import objects.gameObject;
 import test.GamePanel;
 
 public abstract class PNJ extends Entity {
-    GamePanel gp;
     String direction;
     int screenX, screenY;
     int padding; // Ajout du padding comme attribut de la classe
@@ -17,8 +16,7 @@ public abstract class PNJ extends Entity {
     protected boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
 
     public PNJ(GamePanel gp, String imagePath, int padding) {
-        super();
-        this.gp = gp;
+        super(gp);
         this.direction = "neutre"; // Valeur par défaut de la direction
         this.padding = padding; // Initialisation du padding
 

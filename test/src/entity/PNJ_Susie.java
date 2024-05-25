@@ -8,14 +8,15 @@ import javax.swing.JOptionPane;
 
 import objects.Key;
 import objects.gameObject;
+import test.GamePanel;
 
 public class PNJ_Susie extends PNJ {
 	private Player player; // Ajout d'un attribut Player (PERMET DE VOIR JUSTE L INVENTAIRE)
 	private long lastCollisionTime = 0; // Temps de la dernière collision
     private static final long COLLISION_COOLDOWN = 10000; // Délai de 10 secondes
 
-    public PNJ_Susie(Player player) {
-    	super(getGP(), "/img_npj/susie_pnj.png", 15);
+    public PNJ_Susie(GamePanel gp,Player player) {
+    	super(gp,"/img_npj/susie_pnj.png", 15);
         initializePosition('s'); // 'p' pour le point de spawn de Susie
         this.player = player;
     }

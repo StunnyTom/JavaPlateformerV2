@@ -1,12 +1,15 @@
 package objects;
 
+import java.awt.Graphics2D;
+
 import entity.Player;
+import test.GamePanel;
 
 public class Etoile_Collision extends gameObject implements Usable {
 	
     
-    public Etoile_Collision() {
-        super("plus de collision", "w", "/objects/etoile_mario.png", true);
+    public Etoile_Collision(GamePanel gp) {
+        super(gp, "plus de collision", "w", "/objects/etoile_mario.png", true);
     }
 
 
@@ -33,6 +36,8 @@ public class Etoile_Collision extends gameObject implements Usable {
     }
 
    
-   
+    public void draw(Graphics2D g2) {
+    	super.draw(g2);
+    }
 
 }

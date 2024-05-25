@@ -1,14 +1,15 @@
 package objects;
 
+import java.awt.Graphics2D;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import entity.Player;
+import test.GamePanel;
 public class Key extends gameObject implements Usable {
-    public Key(String id) {
-        super(true); // La clé a une collision
+    public Key(GamePanel gp) {
+        super(gp, true); // La clé a une collision
         this.nom = "Key";
-        this.id = id;
         try {
             this.image = ImageIO.read(getClass().getResourceAsStream("/objects/cle.png"));
         } catch (IOException e) {
@@ -29,5 +30,9 @@ public class Key extends gameObject implements Usable {
 
     public String getDescription() {
         return "Obtiens 8 clés pour finir le jeu";
+    }
+    
+    public void draw(Graphics2D g2) {
+    	super.draw(g2);
     }
 }

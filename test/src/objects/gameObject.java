@@ -1,22 +1,28 @@
 package objects;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+
+import generation.Generateur;
+import test.GamePanel;
+
 import java.io.IOException;
 
-public class gameObject {
+public class gameObject extends Generateur {
     protected String nom;
-    protected String id;
     protected BufferedImage image;
     protected boolean collision;
 
     // Ajouter un constructeur qui accepte un boolean pour la collision
-    public gameObject(boolean collision) {
+    public gameObject(GamePanel gp, boolean collision) {
+    	super(gp);
         this.collision = collision;
     }
 
     // Éventuellement, un constructeur plus complet pour initialiser tous les attributs
-    public gameObject(String nom, String id, String imagePath, boolean collision) {
+    public gameObject(GamePanel gp, String nom, String id, String imagePath, boolean collision) {
+    	super(gp);
         this.nom = nom;
         this.id = id;
         this.collision = collision;
@@ -36,14 +42,6 @@ public class gameObject {
 
     public void setImage(BufferedImage image) {
         this.image = image;
-    }
-
-    public String getID() {
-        return id;
-    }
-
-    public void setID(String id) {
-        this.id = id;
     }
 
     public String getNom() {
@@ -67,6 +65,8 @@ public class gameObject {
     }
 
 	
-
+    public void draw(Graphics2D g2) {
+    	super.draw(g2);
+    }
 
 }

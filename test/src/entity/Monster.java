@@ -12,7 +12,7 @@ import test.GamePanel;
 public class Monster extends Entity {
 	public Monster(GamePanel gp) {
 		
-        this.gp = gp;
+        super(gp);
         setDefaultValues();
         
         File nameMap = new File(gp.currentMap);

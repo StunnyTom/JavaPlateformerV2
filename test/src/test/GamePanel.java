@@ -6,13 +6,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
 
 import javax.swing.*;
 
 import entity.Player;
 import objects.InventoryDisplay;
+import objects.Key;
 import entity.Monster;
 import entity.PNJ_Magalor;
 import entity.PNJ_Susie;
@@ -46,19 +51,22 @@ public class GamePanel extends JPanel implements Runnable{
 	//nombre d image par seconde d'image
 	int FPS = 20;
 	
+	public ArrayList<Generateur> Genlist = new ArrayList<>();
+ 	public Map<String, Generateur> genMap;
+ 	//public PNJ_bandana pnj_bandana;
+ 	//public PNJ_Magalor pnj_magalor;
+ 	//public PNJ_Susie pnj_susie;
+ 	public String[][] mapGenNum;
+	
 	Tiles_manger tileM = new Tiles_manger(this);//tuile img
-	Objetc_manager ObjectM = new Objetc_manager(this); // img object
+	//Objetc_manager ObjectM = new Objetc_manager(this); // img object
 	public InventoryDisplay displayInv;
 	KeyHandler keyH;
 	Thread gameThread; //le fil du jeu, il appelle automatiquement la methode run 
 	
 	public CollisionVerif verif = new CollisionVerif(this); // pour la collision 
 
- 	public ArrayList<Generateur> Genlist = new ArrayList<>();
- 	public Map<String, Generateur> genMap;
- 	//public PNJ_bandana pnj_bandana;
- 	//public PNJ_Magalor pnj_magalor;
- 	//public PNJ_Susie pnj_susie;
+ 	
  	
  	public Monster bomb;
     public GameState gameState; // Ajout de l'attribut gameState
@@ -69,7 +77,6 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		
-		this.Genlist.add(new Player(this));
 		gameState = new GameState(this); // Initialisation de gameState
 		
 		setLayout(new GridBagLayout());
@@ -81,20 +88,26 @@ public class GamePanel extends JPanel implements Runnable{
         add(displayInv, gbc);
         setOpaque(false);
         
+        mapGenNum = new String [maxWorldCol][maxWorldRow];
+        genMap = new HashMap<>();
+        //this.loadGenMap("/maps_spawn/" + tileM.mapAct);
+        
         keyH = new KeyHandler(displayInv, this);  // Passer 'this' pour référencer GamePanel
 		getPlayer().setkeyH(keyH);
 		this.addKeyListener(keyH); //reconaitre l'entr�e des touches 
 		this.setFocusable(true);
 		
-		//ObjectM.loadMap("/maps_spawn/maps1.txt"); // Remplacez par le chemin réel du fichier
 		
-		this.Genlist.add(new PNJ_bandana());
-		this.Genlist.add(new PNJ_Magalor());
-		this.Genlist.add(new PNJ_Susie(getPlayer()));
-	    //bomb = new Monster(this);	
-	    //pnj_bandana = new PNJ_bandana(this);
-	    //pnj_magalor = new PNJ_Magalor(this);
-	    //pnj_susie = new PNJ_Susie(this, player);
+	}
+	
+	public void addGen(Generateur g) {
+		this.Genlist.add(g);
+	}
+	
+	public void elaguerGen() {
+		if(Genlist.size() != 0) {
+			Genlist.subList(1, Genlist.size()).clear();
+		}
 	}
 	
 	public void fillMap() {
@@ -116,18 +129,54 @@ public class GamePanel extends JPanel implements Runnable{
 	        gameThread = null;
 	    }
 	}
+	
+	/*
+	public void loadGenMap(String filePath) {
+        try {
+            InputStream is = getClass().getResourceAsStream(filePath);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            int row = 0;
+            int col = 0;
+            int keyCounter = 1; // Compteur pour générer des identifiants uniques pour les clés
+
+            String line;
+            while ((line = br.readLine()) != null && row < maxWorldRow) {
+                String[] characters = line.split(" ");
+                col = 0;
+
+                while (col < maxScreenCol && col < characters.length) {
+                    char objChar = characters[col].charAt(0);
+                    //String uniqueKeyId = "" + objChar + keyCounter++;
+                    mapGenNum[col][row] = ""+objChar; // Utilisation de l'identifiant unique
+                    col++;
+                }
+                row++;
+            }
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    } */
 	/*
 	public void spawnNPC(char npcChar, int row, int col) {
         // Handle spawning NPC based on npcChar at the given row and col
         // This might involve creating a new NPC object and setting its position
     }
 */
+	
+	/*
+	public void updateGenerators() {
+        for (Generateur gen : GenList) {
+             gen.update();
+        }
+    } */
+	
 		@SuppressWarnings("unused")
 		public void update() {
 		    // Mettre à jour le joueur en premier pour prendre en compte les nouvelles positions
 		    if (!gameState.isGameOver()) {
-		        ((Player) this.Genlist.get(0)).update();
-		        //bomb.update();
+		    	 getPlayer().update();
 		    }
 
 		    // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
@@ -150,7 +199,6 @@ public class GamePanel extends JPanel implements Runnable{
 		    } 
 			else {
 				tileM.draw(g2); // d abord le decors 
-				getObjectM().draw(g2); // puis les objects
 				
 	        if (currentMap != null && currentMap.equals("/maps/maps2.txt")) {// Afficher le PNJ si la carte actuelle est "map3.txt"
 	        	//pnj_bandana.draw(g2);
@@ -165,11 +213,12 @@ public class GamePanel extends JPanel implements Runnable{
 	            	
 	            
 	        }
-			getPlayer().draw(g2);// puis apres le perso 	
+        	for (Generateur generateur : Genlist) {
+                generateur.draw(g2); // Appelle la méthode update de la sous-classe spécifique
+            }
 			displayInv.paint(g2);
 			
 			
-			//bomb.draw(g2);
 			g2.dispose();
 		}
 	}
@@ -203,11 +252,11 @@ public class GamePanel extends JPanel implements Runnable{
 		    }
 		}
 
-		public Objetc_manager getObjectM() {
+		/*public Objetc_manager getObjectM() {
 			return ObjectM;
 		}
 
 		public void setObjectM(Objetc_manager objectM) {
 			ObjectM = objectM;
-		}	
+		}	*/
 }

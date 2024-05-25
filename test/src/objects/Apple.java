@@ -1,11 +1,14 @@
 package objects;
 
+import java.awt.Graphics2D;
+
 import entity.Player;
+import test.GamePanel;
 
 public class Apple extends gameObject implements Usable {
 
-    public Apple() {
-        super("Vie", "v", "/objects/apple.png", true);
+    public Apple(GamePanel gp) {
+        super(gp, "Vie", "v", "/objects/apple.png", true);
     }
 
     @Override
@@ -23,5 +26,9 @@ public class Apple extends gameObject implements Usable {
     @Override
     public boolean isConsumable() {
         return true;
+    }
+    
+    public void draw(Graphics2D g2) {
+    	super.draw(g2);
     }
 }

@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import objects.Key;
 import objects.gameObject;
+import test.GamePanel;
 
 public class PNJ_Magalor extends PNJ {
     protected boolean hasDialogStarted = false;
@@ -14,8 +15,8 @@ public class PNJ_Magalor extends PNJ {
     private int currentQuestion = 1;
     private boolean hasMadeMistake = false;  // si le joueur se trompe
 
-    public PNJ_Magalor() {
-        super(getGP(), "/img_npj/PNJ_Magalor.png", 50);
+    public PNJ_Magalor(GamePanel gp) {
+        super(gp, "/img_npj/PNJ_Magalor.png", 50);
         initializePosition('m'); // 'p' pour le point de spawn de Test_Bandana
     }
 

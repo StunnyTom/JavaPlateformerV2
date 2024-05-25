@@ -5,19 +5,20 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import javax.swing.Timer;
 import objects.Epee;
+import test.GamePanel;
 
 public class PNJ_bandana extends PNJ {
     protected Timer dialogueTimer;
     
-    public PNJ_bandana() {
-        super(getGP(), "/img_npj/npj1_neutre.png", 15);
+    public PNJ_bandana(GamePanel gp) {
+        super(gp,"/img_npj/npj1_neutre.png", 15);
         initializePosition('b'); // 'p' pour le point de spawn de Test_Bandana
         dialogueTimer = new Timer(900, e -> isCollisionWithPlayer = false);
         dialogueTimer.setRepeats(false); // Le timer ne se répète pas
     
     
      // Initialisation de l'objet à donner avec la classe Epee existante
-        itemToGive = new Epee(); // Utilisation de la classe Epee déjà définie
+        itemToGive = new Epee(gp); // Utilisation de la classe Epee déjà définie
 }
 
     // Gère la boîte de dialogue propre à chaque PNJ

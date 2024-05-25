@@ -8,12 +8,23 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
 
 import generation.Generateur;
+import objects.Key;
+import objects.Apple;
+import objects.Dead;
+import objects.Epee;
+import objects.Etoile_Collision;
+import objects.Potion;
 import objects.gameObject;
+import entity.PNJ_Magalor;
+import entity.PNJ_bandana;
+import entity.PNJ_Susie;
 import entity.Player;
 import test.GamePanel;
 
@@ -24,21 +35,24 @@ public class Tiles_manger {
     Tile backgroundTile;
     Tile Background2Tile;
     Tile Background3Tile;
+    
+    public String mapOrigin;
+    public String mapAct;
 
-    public Map<String, Generateur> Gen_Map;
+    public Map<String, Class<? extends Generateur>> Gen_Map = new HashMap<>();
 
     // Utilisez un dictionnaire pour mémoriser les transitions de carte
     private Map<Point, MapTransition> mapTransitions;
 
     public Tiles_manger(GamePanel gp) {
         this.gp = gp;
-        tileMap = new HashMap<>(); // Initialisation de tileMap
-        Gen_Map = new HashMap<>();
+        tileMap = new HashMap<>(); 
         mapTilenum = new int[gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
         initMapTransitions();  // Initialiser les transitions ici
         try {
-            String mapOrigin = findFileWithCharacterZ("/maps_spawn/");
+            mapOrigin = findFileWithCharacterZ("/maps_spawn/");
+            mapAct = mapOrigin;
             System.out.println(mapOrigin);
             loadMap("/maps/" + mapOrigin);  // Charge la première carte au démarrage
             loadSpawnMap("/maps_spawn/" + mapOrigin);
@@ -47,6 +61,7 @@ public class Tiles_manger {
             throw new IllegalArgumentException("No initial map found.");
         }
         initGenMap();
+        addGenToGamePanel("z");
     }
 
     // Initialisation des transitions de carte
@@ -61,8 +76,33 @@ public class Tiles_manger {
     }
 
     private void initGenMap() {
-        Gen_Map = new HashMap<>();
-        Gen_Map.put("z", new Player(gp));
+        
+        Gen_Map.put("z", Player.class);
+        Gen_Map.put("k", Key.class);
+        Gen_Map.put("p", Apple.class);
+        Gen_Map.put("e", Etoile_Collision.class);
+        Gen_Map.put("w", Potion.class);
+        Gen_Map.put("s", Epee.class);
+        Gen_Map.put("d", Dead.class);
+        
+        Gen_Map.put("m", PNJ_Magalor.class);
+        Gen_Map.put("b", PNJ_bandana.class);
+        Gen_Map.put("S", PNJ_Susie.class);
+       
+    }
+    
+    private void addGenToGamePanel(String key) {
+        Class<? extends Generateur> clazz = Gen_Map.get(key);
+        if (clazz != null) {
+            try {
+                Generateur generateur = clazz.getDeclaredConstructor(GamePanel.class).newInstance(gp);
+                generateur.setID(key);
+                generateur.setCoordonnees();
+                gp.addGen(generateur);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void checkAndChangeMapOnPosition() {
@@ -168,12 +208,31 @@ public class Tiles_manger {
 
     public void loadSpawnMap(String filePath) {
         try {
+        	gp.mapGenNum = new String [gp.maxWorldCol][gp.maxWorldRow];
+        	gp.elaguerGen();
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line;
-            while ((line = br.readLine()) != null) {
-                // Implémentez ici le chargement des objets, PNJ et monstres
-                // Exemple: parsez la ligne et créez des instances d'objets correspondantes
+            int row = 0;
+            int col = 0;
+            int keyCounter = 1;
+            while ((line = br.readLine()) != null && row < gp.maxWorldRow) {
+                String[] characters = line.split(" ");
+                col = 0;
+                while (col < gp.maxWorldCol && col < characters.length) {
+                	String tileChar = characters[col];
+                	if (!tileChar.equals("a") && !tileChar.equals("z")) {
+                		addGenToGamePanel(tileChar);
+                		String uniqueKeyId = "" + tileChar + keyCounter++;
+                        gp.mapGenNum[col][row] = uniqueKeyId; // Utilisation de l'identifiant unique
+                        gp.genMap.put(uniqueKeyId,gp.Genlist.get(gp.Genlist.size() - 1));
+                        gp.Genlist.get(gp.Genlist.size() - 1).setID(uniqueKeyId);
+                        System.out.println(uniqueKeyId);
+                        //gp.genMap.put(uniqueKeyId, new Key(uniqueKeyId)); // Créer une clé avec un identifiant unique
+                	}
+                    col++;
+                }
+                row++;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -220,8 +279,12 @@ public class Tiles_manger {
         }
     }
 
-    public static String findFileWithCharacterZ(String directoryPath) throws IOException {
-        File directory = new File(directoryPath);
+    public static String findFileWithCharacterZ(String directoryPath) throws IOException, URISyntaxException {
+        URL url = Tiles_manger.class.getResource(directoryPath);
+        if (url == null) {
+            throw new IllegalArgumentException("The provided path does not exist: " + directoryPath);
+        }
+        File directory = new File(url.toURI());
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException("The provided path is not a directory.");
         }
