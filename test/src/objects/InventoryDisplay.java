@@ -100,12 +100,6 @@ public class InventoryDisplay extends JPanel {
 
         repaint(); // Redessinez pour refléter les changements
     }
-
-    
-    
-    
-    
-    
     
     /*
     // Méthode pour supprimer l'objet sélectionné

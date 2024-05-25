@@ -31,11 +31,14 @@ public class Objetc_manager {
     public void getObjetImage() {
         try {
             //instancier d'autre objets 
-        	instObjet(new Potion(gp));
-        	instObjet(new Epee(gp));
-        	instObjet(new Dead(gp));
         	instObjet(new Apple(gp));
+        	instObjet(new Dead(gp));
+        	instObjet(new Epee(gp));
         	instObjet(new Etoile_Collision(gp));
+        	instObjet(new Etoile(gp));
+        	instObjet(new Potion(gp));
+        	instObjet(new Pistolet(gp));
+       
         	
         	
         } catch (Exception e) {
@@ -44,7 +47,6 @@ public class Objetc_manager {
     }
 
     // Pour appeler la map + lire le fichier txt et le translater
-
     public void loadMap(String filePath) {
         try {
             InputStream is = getClass().getResourceAsStream(filePath);
@@ -97,11 +99,6 @@ public class Objetc_manager {
                             gp.ObjetSize, null);
                 }
             }
-            
-            
-            
-            
-
             worldCol++;
             if (worldCol == gp.maxScreenCol) {
                 worldCol = 0;

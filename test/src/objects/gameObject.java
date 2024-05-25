@@ -10,10 +10,10 @@ import test.GamePanel;
 import java.io.IOException;
 
 public class gameObject extends Generateur {
-    protected String nom;
     protected BufferedImage image;
     protected boolean collision = false;
     protected String id;
+    protected String nom;
 
     // Ajouter un constructeur qui accepte un boolean pour la collision
     public gameObject(GamePanel gp, boolean collision) {
@@ -71,11 +71,9 @@ public class gameObject extends Generateur {
         return "Nom: " + nom;
     }
 
-
 	public String getId() {
 		return id;
 	}
-
 
 	public void setId(String id) {
 		this.id = id;

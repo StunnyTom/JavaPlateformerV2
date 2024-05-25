@@ -1,16 +1,11 @@
 package test;
 
 import tiles.Tile;
-import objects.gameObject;
 import java.awt.Rectangle;
-
 import generation.Generateur;
-
-
 
 public class CollisionVerif {
     GamePanel gp;
-
     public CollisionVerif(GamePanel gp) {
         this.gp = gp;
     }
@@ -79,46 +74,4 @@ public class CollisionVerif {
         }
         return object;
     }
-
-
-    /*
-    public boolean checkCollisionPNJ(int newX, int newY, int l, int L, Rectangle solidArea) {
-        Rectangle playerArea = new Rectangle(newX, newY, l, L);
-        if (gp.currentMap.equals("/maps/maps1.txt")) {
-            if (gp.pnj_susie != null && gp.pnj_susie.getSolidAir() != null && gp.pnj_susie.getSolidAir().intersects(playerArea) && System.currentTimeMillis() - gp.pnj_susie.getLastCollisionTime() > PNJ_Susie.getCollisionCooldown()) {
-                gp.pnj_susie.setCollisionWithPlayer(true);
-                gp.pnj_susie.showInventoryDialog();
-                return true;
-            }
-        }
-        
-        if (gp.currentMap.equals("/maps/maps2.txt")) {
-            if (gp.pnj_bandana != null && gp.pnj_bandana.getSolidAir() != null && gp.pnj_bandana.getSolidAir().intersects(playerArea)) {
-                gp.pnj_bandana.setCollisionWithPlayer(true);
-                gp.pnj_bandana.triggerDialogue();
-                gp.pnj_bandana.addItemToInventory(gp.player);
-                System.out.println("Collision avec test_bandana");
-                return true;
-            }
-        }
-    
-        return false;
-	}
-     */
-    
-
-    
-        /*// Vérifier la collision pour PNJ_Magalor sur "map3.txt"
-        if (gp.currentMap.equals("/maps/maps1.txt")) {
-            if (gp.pnj_magalor != null && gp.pnj_magalor.solidAir.intersects(playerArea)) {
-                gp.pnj_magalor.isCollisionWithPlayer = true;
-                gp.pnj_magalor.triggerDialogue();
-             // System.out.println("Collision avec PNJ_Magalor");
-                
-                System.out.println("Collision avec test_bandana");
-                return true;
-            	}
-        } */   
-   
-  
 }

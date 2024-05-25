@@ -36,6 +36,12 @@ public class Player extends Entity {
     int heartY = 0; // Position Y initiale pour les cœurs
     int heartSpacing = 50; // Espacement entre les cœurs
     
+  //item invincible 
+    private boolean isInvincible = false;
+    private long invincibilityStartTime;
+    private static final long INVINCIBILITY_DURATION = 3000; // 3 secondes
+
+    
     //on dessine le joueur
     public Player(GamePanel gp) {
     	super(gp);
@@ -111,8 +117,6 @@ public class Player extends Entity {
         return gp;
     }
 
-
-
   //pour ajouter les clés   
     public int getKeyCount() {
         return keyCount;
@@ -129,19 +133,7 @@ public class Player extends Entity {
             }
         }
     }
-    
-    //l'impact de la potion sur le joueur
-    public void setPotionEffect(boolean hasPotionEffect, long potionStartTime) {
-        this.hasPotionEffect = hasPotionEffect;
-        this.potionStartTime = potionStartTime;
-    }
-
-    
-    // méthode pour gérer l'état des collisions
-    public void setCollisionEnabled(boolean enabled) {
-        this.collisionEnabled = enabled;
-    }
-  
+   
     public void useItem(String itemId) {
         for (int i = 0; i < inv.size(); i++) {
             gameObject item = inv.get(i);
@@ -158,6 +150,30 @@ public class Player extends Entity {
         }
     }
 
+    //l'impact de la potion sur le joueur
+    public void setPotionEffect(boolean hasPotionEffect, long potionStartTime) {
+        this.hasPotionEffect = hasPotionEffect;
+        this.potionStartTime = potionStartTime;
+    }
+
+    
+    // méthode pour gérer l'état des collisions
+    public void setCollisionEnabled(boolean enabled) {
+        this.collisionEnabled = enabled;
+    }
+    
+    //item invincible 
+    public void setInvincible(boolean isInvincible) {
+        this.isInvincible = isInvincible;
+    }
+
+    public void setInvincibilityStartTime(long startTime) {
+        this.invincibilityStartTime = startTime;
+    }
+
+    public boolean isInvincible() {
+        return isInvincible && (System.currentTimeMillis() - invincibilityStartTime < INVINCIBILITY_DURATION);
+    }
    
     //les images pour le sprite
     private void getPlayerImage() {
@@ -170,9 +186,7 @@ public class Player extends Entity {
     
     public void update() {
         int newX = getScreenX(), newY = getScreenY();
-
-        // Appliquer la gravité
-        ySpeed += GRAVITY;
+        ySpeed += GRAVITY; // Appliquer la gravité
         newY += ySpeed;
         boolean onGround = gp.verif.checkCollision(getScreenX(), getScreenY() + 1, l, L, getSolidAir()); // Vérifier les collisions avec le sol
         
@@ -204,11 +218,6 @@ public class Player extends Entity {
         if (!collisionEnabled || !gp.verif.checkCollision(newX, getScreenY(), l, L, getSolidAir())) {
             setScreenX(newX);  // Se déplacer librement en X
         }
-        
-        //utilisation de la potion sur le joueur
-         if (hasPotionEffect && (System.currentTimeMillis() - potionStartTime > Potion.getPotionEffectDuration())) {
-            hasPotionEffect = false; // Reset potion effect after duration
-        }
 
         if (keyH.isUpPressed() && onGround) {
             if (hasPotionEffect) {
@@ -216,6 +225,16 @@ public class Player extends Entity {
             } else {
                 ySpeed = -3; // 
             }
+        }
+        
+        //utilisation de la potion sur le joueur
+        if (hasPotionEffect && (System.currentTimeMillis() - potionStartTime > Potion.getPotionEffectDuration())) {
+           hasPotionEffect = false; // Reset potion effect after duration
+       }
+        
+        if (isInvincible && System.currentTimeMillis() - invincibilityStartTime > INVINCIBILITY_DURATION) {
+            isInvincible = false;
+            System.out.println("Tu n'es plus invincible.");
         }
         
         // Vérification des collisions avec des objets

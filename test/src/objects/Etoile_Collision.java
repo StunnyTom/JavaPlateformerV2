@@ -9,7 +9,7 @@ public class Etoile_Collision extends gameObject implements Usable {
 	
     
     public Etoile_Collision(GamePanel gp) {
-        super(gp, "plus de collision", "w", "/objects/etoile_mario.png", true);
+        super(gp, "plus de collision", "c", "/objects/etoile_mario.png", true);
     }
 
 

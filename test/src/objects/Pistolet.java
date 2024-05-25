@@ -5,10 +5,10 @@ import java.awt.Graphics2D;
 import entity.Player;
 import test.GamePanel;
 
-public class Epee extends gameObject implements Usable {
+public class Pistolet extends gameObject implements Usable {
 
-    public Epee(GamePanel gp) {
-        super(gp,"Epée", "e", "/objects/epe.png", true);
+    public Pistolet(GamePanel gp) {
+        super(gp,"Pistolet", "t", "/objects/pistolet.png", true);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class Epee extends gameObject implements Usable {
     
     @Override
     public boolean isConsumable() {
-        return false; // L'épée n'est pas consommée après utilisation
+        return true; 
     }
     
     public void draw(Graphics2D g2) {

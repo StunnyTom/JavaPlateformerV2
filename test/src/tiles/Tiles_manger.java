@@ -16,9 +16,11 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import generation.Generateur;
 import objects.Key;
+import objects.Pistolet;
 import objects.Apple;
 import objects.Dead;
 import objects.Epee;
+import objects.Etoile;
 import objects.Etoile_Collision;
 import objects.Potion;
 import entity.Monster_Bomb;
@@ -77,17 +79,20 @@ public class Tiles_manger {
     }
 
     private void initGenMap() {
+    	
+    	Gen_Map.put("c", Etoile_Collision.class);
+    	Gen_Map.put("d", Dead.class);
+    	Gen_Map.put("e", Epee.class);
+    	Gen_Map.put("i", Etoile.class);
+    	Gen_Map.put("k", Key.class);
+        Gen_Map.put("p", Potion.class);
+        Gen_Map.put("t", Pistolet.class);
+        Gen_Map.put("v", Apple.class);
         
         Gen_Map.put("z", Player.class);
-        Gen_Map.put("k", Key.class);
-        Gen_Map.put("v", Apple.class);
-        Gen_Map.put("i", Etoile_Collision.class);
-        Gen_Map.put("p", Potion.class);
-        Gen_Map.put("e", Epee.class);
-        Gen_Map.put("d", Dead.class);
-        
-        Gen_Map.put("M", PNJ_Magalor.class);
+     
         Gen_Map.put("b", PNJ_bandana.class);
+        Gen_Map.put("M", PNJ_Magalor.class);
         Gen_Map.put("S", PNJ_Susie.class);
         Gen_Map.put("W", PNJ_Marchand.class);
         
