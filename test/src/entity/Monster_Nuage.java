@@ -12,8 +12,7 @@ public class Monster_Nuage extends Monster{
 		 super(gp, "/img_monster/monstre_nuage.png", 10,0); 
 	     initializePosition('N');
 		}
-		
-		
+	
 		
 
 	}

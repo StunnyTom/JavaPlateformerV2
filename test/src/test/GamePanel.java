@@ -110,7 +110,6 @@ public class GamePanel extends JPanel implements Runnable{
 	        gameThread = null;
 	    }
 	}
-
 	
 		@SuppressWarnings("unused")
 		public void update() {

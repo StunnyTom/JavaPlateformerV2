@@ -17,7 +17,6 @@ public class Monster_Bomb extends Monster {
             return; // Skip update logic if the monster is not visible
         }
     }
-    
     private void handleMonsterBomb(Monster_Bomb monster) {
         // Logique spécifique pour gérer Monster_Bomb
         // Par exemple, peut-être que le monstre attaque le joueur ou déclenche un événement spécial
