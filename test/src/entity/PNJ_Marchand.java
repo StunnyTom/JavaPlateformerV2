@@ -27,7 +27,7 @@ public class PNJ_Marchand extends PNJ {
 
     public void showPNJInventoryConsole() {
     	showInventory(); // Affiche l'inventaire lors de l'interaction
-        if (System.currentTimeMillis() - lastCollisionTime > COLLISION_COOLDOWN) {
+        if (System.currentTimeMillis() - lastCollisionTime > COLLISION_COOLDOWN && !collisionOn) {
             System.out.println("Inventaire du PNJ:");
             for (gameObject item : pnjInventory) {
                 if (item != null) {
@@ -38,11 +38,14 @@ public class PNJ_Marchand extends PNJ {
             }
             lastCollisionTime = System.currentTimeMillis();
             this.selectItemFromInventory();
+            collisionOn = true; // Marquer la première interaction
+        } else if (!collisionOn) {
+            System.out.println("Vous pouvez interagir avec ce PNJ.");
+        } else {
+            System.out.println("Le PNJ ne réagit plus aux interactions.");
         }
     }
 
-
- // Méthode pour afficher l'inventaire et permettre la sélection
     public void selectItemFromInventory() {
         String[] options = pnjInventory.stream().map(gameObject::getNom).toArray(String[]::new);
         int selected = JOptionPane.showOptionDialog(null, "Choisissez un objet à acheter:",
@@ -51,22 +54,21 @@ public class PNJ_Marchand extends PNJ {
         if (selected >= 0) {
             gameObject item = pnjInventory.get(selected);
 
-            // Vérifier si l'objet est déjà dans l'inventaire du joueur
             if (gp.getPlayer().getInv().contains(item)) {
                 JOptionPane.showMessageDialog(null, "Tu as déjà pris cet objet.");
             } else {
-                gp.getPlayer().addInv(item); // Ajoutez l'objet à l'inventaire du joueur
+                gp.getPlayer().addInv(item); // Ajoute l'objet à l'inventaire du joueur
                 System.out.println("Objet ajouté à l'inventaire : " + item.getNom());
             }
         } else {
             System.out.println("Aucun objet sélectionné.");
         }
     }
-   
     // Getters et setters
     public long getLastCollisionTime() {
         return lastCollisionTime;
     }
+
 
     public void setLastCollisionTime(long lastCollisionTime) {
         this.lastCollisionTime = lastCollisionTime;
