@@ -36,13 +36,5 @@ public class Key extends gameObject implements Usable {
     	//System.out.println(this.getID());
     	super.draw(g2);
     }
-    
-    // Méthodes pour définir la position de la clé
-    public void setX(int x) {
-        this.screenX = x;
-    }
 
-    public void setY(int y) {
-        this.screenY = y;
-    }
 }

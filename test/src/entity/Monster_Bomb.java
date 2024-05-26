@@ -46,6 +46,6 @@ public class Monster_Bomb extends Monster {
         Player player = gp.getPlayer(); // Obtenez une référence au joueur
         double distance = Math.sqrt(Math.pow(player.getScreenX() - this.L, 2) + Math.pow(player.getScreenY() - this.l, 2));
         //System.out.println(distance);
-        return distance >= 800 && distance <= 900; 
+        return distance >= 850 && distance <= 900; 
     }
 }
