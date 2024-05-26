@@ -30,6 +30,7 @@ import entity.Monster_Max;
 import entity.Monster_Nuage;
 import entity.Monster_Volant;
 import entity.PNJ_Coffre;
+import entity.PNJ_Inv;
 import entity.PNJ_Magalor;
 import entity.PNJ_Marchand;
 import entity.PNJ_bandana;
@@ -100,10 +101,11 @@ public class Tiles_manger {
      
         //PNJ
         Gen_Map.put("b", PNJ_bandana.class);
+        Gen_Map.put("C", PNJ_Coffre.class);
+        Gen_Map.put("I", PNJ_Inv.class);
         Gen_Map.put("M", PNJ_Magalor.class);
         Gen_Map.put("S", PNJ_Susie.class);
         Gen_Map.put("W", PNJ_Marchand.class);
-        Gen_Map.put("C", PNJ_Coffre.class);
         
         //Monstre
         Gen_Map.put("D", Monster_Max.class);
