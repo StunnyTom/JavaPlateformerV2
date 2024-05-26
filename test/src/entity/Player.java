@@ -92,7 +92,7 @@ public class Player extends Entity {
             System.out.println("Tu ne peux pas utiliser cet objet");
         }
     } 
-
+  
     // Méthode pour réduire le nombre de vies
     public void loseLife() {
         if (lives > 0) {
@@ -133,6 +133,17 @@ public class Player extends Entity {
                 gp.gameState.afficheVictory();  // Déclencher l'état de victoire
             
             }
+        }
+    }
+    
+    // Méthode pour reculer le joueur
+    public void moveBackwards(int steps) {
+        int newX = getScreenX() - steps * (-1) * speed;  // Calculer la nouvelle position en X
+        // Vérifier si la nouvelle position est libre de collision
+        if (!gp.verif.checkCollision(newX, getScreenY(), l, L, getSolidAir())) {
+            setScreenX(newX);  // Appliquer la nouvelle position si elle ne cause pas de collision
+        } else {
+            System.out.println("Mouvement en arrière bloqué par une collision");
         }
     }
    
@@ -263,9 +274,11 @@ public class Player extends Entity {
         	PNJ pnj = (PNJ) collOb;
         	pnj.setCollisionWithPlayer(true);
         	pnj.triggerDialog();
+        	 moveBackwards(5);  // Fait reculer le joueur de 5 "pas"
         } else if (collOb instanceof Monster) {
         	Monster mon = (Monster) collOb;
         	mon.checkPlayerInteraction();
+        	 moveBackwards(5);  // Fait reculer le joueur de 5 "pas"
         }
     
  // Réinitialiser justPickedUpKey si aucune clé n'est touchée dans cette mise à jour
