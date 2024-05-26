@@ -50,13 +50,17 @@ public class PNJ_Marchand extends PNJ {
         
         if (selected >= 0) {
             gameObject item = pnjInventory.get(selected);
-            gp.getPlayer().addInv(item); // Ajoutez l'objet sans vérifier s'il est Usable
-            System.out.println("Objet ajouté à l'inventaire : " + item.getNom());
-        }else {
-            System.out.println("L'objet sélectionné n'est pas utilisable car il n'implémente pas Usable: ");
-        }
 
-         
+            // Vérifier si l'objet est déjà dans l'inventaire du joueur
+            if (gp.getPlayer().getInv().contains(item)) {
+                JOptionPane.showMessageDialog(null, "Tu as déjà pris cet objet.");
+            } else {
+                gp.getPlayer().addInv(item); // Ajoutez l'objet à l'inventaire du joueur
+                System.out.println("Objet ajouté à l'inventaire : " + item.getNom());
+            }
+        } else {
+            System.out.println("Aucun objet sélectionné.");
+        }
     }
    
     // Getters et setters
