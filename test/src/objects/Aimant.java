@@ -7,7 +7,7 @@ import test.GamePanel;
 
 public class Aimant extends gameObject implements Usable{
 	 public Aimant(GamePanel gp) {
-	        super(gp, "Aimant", "a", "/objects/aimant.png", true);
+	        super(gp, "Aimant", "c", "/objects/aimant.png", true);
 	    }
 	 
 	 @Override

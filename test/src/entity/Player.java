@@ -156,6 +156,7 @@ public class Player extends Entity {
         }
     }
 
+ 
     //l'impact de la potion sur le joueur
     public void setPotionEffect(boolean hasPotionEffect, long potionStartTime) {
         this.hasPotionEffect = hasPotionEffect;

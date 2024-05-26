@@ -9,6 +9,8 @@ import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+
 import javax.swing.*;
 import entity.Monster;
 import entity.Player;
@@ -41,6 +43,8 @@ public class GamePanel extends JPanel implements Runnable{
 	//nombre d image par seconde d'image
 	int FPS = 20;
 	
+	public List<Monster> monsters = new ArrayList<>();
+
 	public ArrayList<Generateur> Genlist = new ArrayList<>();
  	public Map<String, Generateur> genMap;
  	public String[][] mapGenNum;
@@ -86,6 +90,9 @@ public class GamePanel extends JPanel implements Runnable{
 		this.Genlist.add(g);
 	}
 	
+	public List<Monster> getMonsters() {
+	    return monsters;
+	}
 	
 	public void elaguerGen() {
 		if(Genlist.size() != 0) {
