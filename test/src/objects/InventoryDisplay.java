@@ -13,6 +13,7 @@ import entity.Player;
 
 import java.awt.Graphics2D;
 
+//Classe pour l'apparition de l'inventaire du joueur
 public class InventoryDisplay extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -102,52 +103,6 @@ public class InventoryDisplay extends JPanel {
         repaint(); // Redessinez pour refléter les changements
     }
     
-    /*
-    // Méthode pour supprimer l'objet sélectionné
-    public void removeSelectedObject() {
-        ArrayList<gameObject> inv = entity.getInv();
-        // Vérification initiale pour s'assurer que l'inventaire n'est pas vide et que l'index est valide
-        if (inv == null || inv.isEmpty()) {
-            System.out.println(" l'inventaire est vide.");
-            //selectedObjectIndex = -1; // Réinitialiser l'index si nécessaire
-            return;
-        }
-        
-        //le cas si il selectionne un objet 
-        if (selectedObjectIndex >= 0 && selectedObjectIndex < inv.size()) {
-            gameObject obj = inv.get(selectedObjectIndex);
-          
-       // gameObject obj = inv.get(selectedObjectIndex);
-        // Vérifie que l'objet à l'index sélectionné n'est pas nul et que l'entité est une instance de Player
-        if (obj != null && entity instanceof Player) {
-            Player player = (Player) entity;
-            // Conditions spécifiques avant d'utiliser un objet, par exemple vérifier le type d'objet et les conditions de vie
-            if (obj instanceof Apple && player.getLives() >= player.getMaxLives()) {
-                System.out.println("Tu ne peux pas utiliser cet objet car tes vies sont pleines.");
-                return;
-            }
-            // Utiliser l'objet
-            player.useItem(obj.getID());
-            // Vérifier si l'objet est consommable et alors le supprimer de l'inventaire
-            if (obj instanceof Usable && ((Usable) obj).isConsumable()) {
-                inv.remove(selectedObjectIndex); // Supprimer l'objet de manière sécurisée
-
-             // Ajuster l'index sélectionné
-                if (inv.size() == 0) {
-                    selectedObjectIndex = -1;
-                } else if (selectedObjectIndex >= inv.size()) {
-                    selectedObjectIndex = inv.size() - 1;
-                }
-            }
-        }
-
-repaint();
-        } else {
-            System.out.println("Aucun objet trouvé à l'index sélectionné ou l'objet est null.");
-        }
-        repaint(); // Redessinez après modifications pour refléter les changements dans l'interface utilisateur
-    }
-*/
 
 
 }

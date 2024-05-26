@@ -5,12 +5,14 @@ import java.awt.Graphics2D;
 import entity.Player;
 import test.GamePanel;
 
+//Objet qui enlève de la vie au joueur
 public class Dead extends gameObject implements Usable {
     
     public Dead(GamePanel gp) {
         super(gp,"Mort", "d", "/objects/eclair.png", true);
     }
 
+    //Méthode commune aux objets
     @Override
     public void use(Player player) {
         if (player.getLives() > 0) {

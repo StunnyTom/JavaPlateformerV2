@@ -6,6 +6,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 import test.GamePanel;
 
+//Classe abstraite pour gérer les méthodes communes aux monstres
 public abstract class Monster extends Entity {
    
     BufferedImage spriteImage;
@@ -33,6 +34,7 @@ public abstract class Monster extends Entity {
         }
     }
     
+    //Méthode abstraite qui gère l'interaction du monstre avec le joueur
     public abstract void checkPlayerInteraction();
 
     protected void updateMovement(int speed) {

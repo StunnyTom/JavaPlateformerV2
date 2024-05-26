@@ -17,6 +17,8 @@ import objects.gameObject;
 import tiles.Tiles_manger;
 import generation.Generateur;
 
+
+//Classe qui gère toutes les mécaniques de jeu et leurs interactions (coeur du jeu)
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable{
 	
@@ -42,13 +44,20 @@ public class GamePanel extends JPanel implements Runnable{
 	//nombre d image par seconde d'image
 	int FPS = 20;
 
+	//Attributs pour gérer les générateurs
 	public ArrayList<Generateur> Genlist = new ArrayList<>();
  	public Map<String, Generateur> genMap;
  	public String[][] mapGenNum;
 	
+ 	//Gère les maps
 	Tiles_manger tileM = new Tiles_manger(this);//tuile img
+	
+	//Affiche l'inventaire
 	public InventoryDisplay displayInv;
+	
+	//Instancie les touches pour le joueur
 	KeyHandler keyH;
+	
 	Thread gameThread; //le fil du jeu, il appelle automatiquement la methode run 
 	
 	public CollisionVerif verif = new CollisionVerif(this); // pour la collision 
@@ -56,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
     public GameState gameState; // Ajout de l'attribut gameState
 	public Object player;
 	
+	//Inventaire pour le stockage des objets dans les coffres
 	public ArrayList<gameObject> StockInventory = new ArrayList<gameObject>();
 	
 	//constructeur de panel 
@@ -66,6 +76,7 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		gameState = new GameState(this); // Initialisation de gameState
 		
+		//Gère l'apparition du HUD
 		setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -84,6 +95,8 @@ public class GamePanel extends JPanel implements Runnable{
 		this.addKeyListener(keyH); //reconaitre l'entr�e des touches 
 		this.setFocusable(true);
 	}
+	
+	//gestion des entités
 	
 	public void addGen(Generateur g) {
 		this.Genlist.add(g);
@@ -120,7 +133,8 @@ public class GamePanel extends JPanel implements Runnable{
 	    }
 	}
 
-		public void update() {
+	//Méthode nécessaire pour la continuité du jeu
+	public void update() {
 		    // Mettre à jour le joueur en premier pour prendre en compte les nouvelles positions
 		    if (!gameState.isGameOver()) {
 		    	 getPlayer().update();
@@ -166,9 +180,10 @@ public class GamePanel extends JPanel implements Runnable{
 		    	tileM.checkAndChangeMapOnPosition(); // Vérifie si le joueur a atteint la position spécifique pour le changement de carte
 		    }	
 		}
-		}
+	}
 
-		public void paintComponent(Graphics g) {
+	//Gère les apparitions à l'écran
+	public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D)g;
 			
@@ -187,9 +202,9 @@ public class GamePanel extends JPanel implements Runnable{
 			    g2.dispose();
 	}
 
-		//genere automatiquement cette classe, permet de faire bouger le joueur
-		@Override
-		public void run() {
+	//genere automatiquement cette classe, permet de faire bouger le joueur
+	@Override
+	public void run() {
 		    double drawInterval = 100000000.0 / FPS;
 		    double nextDrawInterval = System.nanoTime() + drawInterval; 
 

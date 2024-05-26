@@ -9,6 +9,7 @@ import test.GamePanel;
 
 import java.io.IOException;
 
+//Classe qui gère les interactions et attributs communs aux objets
 public class gameObject extends Generateur {
     protected BufferedImage image;
     protected boolean collision = false;

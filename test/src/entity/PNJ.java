@@ -11,6 +11,7 @@ import objects.Fantome_Collision;
 import objects.gameObject;
 import test.GamePanel;
 
+//Classe abstraite pour gérer les interactions et attributs communs des PNJ
 public abstract class PNJ extends Entity {
     String direction;
     int screenX, screenY;
@@ -44,6 +45,7 @@ public abstract class PNJ extends Entity {
         initializeInventory(); 
     }
     
+    //Méthode commune d'interaction avec les PNJ
     public abstract void triggerDialog();
     
     //inventaire par default

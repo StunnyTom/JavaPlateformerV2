@@ -4,12 +4,14 @@ import tiles.Tile;
 import java.awt.Rectangle;
 import generation.Generateur;
 
+//Classe pour vérifier les collisions des entités avec le décor et les autres générateurs
 public class CollisionVerif {
     GamePanel gp;
     public CollisionVerif(GamePanel gp) {
         this.gp = gp;
     }
 
+    //Vérifie les collisions avec le décor
     public boolean checkCollision(int newX, int newY, int l, int L, Rectangle solidArea) {
         // Calculer les positions des tuiles en fonction de newX et newY
         int entityLeftTile = (newX + solidArea.x) / gp.tileSize;
@@ -41,7 +43,7 @@ public class CollisionVerif {
         return collision;
     }
     
-    // Vérification des collisions avec des objets basée sur les positions x, y et des dimensions données :
+    // Vérification des collisions avec des générateurs basée sur les positions x, y et des dimensions données :
     public Generateur checkCollisionGen(int newX, int newY, int l, int L, Rectangle solidArea) {
         int entityLeftObj = (newX + solidArea.x) / gp.ObjetSize;
         int entityRightObj = (newX + solidArea.x + solidArea.width - L) / gp.ObjetSize;
@@ -58,19 +60,20 @@ public class CollisionVerif {
         if (C3!=null) return C3;
         if (C4!=null) return C4;
 
-        return null; // Retourner un gameObject "null"
+        return null; // Retourner un générateur "null"
     }
 
+    //Renvoie le générateur trouvé à une position donnée
     private Generateur GenCollision(int col, int row) {
         if (col < 0 || row < 0 || col >= gp.maxScreenCol || row >= gp.maxScreenRow) {
-            return null; // Retourner un gameObject "null" pour les indices hors limites
+            return null; // Retourner un générateur "null" pour les indices hors limites
         }
 
         String objId = gp.mapGenNum[col][row];
         Generateur object = gp.genMap.get(objId);
 
         if (object == null) {
-            return null; // Retourner un gameObject "null" si aucun objet n'est trouvé
+            return null; // Retourner un générateur "null" si aucun objet n'est trouvé
         }
        
        // System.out.println("collision avec " + object);

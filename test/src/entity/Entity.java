@@ -9,6 +9,9 @@ import objects.gameObject;
 import test.GamePanel;
 
 public class Entity extends Generateur {
+	//Entité pour gérer le joueur, les pnj et les monstres
+	
+	//Constructeur de base
 	public Entity(GamePanel gp) {
 		super(gp);
 	}
@@ -21,13 +24,13 @@ public class Entity extends Generateur {
 	//Inventaire
 	protected ArrayList<gameObject> inv;
 	
-	//Gravit�
+	//Gravité
 	protected static final double GRAVITY = 0.06; // Constante de gravit�
 	protected double ySpeed = 0; // Vitesse verticale
 	
-	//fait une animation
-	protected int spriteCounter = 0;
-	protected int spriteNum = 1;
+	//fait une animation 
+	//protected int spriteCounter = 0;
+	//protected int spriteNum = 1;
 	
 	protected int padding;
 	
@@ -38,27 +41,31 @@ public class Entity extends Generateur {
     protected boolean isCollidable = true;
 	private final int taille_inv = 10;
 	
+	
+	//Ajout d'objet à l'inventaire
 	public void addInv(gameObject collOb) {
 		if (getInv() == null) {
 			inv = new ArrayList<>();
-		} if (getInv().size() < taille_inv) {
+		} if (getInv().size() < taille_inv) { //Gestion de la taille
 			if (!inv.contains(collOb)) {
 				this.getInv().add(collOb);
-	            System.out.println("Objet ajouté à l'inventaire.");
+	            //System.out.println("Objet ajouté à l'inventaire.");
 	        }else {
 	          //  System.out.println("Objet déjà dans l'inventaire.");
 	        }
 		}else {
 	        System.out.println("Impossible : inventaire plein");
 	    }
-}
+	}
 
+	//Enlever un objet de l'inventaire de l'entité
 	 public void removeInv(gameObject obj) {
 	        if (obj != null) {
 	        	getInv().remove(obj);
 	        }
 	    }
 	 
+	 //Méthode pour initialiser la position au chargement d'une map
 	 protected void initializePosition(char identifier) {
 	        File nameMap = new File(gp.currentMap);
 	        try {
@@ -75,6 +82,9 @@ public class Entity extends Generateur {
 	            e.printStackTrace();
 	        }
 	    }
+	 
+	 
+	//Getters et Setters de plusieurs attributs
 
 	public ArrayList<gameObject> getInv() {
 		return inv;

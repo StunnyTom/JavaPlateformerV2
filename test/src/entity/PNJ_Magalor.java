@@ -72,6 +72,7 @@ public class PNJ_Magalor extends PNJ {
         }
     }
     
+    //Prépare l'objet à donner au joueur
     private void initializeItemToGive() {
     	this.itemToGive = new Key(gp);       
     	try {

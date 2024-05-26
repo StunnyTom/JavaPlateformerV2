@@ -5,12 +5,14 @@ import java.awt.Graphics2D;
 import entity.Player;
 import test.GamePanel;
 
+//Objet pour rendre de la vie au joueur
 public class Apple extends gameObject implements Usable {
 
     public Apple(GamePanel gp) {
         super(gp, "Vie", "v", "/objects/apple.png", true);
     }
 
+    //Méthode commune aux objets
     @Override
     public void use(Player player) {
         // Vérifie si le joueur a moins de vies maximales

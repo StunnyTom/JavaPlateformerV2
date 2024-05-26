@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import entity.Player;
 import test.GamePanel;
 
+//Objet qui rend invincible et permet de tuer n'importe quel ennemi
 public class Etoile extends gameObject implements Usable {
 	
     
@@ -12,7 +13,7 @@ public class Etoile extends gameObject implements Usable {
         super(gp, "Invincible", "i", "/objects/etoile_mario.png", true);
     }
 
-
+    
     public void use(Player player) {
         player.setInvincible(true);
         player.setInvincibilityStartTime(System.currentTimeMillis());

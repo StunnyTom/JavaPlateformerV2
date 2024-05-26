@@ -46,6 +46,7 @@ public class PNJ_Marchand extends PNJ {
         }
     }
 
+    //Gère le choix dans l'étalage du marchand
     public void selectItemFromInventory() {
         String[] options = pnjInventory.stream().map(gameObject::getNom).toArray(String[]::new);
         int selected = JOptionPane.showOptionDialog(null, "Choisissez un objet à acheter:",
@@ -78,6 +79,7 @@ public class PNJ_Marchand extends PNJ {
         return COLLISION_COOLDOWN;
     }
 
+    //Méthode commune aux PNJ
 	@Override
 	public void triggerDialog() {
 		// TODO Auto-generated method stub

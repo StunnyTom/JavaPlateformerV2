@@ -21,22 +21,8 @@ public class PNJ_Susie extends PNJ {
         this.player = gp.getPlayer();
     }
     
-    //PERMET DE VOIR UNIQUEMENT L'INVENTAIRE DU JOUEUR
-    /*public void showInventoryDialog() {
-        // Vérifie si le délai de collision est passé
-        if (System.currentTimeMillis() - lastCollisionTime > COLLISION_COOLDOWN) {
-            ArrayList<gameObject> inventory = this.player.inv;
-            StringBuilder items = new StringBuilder("Inventaire:\n");
-            for(gameObject item : inventory) {
-                items.append(item.id).append("\n");
-            }
-
-            JOptionPane.showMessageDialog(null, items.toString(), "Inventaire de Susie", JOptionPane.INFORMATION_MESSAGE);
-            lastCollisionTime = System.currentTimeMillis(); // Réinitialiser le temps de la dernière collision
-        }
-    }*/
     
-    //fonction qui permet de voir dans l'inventaire du joueur 
+    //Méthode commune aux PNJ, permet de voir dans l'inventaire du joueur 
     public void triggerDialog() {
         showInventory(); // Affiche l'inventaire lors de l'interaction
         if (System.currentTimeMillis() - getLastCollisionTime() > getCollisionCooldown()) {

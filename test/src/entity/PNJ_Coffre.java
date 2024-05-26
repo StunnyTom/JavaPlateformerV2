@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import objects.gameObject;
 import test.GamePanel;
 
+//Gère le coffre, appelé comme un pnj pour des raisons pratiques
 public class PNJ_Coffre extends PNJ {
     private ArrayList<gameObject> pnjInventory = new ArrayList<>();
     private long lastCollisionTime = 0; // Temps de la dernière collision
@@ -16,12 +17,6 @@ public class PNJ_Coffre extends PNJ {
     public PNJ_Coffre(GamePanel gp) {
         super(gp, "/img_npj/Coffre.png", 15);
         initializePosition('C');
-    }
-
-    private void addItemsToInventory(gameObject o) {
-        // Exemple d'ajout d'items avec des valeurs fictives appropriées pour les paramètres
-    	gp.getPlayer().getInv().remove(o);
-        pnjInventory.add(o);
     }
 
     public void showPNJInventoryConsole() {
@@ -43,6 +38,8 @@ public class PNJ_Coffre extends PNJ {
 
  // Méthode pour afficher l'inventaire et permettre la sélection
     public void selectItemFromInventory() {
+    	
+    	//Choix initial
         String[] initialOptions = {"Déposer un objet", "Reprendre un objet"};
         int initialChoice = JOptionPane.showOptionDialog(
             null,
@@ -152,6 +149,7 @@ public class PNJ_Coffre extends PNJ {
     	this.pnjInventory.add(o);
     }
 
+    //Méthode commune des PNJ
 	@Override
 	public void triggerDialog() {
 		// TODO Auto-generated method stub

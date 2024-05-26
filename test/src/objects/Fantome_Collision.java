@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import entity.Player;
 import test.GamePanel;
 
+// Objet pour séactiver les collision horizontales pendant un certain temps
 public class Fantome_Collision extends gameObject implements Usable {
     public Fantome_Collision(GamePanel gp) {
         super(gp, "enlever les collisions", "f", "/objects/fantome.png", true);

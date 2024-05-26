@@ -15,11 +15,13 @@ import com.sun.tools.javac.Main;
 
 import test.GamePanel;
 
+//Classe générique qui englobe tout ce qui n'est pas figé, à savoir les objets et les entités vivantes
 public class Generateur {
 
 	protected BufferedImage image; //les images
 	protected static GamePanel gp;
 	
+	//Attributs d'apparition sur l'écran
 	protected int screenX;
 	protected int screenY;
 
@@ -35,6 +37,7 @@ public class Generateur {
 		return gp;
 	}
 	
+	//Gère le chargement de la position des générateurs
 	public void setCoordonnees(int cpt) {
 		File nameMap = new File(gp.currentMap);
 		Point x;
@@ -91,6 +94,7 @@ public class Generateur {
 		this.image = image;
 	}
 	
+	//Permet de trouver la position à l'écran 
 	public static Point[] findSpawnPoints(char character, String filePath) throws IOException {
         List<Point> spawnPointsList = new ArrayList<>();
         try (

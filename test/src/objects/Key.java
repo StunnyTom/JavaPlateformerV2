@@ -7,6 +7,8 @@ import java.util.Random;
 
 import entity.Player;
 import test.GamePanel;
+
+//Classe pour les clés, qui permettent d'accéder à une condition de victoire (8 clés en possession)
 public class Key extends gameObject implements Usable {
     public Key(GamePanel gp) {
         super(gp, true); // La clé a une collision

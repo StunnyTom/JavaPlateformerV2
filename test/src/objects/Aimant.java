@@ -13,6 +13,7 @@ public class Aimant extends gameObject implements Usable {
         super(gp, "Aimant", "c", "/objects/aimant.png", true);
     }
 
+    //Méthode commune aux objets
     @Override
     public void use(Player player) {
         System.out.println("Utilisation de l'Aimant pour voler un objet au pnj.");

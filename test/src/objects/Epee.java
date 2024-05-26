@@ -5,12 +5,14 @@ import java.awt.Graphics2D;
 import entity.Player;
 import test.GamePanel;
 
+//Objet qui permet d'enlever des PV aux ennemis devant le joueur
 public class Epee extends gameObject implements Usable {
 
     public Epee(GamePanel gp) {
         super(gp, "Epée", "e", "/objects/epe.png", true);
     }
 
+    //Méthode commune aux objets
     @Override
     public void use(Player player) {
         System.out.println("Tu attaques l'ennemi");

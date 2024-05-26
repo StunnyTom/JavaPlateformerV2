@@ -39,6 +39,8 @@ import entity.PNJ_Susie;
 import entity.Player;
 import test.GamePanel;
 
+
+//Classe qui gère les apparitions du décor et le chargement du contenu de chaque map
 public class Tiles_manger {
     GamePanel gp;
     public Map<Character, Tile> tileMap;
@@ -52,7 +54,7 @@ public class Tiles_manger {
 
     public Map<String, Class<? extends Generateur>> Gen_Map = new HashMap<>();
 
-    // Utilisez un dictionnaire pour mémoriser les transitions de carte
+    // UDictionnaire pour mémoriser les transitions de carte
     private Map<Point, MapTransition> mapTransitions;
 
     public Tiles_manger(GamePanel gp) {
@@ -116,6 +118,7 @@ public class Tiles_manger {
         Gen_Map.put("V", Monster_Volant.class);
     }
     
+    //rajouter le générateur à la liste des éléments chargés de la map
     private void addGenToGamePanel(String key) {
         Class<? extends Generateur> clazz = Gen_Map.get(key);
         if (clazz != null) {
@@ -206,6 +209,7 @@ public class Tiles_manger {
         }
     }
 
+    //Gestion du changement de map
     private void changeMap(String mapPath, String spawnMapPath, int startX, int startY) {
         System.out.println("Changement de carte à " + mapPath);
         loadMap(mapPath);
@@ -243,6 +247,7 @@ public class Tiles_manger {
         }
     }
 
+    //Idem que loadMap, mais pour gérer les éléments non-décoratifs de la map correspondante
     public void loadSpawnMap(String filePath) {
         try {
             // Trouver le premier coffre dans Genlist
@@ -292,6 +297,7 @@ public class Tiles_manger {
         }
     }
 
+    //Pour éviter la duplication d'objet, seul le premier coffre généré gère réellement le stockage d'objet à long terme
     private PNJ_Coffre findFirstCoffre() {
         for (Object obj : gp.Genlist) {
             if (obj instanceof PNJ_Coffre) {
@@ -301,6 +307,8 @@ public class Tiles_manger {
         return null;
     }
 
+    //Deux méthodes pour la gestion du stockage
+    
     private void transferItemsToBonusInventory(PNJ_Coffre coffre) {
     	if (coffre.getPnjInv().size()!=0)
         gp.getStockInv().addAll(coffre.getPnjInv());
@@ -390,6 +398,7 @@ public class Tiles_manger {
         return foundFile;
     }
 
+    //Méthode pour trouver quelle map générer en premier (dépend de la position choisie du joueur)
     private static boolean containsCharacterZ(File file) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;

@@ -6,6 +6,7 @@ import entity.Player;
 import generation.Generateur;
 import test.GamePanel;
 
+//Objet pour tuer le monstre le plus proche
 public class Pistolet extends gameObject implements Usable {
     
     public Pistolet(GamePanel gp) {

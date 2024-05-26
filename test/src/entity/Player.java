@@ -16,13 +16,18 @@ import objects.gameObject;
 import test.GamePanel;
 import test.KeyHandler;
 
-public class Player extends Entity {    
+//Classe du joueur 
+public class Player extends Entity { 
+	
+	//Attribut pour la gestion de touches
     KeyHandler keyH;
+    
+    //Attributs liés aux objets
     private int keyCount = 0;  // Nombre de clés
 	private boolean hasPotionEffect = false;
 	private long potionStartTime;
 	private Image heartImage;  // Image pour les cœurs
-	private boolean justPickedUpKey = false;  // Nouvelle variable pour gérer l'état de ramassage de clé
+	private boolean justPickedUpKey = false;  // Variable pour gérer l'état de ramassage de clé
 	private boolean collisionEnabled = true; //pour gerer la collison avec l'item 
 	private Set<String> collectedKeys = new HashSet<>();  // Ensemble pour stocker les IDs des clés collectées
 	
@@ -55,6 +60,7 @@ public class Player extends Entity {
     	this.keyH = keyH;
     }
 
+    //Méthode qui met des valeurs par défaut au joueur
     private void setDefaultValues() {
         l = 20;
         L = 25;
@@ -119,7 +125,7 @@ public class Player extends Entity {
         return gp;
     }
 
-  //pour ajouter les clés   
+  //pour récupérer le nombre de clés   
     public int getKeyCount() {
         return keyCount;
     }
@@ -267,7 +273,7 @@ public class Player extends Entity {
             System.out.println("Tu n'es plus invincible.");
         }
         
-        // Vérification des collisions avec des objets
+        // Vérification des collisions avec les différentes entités (en comprenant les objets)
         Generateur collOb = gp.verif.checkCollisionGen(newX, newY, l, L, getSolidAir());
         if (collOb!=null && (collOb instanceof gameObject)) {
         	if (collOb instanceof Key) {
@@ -304,6 +310,7 @@ public class Player extends Entity {
         justPickedUpKey = false;}      
     }
   
+    //Gère l'affichage du joueur
 	public void draw(Graphics2D g2) {
 		super.draw(g2);
 		
