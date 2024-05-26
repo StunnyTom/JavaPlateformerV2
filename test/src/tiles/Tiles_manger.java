@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import generation.Generateur;
 import objects.Key;
 import objects.Pistolet;
+import objects.Aimant;
 import objects.Apple;
 import objects.Dead;
 import objects.Epee;
@@ -83,6 +84,7 @@ public class Tiles_manger {
 
     private void initGenMap() {
     	
+    	Gen_Map.put("a", Aimant.class);
     	Gen_Map.put("d", Dead.class);
     	Gen_Map.put("e", Epee.class);
     	Gen_Map.put("f", Fantome_Collision.class);
