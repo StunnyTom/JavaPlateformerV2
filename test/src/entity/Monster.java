@@ -2,7 +2,6 @@ package entity;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 import test.GamePanel;
@@ -71,23 +70,6 @@ public abstract class Monster extends Entity {
     public void draw(Graphics2D g2) {
         if (spriteImage != null && isVisible) {
             g2.drawImage(spriteImage, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
-        }
-    }
-
-    protected void initializePosition(char identifier) {
-        File nameMap = new File(gp.currentMap);
-        try {
-            Point[] spawnPoints = Entity.findSpawnPoints(identifier, nameMap.getName());
-            if (spawnPoints.length > 0) {
-                Point x = spawnPoints[0];
-                screenX = (int) (gp.tileSize * x.getY());
-                screenY = (int) (gp.tileSize * x.getX());
-                this.setSolidAir(new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding));
-            } else {
-                //System.err.println("Aucun point de spawn trouvé pour l'identifiant: " + identifier);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
     

@@ -1,6 +1,8 @@
 package entity;
 
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.File;
 import java.util.ArrayList;
 import generation.Generateur;
 import objects.gameObject;
@@ -56,6 +58,24 @@ public class Entity extends Generateur {
 	        	getInv().remove(obj);
 	        }
 	    }
+	 
+	 protected void initializePosition(char identifier) {
+	        File nameMap = new File(gp.currentMap);
+	        try {
+	            Point[] spawnPoints = findSpawnPoints(identifier, nameMap.getName());
+	            if (spawnPoints.length > 0) {
+	                Point x = spawnPoints[0];
+	                screenX = (int) (gp.tileSize * x.getY());
+	                screenY = (int) (gp.tileSize * x.getX());
+	                setSolidAir(new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding));
+	            } else {
+	                System.err.println("No spawn point found for identifier: " + identifier);
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
 
 
 	public ArrayList<gameObject> getInv() {

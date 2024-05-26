@@ -1,7 +1,6 @@
 package entity;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
@@ -50,23 +49,6 @@ public abstract class PNJ extends Entity {
         }
     }
 
-    protected void initializePosition(char identifier) {
-        File nameMap = new File(gp.currentMap);
-        try {
-            Point[] spawnPoints = Entity.findSpawnPoints(identifier, nameMap.getName());
-            if (spawnPoints.length > 0) {
-                Point x = spawnPoints[0];
-                screenX = (int) (gp.tileSize * x.getY());
-                screenY = (int) (gp.tileSize * x.getX());
-                this.setSolidAir(new Rectangle(screenX - padding, screenY - padding, gp.tileSize + 2 * padding, gp.tileSize + 2 * padding));
-            } else {
-                //System.err.println("Aucun point de spawn trouvé pour l'identifiant: " + identifier);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void draw(Graphics2D g2) {
         super.draw(g2);
     }
@@ -87,5 +69,4 @@ public abstract class PNJ extends Entity {
 	public void setCollisionWithPlayer(boolean isCollisionWithPlayer) {
 		this.isCollisionWithPlayer = isCollisionWithPlayer;
 	}
-
 }
