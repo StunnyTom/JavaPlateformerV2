@@ -68,10 +68,11 @@ public abstract class Monster extends Entity {
 
     @Override
     public void draw(Graphics2D g2) {
-        if (spriteImage != null && this.isVisible) {
+        if (this.isVisible) {
             g2.drawImage(spriteImage, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
         }
     }
+
     
     public boolean isCollisionWithPlayer() {
         return isCollisionWithPlayer;
