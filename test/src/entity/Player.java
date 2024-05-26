@@ -16,7 +16,6 @@ import objects.gameObject;
 import test.GamePanel;
 import test.KeyHandler;
 
-
 public class Player extends Entity {    
     KeyHandler keyH;
     private int keyCount = 0;  // Nombre de clés
@@ -26,7 +25,6 @@ public class Player extends Entity {
 	private boolean justPickedUpKey = false;  // Nouvelle variable pour gérer l'état de ramassage de clé
 	private boolean collisionEnabled = true; //pour gerer la collison avec l'item 
 	private Set<String> collectedKeys = new HashSet<>();  // Ensemble pour stocker les IDs des clés collectées
-	
 	
 	// Dessiner les cœurs en haut à gauche de l'écran
     private int lives = 3; // Nombre de vies du joueur
@@ -40,7 +38,6 @@ public class Player extends Entity {
     private long invincibilityStartTime;
     private static final long INVINCIBILITY_DURATION = 3000; // 3 secondes
 
-    
     //on dessine le joueur
     public Player(GamePanel gp) {
     	super(gp);
@@ -107,7 +104,6 @@ public class Player extends Entity {
         }
     }
    
-    
  // Méthode pour gagner ou perdre de la vie
     public void setLives(int newLives) {
         this.lives = newLives;
@@ -126,6 +122,7 @@ public class Player extends Entity {
         return keyCount;
     }
 
+    //ajout de la key
     public void addKey(String keyId) {
         if (!collectedKeys.contains(keyId)) {  // Vérifier si la clé n'a pas déjà été collectée
             collectedKeys.add(keyId);
@@ -139,6 +136,7 @@ public class Player extends Entity {
         }
     }
    
+    //Pour utiliser l'item
     public void useItem(String itemId) {
         for (int i = 0; i < inv.size(); i++) {
             gameObject item = inv.get(i);
@@ -155,8 +153,7 @@ public class Player extends Entity {
             }
         }
     }
-
- 
+    
     //l'impact de la potion sur le joueur
     public void setPotionEffect(boolean hasPotionEffect, long potionStartTime) {
         this.hasPotionEffect = hasPotionEffect;
@@ -254,7 +251,6 @@ public class Player extends Entity {
         		 ((Usable) collOb).use(this);  // Utiliser la clé qui appelle addKey
         	}else if (collOb.getID().equals("d")) {
             	loseLife();
-               // gp.gameState.afficheGameOver(); // game over si il touche l'objet 
             }else {
             	addInv((gameObject) collOb);
             }
@@ -274,12 +270,9 @@ public class Player extends Entity {
     
  // Réinitialiser justPickedUpKey si aucune clé n'est touchée dans cette mise à jour
     if (!justPickedUpKey || Math.abs(newX - getScreenX()) > gp.tileSize || Math.abs(newY - getScreenY()) > gp.tileSize) {
-        justPickedUpKey = false;
+        justPickedUpKey = false;}      
     }
-         
-    }
-   
-
+  
 	public void draw(Graphics2D g2) {
 		super.draw(g2);
 		
@@ -293,6 +286,4 @@ public class Player extends Entity {
 	        g2.drawImage(heartImage, heartX + (i * heartSpacing), heartY, gp.tileSize, gp.tileSize, null);
 	    }
 	}
-
-
 }

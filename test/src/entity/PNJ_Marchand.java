@@ -1,12 +1,9 @@
 package entity;
 
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
-
 import objects.Apple;
-import objects.Epee;
-import objects.Usable;
+import objects.Dead;
 import objects.gameObject;
 import test.GamePanel;
 
@@ -25,7 +22,7 @@ public class PNJ_Marchand extends PNJ {
     private void addItemsToInventory() {
         // Exemple d'ajout d'items avec des valeurs fictives appropriées pour les paramètres
         pnjInventory.add(new Apple(gp));
-        pnjInventory.add(new Epee(gp));
+        pnjInventory.add(new Dead(gp));
     }
 
     public void showPNJInventoryConsole() {

@@ -14,6 +14,7 @@ public abstract class PNJ extends Entity {
     int padding; // Ajout du padding comme attribut de la classe
     protected gameObject itemToGive; // Objet à donner utilisé dans les sous-classes
     protected boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
+    private boolean isVisible = true; // Contrôle la visibilité du PNJ
 
     public PNJ(GamePanel gp, String imagePath, int padding) {
         super(gp);
@@ -68,7 +69,15 @@ public abstract class PNJ extends Entity {
 
     public void draw(Graphics2D g2) {
         super.draw(g2);
-       
+    }
+    
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
+
+    public void interact() {
+        setVisible(false); // Rendre le PNJ invisible lors de l'interaction
+        triggerDialog(); // Déclenche le dialogue si nécessaire
     }
 
 	public boolean isCollisionWithPlayer() {
@@ -78,4 +87,5 @@ public abstract class PNJ extends Entity {
 	public void setCollisionWithPlayer(boolean isCollisionWithPlayer) {
 		this.isCollisionWithPlayer = isCollisionWithPlayer;
 	}
+
 }

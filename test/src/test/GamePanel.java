@@ -9,8 +9,6 @@ import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.List;
-
 import javax.swing.*;
 import entity.Monster;
 import entity.Player;
@@ -43,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable{
 	//nombre d image par seconde d'image
 	int FPS = 20;
 	
-	public List<Monster> monsters = new ArrayList<>();
+	//public List<Monster> monsters = new ArrayList<>();
 
 	public ArrayList<Generateur> Genlist = new ArrayList<>();
  	public Map<String, Generateur> genMap;
@@ -90,9 +88,10 @@ public class GamePanel extends JPanel implements Runnable{
 		this.Genlist.add(g);
 	}
 	
-	public List<Monster> getMonsters() {
-	    return monsters;
+	public ArrayList<Generateur> getGenlist() {
+	    return Genlist;
 	}
+
 	
 	public void elaguerGen() {
 		if(Genlist.size() != 0) {
@@ -122,16 +121,42 @@ public class GamePanel extends JPanel implements Runnable{
 		    // Mettre à jour le joueur en premier pour prendre en compte les nouvelles positions
 		    if (!gameState.isGameOver()) {
 		    	 getPlayer().update();
-		    	 for (Generateur generateur : Genlist) {
-		             if (generateur instanceof Monster) {
-		                 ((Monster) generateur).update();  // Mettre à jour chaque monstre.
+		    	 
+		    	 //trouver le monstre le plus proche => initialisation des variables 
+		    	 Generateur closestEntity = null;
+		         double minDistance = Double.MAX_VALUE;
+		         
+		         // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
+					int playerTileX = getPlayer().getScreenX() / tileSize;  // Utilisation de screenX pour la position en X
+				    int playerTileY = getPlayer().getScreenY() / tileSize;  // Utilisation de screenY pour la position en Y
+			
+		    	 
+		    	 // Trouver l'entité la plus proche
+		         for (Generateur gen : Genlist) {
+		             int entityX = gen.getScreenX();
+		             int entityY = gen.getScreenY();
+		             double distance = Math.sqrt(Math.pow(entityX - playerTileX, 2) + Math.pow(entityY - playerTileY, 2));
+		             
+		             if (distance < minDistance) {
+		                 minDistance = distance;
+		                 closestEntity = gen;
 		             }
-		    }
+		         }
+		         
+		         // Rendre l'entité la plus proche invisible si c'est un monstre
+		         if (closestEntity != null && closestEntity instanceof Monster) {
+		             ((Monster) closestEntity).setVisible(false);
+		             System.out.println("Le monstre le plus proche a été rendu invisible.");
+		         }
 
-		    // Convertir les coordonnées du joueur en indices de tuile pour vérifier la collision
-			int playerTileX = getPlayer().getScreenX() / tileSize;  // Utilisation de screenX pour la position en X
-		    int playerTileY = getPlayer().getScreenY() / tileSize;  // Utilisation de screenY pour la position en Y
-	
+		         // Mettre à jour les monstres et autres entités
+		         for (Generateur generateur : Genlist) {
+		             if (generateur instanceof Monster) {
+		                 ((Monster) generateur).update();
+		             }
+		         }
+		         
+		  
 		
 		    // Si le jeu continue, vérifier le changement de carte
 		    if (!gameState.isGameOver()) {
