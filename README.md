@@ -1,9 +1,9 @@
 # 🎮 Kirby's Adventure - Platform Game 🎮
 
-Description
+## Description
 
 Bienvenue dans "Kirby's Adventure" ! 🌟 Ce jeu de plateforme, inspiré de Mario Bros, vous permet de contrôler Kirby. 
-Votre mission est simple : récupérer 8 clés 🔑 pour gagner le jeu. 
+Votre mission est simple : récupérer 8 clés 🔑 sans mourir pour gagner le jeu. 
 Vous pouvez parler aux PNJ pour obtenir des missions et des récompenses, combattre des monstres, et utiliser différents objets pour vous aider dans votre aventure.
 
 ## Pré-requis 🛠
@@ -49,6 +49,7 @@ Si le joueur sort trop des limites, gameOver.
 - 🎅🏻Marchand : Vous propose 2 objets au choix.
 - 🦸🏻‍♀️Susie : Si vous n'avez pas l'objet qu'elle souhaite, elle vous donne une mission. Revenez avec l'objet pour obtenir une récompense.
 - 🧛🏻‍♂️Inv : Permet d'échanger des objets avec lui.
+- 🎁Coffre : Le coffre permet de vider l'inventaire du joueur, il peut recuperer les objects a tout moment
 
 ## Monstres 👾
 
