@@ -1,4 +1,4 @@
-🎮 Kirby's Adventure - Platform Game 🎮
+# 🎮 Kirby's Adventure - Platform Game 🎮
 
 Description
 
@@ -6,10 +6,12 @@ Bienvenue dans "Kirby's Adventure" ! 🌟 Ce jeu de plateforme, inspiré de Mari
 Votre mission est simple : récupérer 8 clés 🔑 pour gagner le jeu. 
 Vous pouvez parler aux PNJ pour obtenir des missions et des récompenses, combattre des monstres, et utiliser différents objets pour vous aider dans votre aventure.
 
-Pré-requis 🛠️
+## Pré-requis 🛠️
+
 Assurez-vous d'avoir Java 8 ou une version supérieure installée sur votre machine.
 
-Installation et Lancement 🚀
+## Installation et Lancement 🚀
+
   1. Téléchargez le fichier .jar :
   2. Récupérez KirbysAdventure.jar à partir du répertoire de distribution.
 
@@ -17,13 +19,13 @@ Lancez le jeu :
 
 Ouvrez un terminal et tapez la commande suivante :
 
-Contrôles 🎮
+## Contrôles 🎮
 
 - ⬅️➡️⬆️⬇️ : Pour vous déplacer
 - Numero f1,f2...f9: Pour sélectionner un objet dans l'inventaire
 - Espace : Pour utiliser l'objet sélectionné
 
-Règles du Jeu 🎯
+## Règles du Jeu 🎯
 
 - But du jeu : Récupérer 8 clés pour gagner le jeu.
 - PNJ : Discutez avec les PNJ pour obtenir des missions ou des récompenses.
