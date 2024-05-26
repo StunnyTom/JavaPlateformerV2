@@ -2,6 +2,7 @@ package entity;
 
 import test.GamePanel;
 
+// on meurt d un coup 
 public class Monster_Nuage extends Monster {
     public Monster_Nuage(GamePanel gp) {
         super(gp, "/img_monster/monstre_nuage.png", 10, 0);

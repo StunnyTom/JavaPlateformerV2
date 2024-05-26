@@ -1,6 +1,9 @@
 package entity;
 
 import test.GamePanel;
+/*Le joueur perds de la vie en touchant le monstre Bomb 
+ * seul moyen de le tuer avoir l etoile 
+ */
 
 public class Monster_Bomb extends Monster {
     private long lastCollisionTime = 0; // Temps de la dernière collision
@@ -39,7 +42,6 @@ public class Monster_Bomb extends Monster {
             }
         }
     }
-
 
     // Détermine si le joueur est suffisamment proche du monstre
     private boolean isPlayerNear() {

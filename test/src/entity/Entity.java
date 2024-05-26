@@ -9,7 +9,6 @@ import objects.gameObject;
 import test.GamePanel;
 
 public class Entity extends Generateur {
-	
 	public Entity(GamePanel gp) {
 		super(gp);
 	}
@@ -75,8 +74,6 @@ public class Entity extends Generateur {
 	            e.printStackTrace();
 	        }
 	    }
-
-
 
 	public ArrayList<gameObject> getInv() {
 		return inv;

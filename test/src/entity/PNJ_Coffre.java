@@ -18,7 +18,8 @@ public class PNJ_Coffre extends PNJ {
         initializePosition('C');
     }
 
-    private void addItemsToInventory(gameObject o) {
+    @SuppressWarnings("unused")
+	private void addItemsToInventory(gameObject o) {
         // Exemple d'ajout d'items avec des valeurs fictives appropriées pour les paramètres
     	gp.getPlayer().getInv().remove(o);
         pnjInventory.add(o);
@@ -39,7 +40,6 @@ public class PNJ_Coffre extends PNJ {
             this.selectItemFromInventory();
         }
     }
-
 
  // Méthode pour afficher l'inventaire et permettre la sélection
     public void selectItemFromInventory() {

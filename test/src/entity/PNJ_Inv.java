@@ -1,12 +1,10 @@
 package entity;
 import javax.swing.*;
-
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
-
 import objects.gameObject;
 import test.GamePanel;
 
@@ -33,7 +31,6 @@ public class PNJ_Inv extends PNJ {
     public void triggerDialog() {
         // System.out.println("collision");
     }
-
     @Override
     public void setCollisionWithPlayer(boolean isCollisionWithPlayer) {
     	 System.out.println("setCollisionWithPlayer called with: " + isCollisionWithPlayer);
@@ -52,7 +49,6 @@ public class PNJ_Inv extends PNJ {
         }
     }
 
-    
     private void exchangeItems() {
         // Obtenir l'inventaire du joueur
         ArrayList<gameObject> playerInventory = getPlayer().getInv();
@@ -72,13 +68,11 @@ public class PNJ_Inv extends PNJ {
         inv.set(pnjItemIndex, temp);
 
         // Affichage d'un message confirmant l'échange
-        JOptionPane.showMessageDialog(null, "Échange effectué avec succès!\nVous avez reçu: " + inv.get(pnjItemIndex).getClass().getSimpleName() +
+        JOptionPane.showMessageDialog(null, "Échange effectué avec succès!\n " +
                                       "\nVous avez donné: " + temp.getClass().getSimpleName(), "Échange Réussi", JOptionPane.INFORMATION_MESSAGE);
-
-        System.out.println("Échange effectué : " + temp.getClass().getSimpleName() + " contre " + inv.get(pnjItemIndex).getClass().getSimpleName());
+       // System.out.println("Échange effectué : " + temp.getClass().getSimpleName() + " contre " + inv.get(pnjItemIndex).getClass().getSimpleName());
     }
 
-   
     private void showInventoryPopup() {
         if (getPlayer().getInv().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Reviens plus tard, tu n'as rien dans ton inventaire", "Inventaire Vide", JOptionPane.WARNING_MESSAGE);
@@ -114,21 +108,16 @@ public class PNJ_Inv extends PNJ {
                     dialog.dispose();  // Ferme la boîte de dialogue
                 }
             });
-
-           
+            
             buttonPanel.add(exchangeButton);
             buttonPanel.add(cancelButton);
             dialog.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-
-            // Configuration finale du dialogue
-            dialog.pack();  // Ajuste la taille du dialogue en fonction de son contenu
+            dialog.pack();  
             dialog.setLocationRelativeTo(null);  // Centre la boîte de dialogue sur l'écran
             dialog.setVisible(true);  // Rend la boîte de dialogue visible
         }
     }
 
- 
-    // Supposant que PNJ a une méthode getPlayer pour accéder au joueur
     private Player getPlayer() {
         return gp.getPlayer();
     }
