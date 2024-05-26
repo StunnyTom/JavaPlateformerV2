@@ -23,6 +23,7 @@ public class PNJ_bandana extends PNJ {
 }
     // Gère la boîte de dialogue propre à chaque PNJ
     public void drawDialogue(Graphics2D g2) {
+    	showInventory(); // Affiche l'inventaire lors de l'interaction
         String text = "Bonjour, je suis Bandana ! Je te donne cette épée pour vaincre le monstre.";
         int boxWidth = 220;
         int boxHeight = 50;

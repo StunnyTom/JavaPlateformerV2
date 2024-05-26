@@ -26,6 +26,7 @@ public class PNJ_Marchand extends PNJ {
     }
 
     public void showPNJInventoryConsole() {
+    	showInventory(); // Affiche l'inventaire lors de l'interaction
         if (System.currentTimeMillis() - lastCollisionTime > COLLISION_COOLDOWN) {
             System.out.println("Inventaire du PNJ:");
             for (gameObject item : pnjInventory) {

@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import objects.gameObject;
 import test.GamePanel;
+/* il faut avoir une pomme et elle donne un aure objet */
 
 public class PNJ_Susie extends PNJ {
 	private Player player; // Ajout d'un attribut Player (PERMET DE VOIR JUSTE L INVENTAIRE)
@@ -36,40 +37,44 @@ public class PNJ_Susie extends PNJ {
     
     //fonction qui permet de voir dans l'inventaire du joueur 
     public void triggerDialog() {
-        if (System.currentTimeMillis() - getLastCollisionTime() > getCollisionCooldown()) { // me permet de plus avoir de collision avec mon pnj pendant 10 secondes 
-            ArrayList<gameObject> inventory = this.player.getInv(); //permet d'acceder a l'inventaire de mon joueur
-            boolean hasItem1 = false; // l'id 1 est d'office a faux 
+        showInventory(); // Affiche l'inventaire lors de l'interaction
+        if (System.currentTimeMillis() - getLastCollisionTime() > getCollisionCooldown()) {
+            ArrayList<gameObject> inventory = this.player.getInv(); // Accès à l'inventaire du joueur
+            boolean hasApple = false; // Assume que l'ID de la pomme est "v"
             
-            for(gameObject item : inventory) { // boucle dans mon inventaire
-                if (item.getID().equals("p")) {
-                    hasItem1 = true;
-                    break; // Dès que l'ID 1 est trouvé, arrêtez la recherche
+            for (gameObject item : inventory) { // Boucle pour vérifier l'inventaire
+                if (item.getID().equals("v")) {
+                    hasApple = true; // La pomme est trouvée
+                    break;
                 }
             }
-
-            // Message simple indiquant la présence ou l'absence de l'ID 1
-            if (!hasItem1) {
-                JOptionPane.showMessageDialog(null, "Il te manque un objet, reviens plus tard :(", "accès a l'inventaire de kirby", JOptionPane.INFORMATION_MESSAGE);
+            if (!hasApple) {
+                JOptionPane.showMessageDialog(null, "Il te manque un objet, reviens plus tard :(", "accès a l'inventaire de Susie", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Tu as enfin l'épé, tiens pour toi :)", "accès a l'inventaire du joueur", JOptionPane.INFORMATION_MESSAGE);
-                initializeItemToGive();
-                AddItemToPlayer(gp.getPlayer()); // Méthode pour ajouter un objet à l'inventaire du joueur
+                JOptionPane.showMessageDialog(null, "Tu as enfin l'épée, tiens pour toi :)", "accès a l'inventaire de Susie", JOptionPane.INFORMATION_MESSAGE);
+                initializeItemToGive(); // Initialise l'épée à donner
+                addItemToPlayer(); // Ajoute l'item à l'inventaire du joueur
             }
-            
             setLastCollisionTime(System.currentTimeMillis()); // Réinitialiser le temps de la dernière collision
         }
     }
-    
+
+    // Méthode pour ajouter un objet à l'inventaire du joueur
+    private void addItemToPlayer() {
+        player.getInv().add(this.itemToGive); // Ajoute l'épée à l'inventaire du joueur
+    }
+
     private void initializeItemToGive() {
-    	 //this.itemToGive = new Key();
         try {
-            BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/cle.png"));
-            itemToGive.setImage(itemImage);
-            itemToGive.setID("e");
+            BufferedImage itemImage = ImageIO.read(getClass().getResourceAsStream("/objects/fantome.png"));
+            this.itemToGive = new gameObject(gp, isCollisionWithPlayer); // Créez une nouvelle instance 
+            this.itemToGive.setImage(itemImage);
+            this.itemToGive.setID("f"); 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
 	public long getLastCollisionTime() {
 		return lastCollisionTime;

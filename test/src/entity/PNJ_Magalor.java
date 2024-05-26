@@ -19,6 +19,7 @@ public class PNJ_Magalor extends PNJ {
     }
 
     public void triggerDialog() {
+    	showInventory(); // Affiche l'inventaire lors de l'interaction
         if (!hasDialogStarted && attemptsLeft > 0) {
             hasDialogStarted = true;
             String question = "";
