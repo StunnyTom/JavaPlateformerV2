@@ -12,7 +12,8 @@ public abstract class Monster extends Entity {
     BufferedImage spriteImage;
     private boolean isCollisionWithPlayer = false;
     protected boolean isVisible = true; // Default visibility
-   
+    private boolean isCollidable = true; // Default collidability
+
     protected int stepsCount = 0; // Compteur de pas commun
     protected int maxSteps;   // Maximum de pas avant de changer de direction
     protected boolean movingRight = true; // Direction initiale
@@ -69,10 +70,11 @@ public abstract class Monster extends Entity {
 
     @Override
     public void draw(Graphics2D g2) {
-        if (spriteImage != null && isVisible) {
+        if (this.isVisible) {
             g2.drawImage(spriteImage, getScreenX(), getScreenY(), gp.tileSize, gp.tileSize, null);
         }
     }
+
     
     public boolean isCollisionWithPlayer() {
         return isCollisionWithPlayer;
@@ -86,10 +88,23 @@ public abstract class Monster extends Entity {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void setVisible(boolean isVisible) {
+	    this.isVisible = isVisible;
+	}
+
+	public void setCollidable(boolean isCollidable) {
+	    this.isCollidable = isCollidable;
+	}
+
+	public boolean getIsVisible() {
+	    return isVisible;
+	}
+
+	public boolean getIsCollidable() {
+	    return isCollidable;
+	}
+
+
+
 }
-
-
-    
-      
-	
-	

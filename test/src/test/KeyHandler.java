@@ -24,8 +24,17 @@ public class KeyHandler implements KeyListener{
 	}
 
 	public void keyPressed(KeyEvent e) {
-
-	    int code = e.getKeyCode();
+		  int code = e.getKeyCode();
+		
+		
+		 // Gestion du jeu terminé
+	    if (gp.gameState.isGameOver()) {
+	        if (code == KeyEvent.VK_ENTER) {
+	            gp.gameState.retryGame();  // Redémarrage du jeu
+	        }
+	        return; // Ignorer les autres entrées si le jeu est terminé
+	    }
+	    
 
 	    if (code == KeyEvent.VK_ENTER && gp.gameState.isGameOver()) {
 	        gp.gameState.retryGame();

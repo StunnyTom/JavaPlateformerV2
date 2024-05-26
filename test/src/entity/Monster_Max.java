@@ -27,7 +27,7 @@ public class Monster_Max extends Monster {
     @Override
     //Collision entre mon joueur et mon monstre
     public void checkPlayerInteraction() {
-        if (!interactionDelay.isRunning() && this.isCollidable()) {
+        if (!interactionDelay.isRunning() && this.getIsCollidable()) {
             String[] questions = {"Le Java c'est trop génial ?", "Tu es sûr de toi ?", "Vraiment ?"};
             String[] correctAnswers = {"oui", "oui", "non"};  // Réponses correctes pour chaque question
 

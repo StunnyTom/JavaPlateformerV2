@@ -5,6 +5,8 @@ import test.GamePanel;
 //Monstre statique
 public class Monster_Attaque extends Monster {
     private int lives = 3; // Vie du monstre
+   
+    private boolean collidable = true;
 
     //Constructeur qui initialise le monstre et sa position
     public Monster_Attaque(GamePanel gp) {
@@ -15,16 +17,17 @@ public class Monster_Attaque extends Monster {
     //Méthode commune qui gère l'interaction avec le joueur
     @Override
     public void checkPlayerInteraction() {
-        if (!this.isVisible() || !this.isCollidable()) {
+        // Ajouter une vérification pour s'assurer que le monstre est visible et collidable avant de procéder
+        if ( !this.isCollidable()) {
             return; // Si le monstre n'est pas visible ou collidable, aucune interaction ne doit avoir lieu
         }
+
         if (gp.getPlayer().isAttacking()) {
-            // Appelle la méthode pour perdre une vie lorsque le joueur attaque
             this.loseLife();
         } else {
             gp.getPlayer().loseLife();
         }
-        gp.getPlayer().moveBackwards(-50); // Fait reculer le joueur 
+        gp.getPlayer().moveBackwards(-50); // Fait reculer le joueur de 5 "pas"
     }
 
     // Méthode modifiée pour perdre une vie
@@ -36,10 +39,21 @@ public class Monster_Attaque extends Monster {
             disappear(); // Appelle la méthode pour faire disparaître le monstre
         }
     }
-    
+
     // Méthode pour faire disparaître le monstre et le rendre non-collidable
     public void disappear() {
-        this.setVisible(false);    // Rendre le monstre invisible
-        this.setCollidable(false); // Rendre le monstre non-collidable
+        setVisible(false);    // Rendre le monstre invisible
+        setCollidable(false); // Rendre le monstre non-collidable
+        // Vous pouvez également appeler ici une méthode pour lâcher une récompense si nécessaire
+    }
+
+
+
+    public boolean isCollidable() {
+        return collidable;
+    }
+
+    public void setCollidable(boolean collidable) {
+        this.collidable = collidable;
     }
 }
