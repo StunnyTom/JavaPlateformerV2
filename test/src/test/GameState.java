@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JOptionPane;
 
+//L ETAT DU JEU? PERDU? VAINQUEUR
 public class GameState {
     private GamePanel gp;
     private boolean isGameOver = false;
@@ -43,6 +44,12 @@ public class GameState {
         }
     }
 
+    public int getXForCenteredText(String text, Graphics2D g2) {
+        int stringWidth = g2.getFontMetrics().stringWidth(text);
+        return (gp.screenWidth - stringWidth) / 2;
+    }
+    
+    //affichage
     public void drawGameOverScreen(Graphics2D g2) {
         g2.setFont(new Font("Arial", Font.BOLD, 50));
         String text = isVictory ? "Bravo ! " : "Game Over";
@@ -57,12 +64,5 @@ public class GameState {
         y += gp.tileSize * 2;
         g2.setColor(Color.white);
         g2.drawString(retryText, x, y);
-        
-        //this.gp.displayInv = null;
-    }
-
-    public int getXForCenteredText(String text, Graphics2D g2) {
-        int stringWidth = g2.getFontMetrics().stringWidth(text);
-        return (gp.screenWidth - stringWidth) / 2;
     }
 }

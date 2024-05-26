@@ -115,8 +115,7 @@ public class GamePanel extends JPanel implements Runnable{
 	        gameThread = null;
 	    }
 	}
-	
-		@SuppressWarnings("unused")
+
 		public void update() {
 		    // Mettre à jour le joueur en premier pour prendre en compte les nouvelles positions
 		    if (!gameState.isGameOver()) {

@@ -6,7 +6,7 @@ import test.GamePanel;
 
 public class Fantome_Collision extends gameObject implements Usable {
     public Fantome_Collision(GamePanel gp) {
-        super(gp, "plus de collision", "f", "/objects/fantome.png", true);
+        super(gp, "enlever les collisions", "f", "/objects/fantome.png", true);
     }
 
     public void use(Player player) {

@@ -4,9 +4,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
-
 import objects.Apple;
 import objects.Dead;
 import objects.Fantome_Collision;
@@ -21,7 +19,8 @@ public abstract class PNJ extends Entity {
     protected ArrayList<gameObject> inv; // Inventaire des objets
     protected ArrayList<gameObject> pnjInventory;
     protected boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
-    private boolean isVisible = true; // Contrôle la visibilité du PNJ
+    @SuppressWarnings("unused")
+	private boolean isVisible = true; // Contrôle la visibilité du PNJ
 
     public PNJ(GamePanel gp, String imagePath, int padding) {
         super(gp);
@@ -61,7 +60,6 @@ public abstract class PNJ extends Entity {
         }
         return null;
     }
-
     
     //ajouter un objet dans l'inventaire
     public void AddItemToPlayer(Player player) {

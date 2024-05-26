@@ -83,7 +83,9 @@ public class Tiles_manger {
     }
 
     private void initGenMap() {
-    	
+        Gen_Map.put("z", Player.class); //perso 
+        
+    	//object 
     	Gen_Map.put("c", Aimant.class);
     	Gen_Map.put("d", Dead.class);
     	Gen_Map.put("e", Epee.class);
@@ -93,14 +95,14 @@ public class Tiles_manger {
         Gen_Map.put("p", Potion.class);
         Gen_Map.put("t", Pistolet.class);
         Gen_Map.put("v", Apple.class);
-        
-        Gen_Map.put("z", Player.class);
      
+        //PNJ
         Gen_Map.put("b", PNJ_bandana.class);
         Gen_Map.put("M", PNJ_Magalor.class);
         Gen_Map.put("S", PNJ_Susie.class);
         Gen_Map.put("W", PNJ_Marchand.class);
         
+        //Monstre
         Gen_Map.put("D", Monster_Max.class);
         Gen_Map.put("L", Monster_Bomb.class);
         Gen_Map.put("N", Monster_Nuage.class);

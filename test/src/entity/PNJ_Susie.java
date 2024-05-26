@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import objects.gameObject;
 import test.GamePanel;
+
 /* il faut avoir une pomme et elle donne un aure objet */
 
 public class PNJ_Susie extends PNJ {
