@@ -3,6 +3,7 @@ package objects;
 import java.awt.Graphics2D;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.util.Random;
 
 import entity.Player;
 import test.GamePanel;
@@ -20,7 +21,8 @@ public class Key extends gameObject implements Usable {
     @Override
     public void use(Player player) {
         System.out.println("Clé utilisée: " + id);
-        player.addKey(this.id);  // Incrémenter le compteur de clés dans le joueur
+        Random random = new Random();
+        player.addKey(this.getID() + String.valueOf(random.nextInt(900000)));  // Incrémenter le compteur de clés dans le joueur
     }
 
     @Override

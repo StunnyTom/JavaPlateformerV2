@@ -13,7 +13,6 @@ import java.util.List;
 
 import com.sun.tools.javac.Main;
 
-import entity.Entity;
 import test.GamePanel;
 
 public class Generateur {

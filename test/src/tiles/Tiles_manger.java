@@ -24,10 +24,12 @@ import objects.Epee;
 import objects.Etoile;
 import objects.Fantome_Collision;
 import objects.Potion;
+import objects.gameObject;
 import entity.Monster_Bomb;
 import entity.Monster_Max;
 import entity.Monster_Nuage;
 import entity.Monster_Volant;
+import entity.PNJ_Coffre;
 import entity.PNJ_Magalor;
 import entity.PNJ_Marchand;
 import entity.PNJ_bandana;
@@ -101,6 +103,7 @@ public class Tiles_manger {
         Gen_Map.put("M", PNJ_Magalor.class);
         Gen_Map.put("S", PNJ_Susie.class);
         Gen_Map.put("W", PNJ_Marchand.class);
+        Gen_Map.put("C", PNJ_Coffre.class);
         
         //Monstre
         Gen_Map.put("D", Monster_Max.class);
@@ -237,7 +240,15 @@ public class Tiles_manger {
 
     public void loadSpawnMap(String filePath) {
         try {
-            gp.mapGenNum = new String [gp.maxWorldCol][gp.maxWorldRow];
+            // Trouver le premier coffre dans Genlist
+            PNJ_Coffre firstCoffre = findFirstCoffre();
+            
+            // Transférer les objets du premier coffre dans l'inventaire bonus
+            if (firstCoffre != null) {
+                transferItemsToBonusInventory(firstCoffre);
+            }
+
+            gp.mapGenNum = new String[gp.maxWorldCol][gp.maxWorldRow];
             gp.elaguerGen();
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -264,10 +275,40 @@ public class Tiles_manger {
                 }
                 row++;
             }
+
+            // Remettre les objets de l'inventaire bonus dans le premier coffre de la nouvelle map
+            firstCoffre = findFirstCoffre(); // Rechercher le premier coffre dans la nouvelle liste
+            if (firstCoffre != null) {
+                transferItemsFromBonusInventory(firstCoffre);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private PNJ_Coffre findFirstCoffre() {
+        for (Object obj : gp.Genlist) {
+            if (obj instanceof PNJ_Coffre) {
+                return (PNJ_Coffre) obj;
+            }
+        }
+        return null;
+    }
+
+    private void transferItemsToBonusInventory(PNJ_Coffre coffre) {
+    	if (coffre.getPnjInv().size()!=0)
+        gp.getStockInv().addAll(coffre.getPnjInv());
+    }
+
+    private void transferItemsFromBonusInventory(PNJ_Coffre coffre) {
+    	if (gp.getStockInv().size()!=0)
+    	for (gameObject o : gp.getStockInv()) {
+    		coffre.addPnjInv(o);
+    	}
+        gp.getStockInv().clear();
+    }
+
 
 
     public void draw(Graphics2D g2) {
