@@ -1,17 +1,13 @@
 package objects;
 
 import java.awt.Graphics2D;
-
 import entity.Player;
 import test.GamePanel;
 
-public class Etoile_Collision extends gameObject implements Usable {
-	
-    
-    public Etoile_Collision(GamePanel gp) {
-        super(gp, "plus de collision", "c", "/objects/etoile_mario.png", true);
+public class Fantome_Collision extends gameObject implements Usable {
+    public Fantome_Collision(GamePanel gp) {
+        super(gp, "plus de collision", "f", "/objects/fantome.png", true);
     }
-
 
     public void use(Player player) {
         player.setCollisionEnabled(false);  // Désactiver les collisions
@@ -33,11 +29,12 @@ public class Etoile_Collision extends gameObject implements Usable {
     @Override
     public boolean isConsumable() { 
         return true; // la potion est utilisable qu'une fois 
-    }
+	    }
 
-   
-    public void draw(Graphics2D g2) {
-    	super.draw(g2);
-    }
+	   
+	    public void draw(Graphics2D g2) {
+	    	super.draw(g2);
+	    }
 
 }
+

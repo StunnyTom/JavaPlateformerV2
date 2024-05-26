@@ -21,7 +21,7 @@ import objects.Apple;
 import objects.Dead;
 import objects.Epee;
 import objects.Etoile;
-import objects.Etoile_Collision;
+import objects.Fantome_Collision;
 import objects.Potion;
 import entity.Monster_Bomb;
 import entity.Monster_Nuage;
@@ -82,9 +82,9 @@ public class Tiles_manger {
 
     private void initGenMap() {
     	
-    	Gen_Map.put("c", Etoile_Collision.class);
     	Gen_Map.put("d", Dead.class);
     	Gen_Map.put("e", Epee.class);
+    	Gen_Map.put("f", Fantome_Collision.class);
     	Gen_Map.put("i", Etoile.class);
     	Gen_Map.put("k", Key.class);
         Gen_Map.put("p", Potion.class);

@@ -34,7 +34,7 @@ public class Objetc_manager {
         	instObjet(new Apple(gp));
         	instObjet(new Dead(gp));
         	instObjet(new Epee(gp));
-        	instObjet(new Etoile_Collision(gp));
+        	instObjet(new Fantome_Collision(gp));
         	instObjet(new Etoile(gp));
         	instObjet(new Potion(gp));
         	instObjet(new Pistolet(gp));
