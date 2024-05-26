@@ -14,9 +14,10 @@ public class Etoile extends gameObject implements Usable {
 
 
     public void use(Player player) {
-    	 player.setInvincible(true); // Activer l'invincibilité
-		 player.setInvincibilityStartTime(System.currentTimeMillis()); // Enregistrer le temps de débu
+        player.setInvincible(true);
+        player.setInvincibilityStartTime(System.currentTimeMillis());
     }
+
     
     @Override
     public boolean isConsumable() { 

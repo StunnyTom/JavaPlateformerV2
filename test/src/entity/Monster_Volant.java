@@ -35,7 +35,7 @@ import java.util.Random;
 		    //sinon je laisse + j'enleve la collision pendant 5 secondes 
 		    public void checkPlayerInteraction() {
 		        long currentTime = System.currentTimeMillis();
-		        if (this.getIsCollidable() && !interactionInProgress && currentTime - lastCollisionTime > COLLISION_COOLDOWN) {
+		        if (this.isCollidable() && !interactionInProgress && currentTime - lastCollisionTime > COLLISION_COOLDOWN) {
 		            interactionInProgress = true; // Définir le flag lors de l'interaction
 		            if (!gp.getPlayer().getInv().isEmpty()) {
 		                Random rand = new Random();

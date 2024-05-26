@@ -25,7 +25,8 @@ public class Pistolet extends gameObject implements Usable {
             PNJ closestPNJ = findClosestPNJ(player);
             if (closestPNJ != null) {
                 System.out.println("Vous interagissez avec le PNJ le plus proche.");
-                closestPNJ.interact();
+                 closestPNJ.setVisible(false);
+            	closestPNJ.setCollidable(false);
             } 
             */
         else {

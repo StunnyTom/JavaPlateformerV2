@@ -38,6 +38,8 @@ public class Player extends Entity {
     private long invincibilityStartTime;
     private static final long INVINCIBILITY_DURATION = 3000; // 3 secondes
 
+    private boolean isAttacking = false; // Nouvel état pour gérer l'attaque
+    
     //on dessine le joueur
     public Player(GamePanel gp) {
     	super(gp);
@@ -189,6 +191,7 @@ public class Player extends Entity {
     public boolean isInvincible() {
         return isInvincible && (System.currentTimeMillis() - invincibilityStartTime < INVINCIBILITY_DURATION);
     }
+
    
     //les images pour le sprite
     private void getPlayerImage() {
@@ -198,6 +201,15 @@ public class Player extends Entity {
             e.printStackTrace();
         }
     }
+    
+    public void setAttacking(boolean isAttacking) {
+        this.isAttacking = isAttacking;
+    }
+
+    public boolean isAttacking() {
+        return this.isAttacking;
+    }
+
     
     public void update() {
     	 if (gp.gameState.isGameOver()) {
@@ -270,15 +282,21 @@ public class Player extends Entity {
             System.out.println(gp.Genlist);
             gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
             //gp.Genlist.remove(Character.getNumericValue(key.charAt(key.length()-1))-1);
-        } else if (collOb instanceof PNJ) {
+        } 
+        
+        else if (collOb instanceof PNJ) {
         	PNJ pnj = (PNJ) collOb;
         	pnj.setCollisionWithPlayer(true);
         	pnj.triggerDialog();
         	 moveBackwards(5);  // Fait reculer le joueur de 5 "pas"
-        } else if (collOb instanceof Monster) {
+        } 
+        
+        else if (collOb instanceof Monster) {
+        	if (!gp.getPlayer().isInvincible()) {
         	Monster mon = (Monster) collOb;
         	mon.checkPlayerInteraction();
         	 moveBackwards(5);  // Fait reculer le joueur de 5 "pas"
+        }
         }
     
  // Réinitialiser justPickedUpKey si aucune clé n'est touchée dans cette mise à jour

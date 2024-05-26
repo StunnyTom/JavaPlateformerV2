@@ -25,6 +25,7 @@ import objects.Etoile;
 import objects.Fantome_Collision;
 import objects.Potion;
 import objects.gameObject;
+import entity.Monster_Attaque;
 import entity.Monster_Bomb;
 import entity.Monster_Max;
 import entity.Monster_Nuage;
@@ -108,6 +109,7 @@ public class Tiles_manger {
         Gen_Map.put("W", PNJ_Marchand.class);
         
         //Monstre
+        Gen_Map.put("A",  Monster_Attaque.class);
         Gen_Map.put("D", Monster_Max.class);
         Gen_Map.put("L", Monster_Bomb.class);
         Gen_Map.put("N", Monster_Nuage.class);
