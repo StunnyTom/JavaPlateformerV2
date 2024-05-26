@@ -13,6 +13,7 @@ import javax.swing.*;
 import entity.Monster;
 import entity.Player;
 import objects.InventoryDisplay;
+import objects.gameObject;
 import tiles.Tiles_manger;
 import generation.Generateur;
 
@@ -40,8 +41,6 @@ public class GamePanel extends JPanel implements Runnable{
 
 	//nombre d image par seconde d'image
 	int FPS = 20;
-	
-	//public List<Monster> monsters = new ArrayList<>();
 
 	public ArrayList<Generateur> Genlist = new ArrayList<>();
  	public Map<String, Generateur> genMap;
@@ -56,6 +55,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     public GameState gameState; // Ajout de l'attribut gameState
 	public Object player;
+	
+	public ArrayList<gameObject> StockInventory = new ArrayList<gameObject>();
 	
 	//constructeur de panel 
 	public GamePanel() {
@@ -98,7 +99,10 @@ public class GamePanel extends JPanel implements Runnable{
 			Genlist.subList(1, Genlist.size()).clear();
 		}
 	}
-	public void fillMap() {}
+
+	public ArrayList<gameObject> getStockInv() {
+		return this.StockInventory;
+	}
 	
 	public Player getPlayer() {
 		return ((Player) this.Genlist.get(0));

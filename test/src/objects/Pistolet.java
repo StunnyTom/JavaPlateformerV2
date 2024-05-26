@@ -18,6 +18,7 @@ public class Pistolet extends gameObject implements Usable {
         if (closestMonster != null) { //si le monstre est differents de nul, tu attaques et tu le tue
             System.out.println("Tu attaques le monstre le plus proche avec le pistolet.");
             closestMonster.setVisible(false);
+            closestMonster.setCollidable(false);
         } 
         /* pour interagir avec le pnj le plus proche 
          * else{

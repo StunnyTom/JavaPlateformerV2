@@ -27,7 +27,7 @@ public class Monster_Max extends Monster {
     @Override
     //Collision entre mon joueur et mon monstre
     public void checkPlayerInteraction() {
-        if (!interactionDelay.isRunning()) {
+        if (!interactionDelay.isRunning() && this.getIsCollidable()) {
             String[] questions = {"Le Java c'est trop génial ?", "Tu es sûr de toi ?", "Vraiment ?"};
             String[] correctAnswers = {"oui", "oui", "non"};  // Réponses correctes pour chaque question
 
@@ -37,7 +37,10 @@ public class Monster_Max extends Monster {
                 String question = questions[i];
                 String correctAnswer = correctAnswers[i];
                 String response = JOptionPane.showInputDialog(null, question);
-                if (!response.equalsIgnoreCase(correctAnswer)) {
+                if (response == null) {
+                	JOptionPane.showMessageDialog(null, "Il faut répondre !");
+                    return;  // Sortir de la méthode si l'utilisateur annule l'interaction
+                } else if (!response.equalsIgnoreCase(correctAnswer)) {
                     player.loseLife(); // Le joueur perd une vie immédiatement après une mauvaise réponse
                     JOptionPane.showMessageDialog(null, "Mauvaise réponse! Vies restantes: " + player.getLives());
                     allCorrect = false;  // Marquer comme fausse réponse
