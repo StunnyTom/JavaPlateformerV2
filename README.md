@@ -20,7 +20,6 @@ Lancez le jeu :
 Ouvrez un terminal et tapez la commande suivante :
 
 ## Contrôles 🎮
-
 - ⬅️➡️⬆️⬇️ : Pour vous déplacer
 - Numero f1,f2...f9: Pour sélectionner un objet dans l'inventaire
 - Espace : Pour utiliser l'objet sélectionné
