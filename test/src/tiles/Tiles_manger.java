@@ -183,6 +183,7 @@ public class Tiles_manger {
 
             tileMap.put('f', new Tile());
             tileMap.get('f').image = ImageIO.read(getClass().getResourceAsStream("/tiles/015.png"));
+            tileMap.get('f').collision = true;
 
             tileMap.put('g', new Tile());
             tileMap.get('g').image = ImageIO.read(getClass().getResourceAsStream("/tiles/001.png"));
