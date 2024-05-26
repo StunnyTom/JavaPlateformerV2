@@ -22,7 +22,8 @@ public abstract class PNJ extends Entity {
     protected boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
     @SuppressWarnings("unused")
 	private boolean isVisible = true; // Contrôle la visibilité du PNJ
-    private boolean isCollidable = true; // Default collidability
+    @SuppressWarnings("unused")
+	private boolean isCollidable = true; // Default collidability
 
     public PNJ(GamePanel gp, String imagePath, int padding) {
         super(gp);

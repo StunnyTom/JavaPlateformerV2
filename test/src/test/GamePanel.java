@@ -162,8 +162,8 @@ public class GamePanel extends JPanel implements Runnable{
 		         
 		         // Rendre l'entité la plus proche invisible si c'est un monstre
 		         if (closestEntity != null && closestEntity instanceof Monster) {
-		             ((Monster) closestEntity).setVisible(false);
-		             System.out.println("Le monstre le plus proche a été rendu invisible.");
+		             //((Monster) closestEntity).setVisible(false);
+		             //System.out.println("Le monstre le plus proche a été rendu invisible.");
 		         }
 
 		         // Mettre à jour les monstres et autres entités
