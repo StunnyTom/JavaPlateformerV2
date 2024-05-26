@@ -2,13 +2,10 @@ package test;
 
 import tiles.Tile;
 import java.awt.Rectangle;
-
-import entity.Player;
 import generation.Generateur;
 
 public class CollisionVerif {
     GamePanel gp;
-	private Object player;
     public CollisionVerif(GamePanel gp) {
         this.gp = gp;
     }

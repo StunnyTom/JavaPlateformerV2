@@ -25,23 +25,32 @@ public class Monster_Max extends Monster {
     }
 
     @Override
-    //interraction joueur monstre
+    //Collision entre mon joueur et mon monstre
     public void checkPlayerInteraction() {
         if (!interactionDelay.isRunning()) {
-            String[] questions = {"Le Java c'est trop génial ?", "Tu es sûr de toi ?", "Vraiment ?"}; //questions
-            String[] correctAnswers = {"oui", "oui", "non"};  //  réponses correctes pour chaque question
+            String[] questions = {"Le Java c'est trop génial ?", "Tu es sûr de toi ?", "Vraiment ?"};
+            String[] correctAnswers = {"oui", "oui", "non"};  // Réponses correctes pour chaque question
+
+            boolean allCorrect = true;  // Flag pour suivre si toutes les réponses sont correctes
 
             for (int i = 0; i < questions.length; i++) {
-                String question = questions[i];//on fait les questions dans une boucle
+                String question = questions[i];
                 String correctAnswer = correctAnswers[i];
                 String response = JOptionPane.showInputDialog(null, question);
                 if (!response.equalsIgnoreCase(correctAnswer)) {
-                    player.loseLife(); // Le joueur perd une vie après une mauvaise réponse
+                    player.loseLife(); // Le joueur perd une vie immédiatement après une mauvaise réponse
                     JOptionPane.showMessageDialog(null, "Mauvaise réponse! Vies restantes: " + player.getLives());
+                    allCorrect = false;  // Marquer comme fausse réponse
                 } else {
                     JOptionPane.showMessageDialog(null, "Bonne réponse!");
                 }
             }
+
+            if (allCorrect) {
+                player.addKey("KeyX");  // Ajouter une clé au joueur si toutes les réponses sont correctes
+                System.out.println("Félicitations ! Vous avez obtenu une nouvelle clé.");
+            }
+
             interactionDelay.start();
         }
     }
