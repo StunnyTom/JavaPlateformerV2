@@ -34,8 +34,7 @@ public class Entity extends Generateur {
 	//pour les collision 
 	protected Rectangle solidAir; //stocker un rectangle invisible ou abstrait avec x,y, largeur, hauteur
 	protected boolean collisionOn = false;
-	protected boolean isVisible = true;
-    protected boolean isCollidable = true;
+	
 	private final int taille_inv = 10;
 	
 	public void addInv(gameObject collOb) {
@@ -91,22 +90,4 @@ public class Entity extends Generateur {
 	public void setSolidAir(Rectangle solidAir) {
 		this.solidAir = solidAir;
 	}
-	
-	// Getters and Setters
-    public void setVisible(boolean visible) {
-        isVisible = visible;
-    }
-
-    public void setCollidable(boolean collidable) {
-        isCollidable = collidable;
-    }
-
-    public boolean isCollidable() {
-        return isCollidable;
-    }
-
-    public boolean isVisible() {
-        return isVisible;
-    }
-
 }

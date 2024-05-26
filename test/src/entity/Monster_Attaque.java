@@ -4,6 +4,9 @@ import test.GamePanel;
 
 public class Monster_Attaque extends Monster {
     private int lives = 3; // Vie du monstre
+    private boolean visible = true;
+    private boolean collidable = true;
+
 
     public Monster_Attaque(GamePanel gp) {
         super(gp, "/img_monster/Monstre_attaque.png", 10, 0);
@@ -12,19 +15,20 @@ public class Monster_Attaque extends Monster {
 
     @Override
     public void checkPlayerInteraction() {
+        // Ajouter une vérification pour s'assurer que le monstre est visible et collidable avant de procéder
         if (!this.isVisible() || !this.isCollidable()) {
             return; // Si le monstre n'est pas visible ou collidable, aucune interaction ne doit avoir lieu
         }
+
         if (gp.getPlayer().isAttacking()) {
-            // Appelle la méthode pour perdre une vie lorsque le joueur attaque
             this.loseLife();
         } else {
             gp.getPlayer().loseLife();
         }
-        gp.getPlayer().moveBackwards(-50); // Fait reculer le joueur 
+        gp.getPlayer().moveBackwards(-50); // Fait reculer le joueur de 5 "pas"
     }
 
-    // Méthode modifiée pour perdre une vie
+	// Méthode modifiée pour perdre une vie
     public void loseLife() {
         lives--;
         System.out.println("Vie du monstre restante : " + lives);
@@ -36,7 +40,25 @@ public class Monster_Attaque extends Monster {
     
     // Méthode pour faire disparaître le monstre et le rendre non-collidable
     public void disappear() {
-        this.setVisible(false);    // Rendre le monstre invisible
-        this.setCollidable(false); // Rendre le monstre non-collidable
+    	setVisible(false);    // Rendre le monstre invisible
+    	setCollidable(false); // Rendre le monstre non-collidable
+        //dropReward(); // Vous pouvez également appeler ici une méthode pour lâcher une récompense
     }
+    
+
+public boolean isVisible() {
+    return visible;
+}
+
+public void setVisible(boolean visible) {
+    this.visible = visible;
+}
+
+public boolean isCollidable() {
+    return collidable;
+}
+
+public void setCollidable(boolean collidable) {
+    this.collidable = collidable;
+}
 }
