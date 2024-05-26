@@ -16,7 +16,7 @@ public class Entity extends Generateur {
 		super(gp);
 	}
 
-	//variable 
+	//variables
     protected int l;
     protected int L;
 	protected int speed;
