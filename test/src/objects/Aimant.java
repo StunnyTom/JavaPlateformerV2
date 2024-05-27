@@ -18,7 +18,7 @@ public class Aimant extends gameObject implements Usable {
     public void use(Player player) {
         System.out.println("Utilisation de l'Aimant pour voler un objet au pnj.");
        
-        gameObject[] possibleItems = {new Apple(gp), new Fantome_Collision(gp), new Dead(gp)};// Liste des objets potentiellement volés
+        gameObject[] possibleItems = {new Apple(gp), new Fantome_Collision(gp)};// Liste des objets potentiellement volés
         Random rand = new Random(); // Sélectionne un objet au hasard parmi les objets possibles
         gameObject stolenItem = possibleItems[rand.nextInt(possibleItems.length)];
 
