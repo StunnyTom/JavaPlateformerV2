@@ -3,8 +3,6 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Random;
 import objects.gameObject;
 import test.GamePanel;
 
@@ -49,6 +47,7 @@ public class PNJ_Inv extends PNJ {
         }
     }
 
+    /*
     private void exchangeItems() {
         // Obtenir l'inventaire du joueur
         ArrayList<gameObject> playerInventory = getPlayer().getInv();
@@ -72,7 +71,8 @@ public class PNJ_Inv extends PNJ {
                                       "\nVous avez donné: " + temp.getClass().getSimpleName(), "Échange Réussi", JOptionPane.INFORMATION_MESSAGE);
        // System.out.println("Échange effectué : " + temp.getClass().getSimpleName() + " contre " + inv.get(pnjItemIndex).getClass().getSimpleName());
     }
-
+*/
+    /*
     private void showInventoryPopup() {
         if (getPlayer().getInv().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Reviens plus tard, tu n'as rien dans ton inventaire", "Inventaire Vide", JOptionPane.WARNING_MESSAGE);
@@ -89,11 +89,11 @@ public class PNJ_Inv extends PNJ {
                 panel.add(new JLabel(item.getClass().getSimpleName() + "<br/>"));
             }
             dialog.getContentPane().add(panel, BorderLayout.CENTER);
-
+ 
             // Boutons
             JPanel buttonPanel = new JPanel();
            
-           
+           /*
             JButton exchangeButton = new JButton("Échanger");
             exchangeButton.addActionListener(new ActionListener() {
                 @Override
@@ -102,6 +102,7 @@ public class PNJ_Inv extends PNJ {
                     dialog.dispose();  // Ferme la boîte de dialogue après l'échange
                 }
             });
+            
             JButton cancelButton = new JButton("Cancel");
             cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -109,12 +110,51 @@ public class PNJ_Inv extends PNJ {
                 }
             });
             
-            buttonPanel.add(exchangeButton);
+           // buttonPanel.add(exchangeButton);
             buttonPanel.add(cancelButton);
             dialog.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
             dialog.pack();  
             dialog.setLocationRelativeTo(null);  // Centre la boîte de dialogue sur l'écran
             dialog.setVisible(true);  // Rend la boîte de dialogue visible
+        }
+    }
+    */
+
+    
+    private void showInventoryPopup() {
+        // Vérifie si l'inventaire du PNJ est vide
+        if (inv.isEmpty()) {
+            // Affiche un message indiquant que le PNJ n'a rien
+            JOptionPane.showMessageDialog(null, "Je n'ai rien", "Inventaire Vide", JOptionPane.WARNING_MESSAGE);
+            System.out.println("Le PNJ n'a rien dans son inventaire.");
+        } else {
+            // Crée un nouveau JDialog pour montrer l'inventaire si le PNJ a des objets
+            JDialog dialog = new JDialog();
+            dialog.setTitle("Inventaire du PNJ");
+            dialog.setModal(true);
+
+            // Contenu principal affichant les items
+            JPanel panel = new JPanel();
+            panel.add(new JLabel("<html>Inventaire :<br/>"));
+            for (gameObject item : inv) {
+                panel.add(new JLabel(item.getClass().getSimpleName() + "<br/>"));
+            }
+            dialog.getContentPane().add(panel, BorderLayout.CENTER);
+
+            // Boutons de contrôle
+            JPanel buttonPanel = new JPanel();
+            JButton cancelButton = new JButton("Cancel");
+            cancelButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    dialog.dispose();
+                }
+            });
+            buttonPanel.add(cancelButton);
+            dialog.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+
+            dialog.pack();
+            dialog.setLocationRelativeTo(null);
+            dialog.setVisible(true);
         }
     }
 
