@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import generation.Generateur;
 import objects.Apple;
+import objects.Dead;
+import objects.Fantome_Collision;
 import objects.Key;
 import objects.Potion;
 import objects.Usable;
@@ -66,12 +68,24 @@ public class Player extends Entity {
         L = 25;
         speed = 2;
         setInv(new ArrayList<gameObject>());
+        
+        this.inv.add(new Potion(gp));
+        this.inv.add(new Fantome_Collision(gp));
+        this.inv.add(new Dead(gp));
+        this.inv.add(new Dead(gp));
+        this.inv.add(new Dead(gp));
+        
+    }
+       /*
+            this.inv.add(new Apple(gp));
+            this.inv.add(new Fantome_Collision(gp));
+            this.inv.add(new Dead(gp));
         /* POUR DIRECT AVOIR LES 7 CLé
         for (int i = 0; i < 7; i++) {
             collectedKeys.add("Key" + i);  // Ajouter des identifiants de clés fictifs
         }
         */
-    }
+   
     
     // Charger l'image du cœur
     private void loadHeartImage() {
