@@ -30,15 +30,15 @@ public class PNJ_Susie extends PNJ {
             boolean hasApple = false; // Assume que l'ID de la pomme est "v"
             
             for (gameObject item : inventory) { // Boucle pour vérifier l'inventaire
-                if (item.getID().equals("v")) {
+                if (item.getID().equals("e")) {
                     hasApple = true; // La pomme est trouvée
                     break;
                 }
             }
             if (!hasApple) {
-                JOptionPane.showMessageDialog(null, "Il te manque un objet, reviens plus tard :(", "accès a l'inventaire de Susie", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Il te manque l'épée, reviens plus tard :(", "accès a l'inventaire de Susie", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Tu as enfin l'épée, tiens pour toi :)", "accès a l'inventaire de Susie", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Tu as enfin l'épée, tu peux passer a travers les collisions :)", "accès a l'inventaire de Susie", JOptionPane.INFORMATION_MESSAGE);
                 initializeItemToGive(); // Initialise l'épée à donner
                 addItemToPlayer(); // Ajoute l'item à l'inventaire du joueur
             }

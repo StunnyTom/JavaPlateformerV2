@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import objects.Apple;
 import objects.Dead;
+import objects.Potion;
 import objects.gameObject;
 import test.GamePanel;
 
@@ -21,7 +22,7 @@ public class PNJ_Marchand extends PNJ {
 
     private void addItemsToInventory() {
         // Exemple d'ajout d'items avec des valeurs fictives appropriées pour les paramètres
-        pnjInventory.add(new Apple(gp));
+        pnjInventory.add(new Potion(gp));
         pnjInventory.add(new Dead(gp));
     }
 

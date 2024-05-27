@@ -371,7 +371,7 @@ public class Tiles_manger {
         }
         File directory = new File(url.toURI());
         if (!directory.isDirectory()) {
-            throw new IllegalArgumentException("The provided path is not a directory.");
+            //throw new IllegalArgumentException("The provided path is not a directory.");
         }
 
         File[] files = directory.listFiles();

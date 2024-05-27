@@ -37,6 +37,7 @@ public class Monster_Attaque extends Monster {
         if (lives <= 0) {
             System.out.println("Le monstre est vaincu");
             disappear(); // Appelle la méthode pour faire disparaître le monstre
+            gp.gameState.afficheVictory();
         }
     }
 
