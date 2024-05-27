@@ -15,6 +15,7 @@ import objects.Etoile;
 import objects.Fantome_Collision;
 import objects.Key;
 import objects.Potion;
+import objects.Rencontre;
 import objects.Usable;
 import objects.gameObject;
 import test.GamePanel;
@@ -51,6 +52,7 @@ public class Player extends Entity {
 
     private boolean isAttacking = false; // Nouvel état pour gérer l'attaque
     
+    private Set<String> pnjInteractions = new HashSet<>();
     //on dessine le joueur
     public Player(GamePanel gp) {
     	super(gp);
@@ -73,13 +75,25 @@ public class Player extends Entity {
         speed = 2;
         setInv(new ArrayList<gameObject>());
         
-        this.inv.add(new Potion(gp));
+        this.inv.add(new Rencontre(gp));
         this.inv.add(new Etoile(gp));
         this.inv.add(new Dead(gp));
         this.inv.add(new Apple(gp));
         this.inv.add(new Aimant(gp));
         
     }
+    
+ // Méthode pour ajouter une interaction
+    public void addPnjInteraction(String pnjId) {
+        pnjInteractions.add(pnjId);
+    }
+
+    // Méthode pour vérifier si des interactions ont eu lieu
+    public boolean hasPnjInteractions() {
+        return !pnjInteractions.isEmpty();
+    }
+
+
        /*
             this.inv.add(new Apple(gp));
             this.inv.add(new Fantome_Collision(gp));
