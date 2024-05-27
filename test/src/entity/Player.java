@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 import generation.Generateur;
+import objects.Aimant;
 import objects.Apple;
 import objects.Dead;
 import objects.Fantome_Collision;
@@ -45,6 +46,8 @@ public class Player extends Entity {
     private long invincibilityStartTime;
     private static final long INVINCIBILITY_DURATION = 3000; // 3 secondes
 
+	private static final int NUM_SQUARES = 5;
+
     private boolean isAttacking = false; // Nouvel état pour gérer l'attaque
     
     //on dessine le joueur
@@ -72,8 +75,8 @@ public class Player extends Entity {
         this.inv.add(new Potion(gp));
         this.inv.add(new Fantome_Collision(gp));
         this.inv.add(new Dead(gp));
-        this.inv.add(new Dead(gp));
-        this.inv.add(new Dead(gp));
+        this.inv.add(new Apple(gp));
+        this.inv.add(new Aimant(gp));
         
     }
        /*
@@ -316,6 +319,18 @@ public class Player extends Entity {
         	Monster mon = (Monster) collOb;
         	mon.checkPlayerInteraction();
         	 moveBackwards(5);  // Fait reculer le joueur de 5 "pas"
+        }
+        	
+            if (collOb != null && (collOb instanceof gameObject)) {
+                gameObject obj = (gameObject) collOb;
+                if (inv.size() < NUM_SQUARES) {  // Assurez-vous de définir MAX_INVENTORY_SIZE quelque part
+                    addInv(obj);
+                    String key = collOb.getID();
+                    gp.genMap.remove(key);
+                    gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
+                } else {
+                    System.out.println("Inventaire plein, impossible de ramasser : " + obj.getID());
+                }
         }
         }
     
