@@ -38,7 +38,7 @@ public class Entity extends Generateur {
 	protected Rectangle solidAir; //stocker un rectangle invisible ou abstrait avec x,y, largeur, hauteur
 	protected boolean collisionOn = false;
 	
-	private final int taille_inv = 10;
+	private final int taille_inv = 5;
 	
 	
 	//Ajout d'objet à l'inventaire

@@ -46,6 +46,8 @@ public abstract class PNJ extends Entity {
         initializeInventory(); 
     }
     
+    
+    
     //Méthode commune d'interaction avec les PNJ
     public abstract void triggerDialog();
     

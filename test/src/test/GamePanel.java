@@ -105,6 +105,10 @@ public class GamePanel extends JPanel implements Runnable{
 	public ArrayList<Generateur> getGenlist() {
 	    return Genlist;
 	}
+	
+	public Tiles_manger getTileM(){
+		return this.tileM;
+	}
 
 	
 	public void elaguerGen() {

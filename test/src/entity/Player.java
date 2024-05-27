@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import generation.Generateur;
 import objects.Apple;
+import objects.Item1;
 import objects.Key;
 import objects.Potion;
 import objects.Usable;
@@ -45,6 +46,8 @@ public class Player extends Entity {
 
     private boolean isAttacking = false; // Nouvel état pour gérer l'attaque
     
+    public ArrayList<PNJ> lastPNJs=new ArrayList<>();
+    
     //on dessine le joueur
     public Player(GamePanel gp) {
     	super(gp);
@@ -66,6 +69,8 @@ public class Player extends Entity {
         L = 25;
         speed = 2;
         setInv(new ArrayList<gameObject>());
+        this.addInv(new Item1(gp));
+        
         /* POUR DIRECT AVOIR LES 7 CLé
         for (int i = 0; i < 7; i++) {
             collectedKeys.add("Key" + i);  // Ajouter des identifiants de clés fictifs
@@ -89,6 +94,10 @@ public class Player extends Entity {
 
     public int getMaxLives() {
         return maxLives;
+    }
+    
+    public ArrayList<PNJ> getLastPNJs() {
+    	return this.lastPNJs;
     }
     
     // Méthode pour gagner une vie
@@ -218,6 +227,11 @@ public class Player extends Entity {
 
     
     public void update() {
+    	if (gp.getGenlist().size()==1) {
+    		//System.out.println("oui");
+    		//gp.getTileM().loadSpawnMap(gp.currentMap);
+    	}
+    	
     	 if (gp.gameState.isGameOver()) {
     	        return; // Ne rien faire si le jeu est terminé
     	    }
@@ -294,7 +308,9 @@ public class Player extends Entity {
         	PNJ pnj = (PNJ) collOb;
         	pnj.setCollisionWithPlayer(true);
         	pnj.triggerDialog();
-        	 moveBackwards(5);  // Fait reculer le joueur de 5 "pas"
+        	if(!this.getLastPNJs().contains(pnj))
+        		this.getLastPNJs().add(pnj);
+        	 //moveBackwards(5);  // Fait reculer le joueur de 5 "pas"
         } 
         
         else if (collOb instanceof Monster) {

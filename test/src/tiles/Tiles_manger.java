@@ -4,15 +4,20 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
 import javax.imageio.ImageIO;
 import generation.Generateur;
 import objects.Key;
@@ -23,6 +28,7 @@ import objects.Dead;
 import objects.Epee;
 import objects.Etoile;
 import objects.Fantome_Collision;
+import objects.Item1;
 import objects.Potion;
 import objects.gameObject;
 import entity.Monster_Attaque;
@@ -30,6 +36,7 @@ import entity.Monster_Bomb;
 import entity.Monster_Max;
 import entity.Monster_Nuage;
 import entity.Monster_Volant;
+import entity.PNJ1;
 import entity.PNJ_Coffre;
 import entity.PNJ_Inv;
 import entity.PNJ_Magalor;
@@ -101,6 +108,8 @@ public class Tiles_manger {
         Gen_Map.put("p", Potion.class);
         Gen_Map.put("t", Pistolet.class);
         Gen_Map.put("v", Apple.class);
+        Gen_Map.put("l", Item1.class);
+        
      
         //PNJ
         Gen_Map.put("b", PNJ_bandana.class);
@@ -109,6 +118,8 @@ public class Tiles_manger {
         Gen_Map.put("M", PNJ_Magalor.class);
         Gen_Map.put("S", PNJ_Susie.class);
         Gen_Map.put("W", PNJ_Marchand.class);
+        Gen_Map.put("P", PNJ1.class);
+        
         
         //Monstre
         Gen_Map.put("A",  Monster_Attaque.class);
@@ -366,41 +377,80 @@ public class Tiles_manger {
 
     public static String findFileWithCharacterZ(String directoryPath) throws IOException, URISyntaxException {
         URL url = Tiles_manger.class.getResource(directoryPath);
+        System.out.println(url);
         if (url == null) {
             throw new IllegalArgumentException("The provided path does not exist: " + directoryPath);
         }
-        File directory = new File(url.toURI());
-        if (!directory.isDirectory()) {
-            throw new IllegalArgumentException("The provided path is not a directory.");
-        }
+        
+        if (url.getProtocol().equals("file")) {
+            File directory = new File(url.toURI());
+            if (!directory.isDirectory()) {
+                throw new IllegalArgumentException("The provided path is not a directory.");
+            }
 
-        File[] files = directory.listFiles();
-        if (files == null || files.length == 0) {
-            throw new IllegalArgumentException("The directory is empty or an error occurred.");
-        }
+            File[] files = directory.listFiles();
+            if (files == null || files.length == 0) {
+                throw new IllegalArgumentException("The directory is empty or an error occurred.");
+            }
 
-        String foundFile = null;
-        for (File file : files) {
-            if (file.isFile()) {
-                if (containsCharacterZ(file)) {
-                    if (foundFile != null) {
-                        throw new IllegalArgumentException("The character 'z' was found in multiple files.");
+            String foundFile = null;
+            for (File file : files) {
+                if (file.isFile()) {
+                    if (containsCharacterZ(file)) {
+                        if (foundFile != null) {
+                            throw new IllegalArgumentException("The character 'z' was found in multiple files.");
+                        }
+                        foundFile = file.getName();
                     }
-                    foundFile = file.getName();
                 }
             }
-        }
 
-        if (foundFile == null) {
-            throw new IllegalArgumentException("The character 'z' was not found in any file.");
-        }
+            if (foundFile == null) {
+                throw new IllegalArgumentException("The character 'z' was not found in any file.");
+            }
 
-        return foundFile;
+            return foundFile;
+        } else if (url.getProtocol().equals("jar")) {
+            String path = url.getPath();
+            String jarPath = path.substring(5, path.indexOf("!"));
+            String directory = path.substring(path.indexOf("!") + 2);
+
+            try (JarFile jarFile = new JarFile(jarPath)) {
+                Enumeration<JarEntry> entries = jarFile.entries();
+                String foundFile = null;
+
+                while (entries.hasMoreElements()) {
+                    JarEntry entry = entries.nextElement();
+                    if (entry.getName().startsWith(directory) && !entry.isDirectory()) {
+                        try (InputStream is = jarFile.getInputStream(entry);
+                             BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                if (line.contains("z")) {
+                                    if (foundFile != null) {
+                                        throw new IllegalArgumentException("The character 'z' was found in multiple files.");
+                                    }
+                                    foundFile = entry.getName();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (foundFile == null) {
+                    throw new IllegalArgumentException("The character 'z' was not found in any file.");
+                }
+
+                return foundFile;
+            }
+        } else {
+            throw new IllegalArgumentException("Unsupported URL protocol: " + url.getProtocol());
+        }
     }
 
-    //Méthode pour trouver quelle map générer en premier (dépend de la position choisie du joueur)
     private static boolean containsCharacterZ(File file) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.contains("z")) {
