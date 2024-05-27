@@ -30,7 +30,7 @@ public class Aimant extends gameObject implements Usable {
 
     @Override
     public boolean isConsumable() {
-        return true;
+        return false;
     }
 
     @Override
