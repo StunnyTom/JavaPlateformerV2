@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -29,6 +30,9 @@ import objects.Epee;
 import objects.Etoile;
 import objects.Fantome_Collision;
 import objects.Item1;
+import objects.Item2;
+import objects.Item4;
+import objects.Item5;
 import objects.Potion;
 import objects.gameObject;
 import entity.Monster_Attaque;
@@ -86,13 +90,13 @@ public class Tiles_manger {
 
     // Initialisation des transitions de carte
     private void initMapTransitions() {
-        mapTransitions = new HashMap<>();
-        mapTransitions.put(new Point(20, 6), new MapTransition("/maps/maps2.txt", "/maps_spawn/maps2.txt", 1, 0)); // map 1 à 2
-        mapTransitions.put(new Point(0, 1), new MapTransition("/maps/maps1.txt", "/maps_spawn/maps1.txt", 20, 6)); // map 2 à 1
-        mapTransitions.put(new Point(20, 7), new MapTransition("/maps/map3.txt", "/maps_spawn/map3.txt", 0, 6)); // map 2 à 3
-        mapTransitions.put(new Point(0, 7), new MapTransition("/maps/maps2.txt", "/maps_spawn/maps2.txt", 19, 7)); // map 3 à 2
-        mapTransitions.put(new Point(19, 1), new MapTransition("/maps/maps4.txt", "/maps_spawn/maps4.txt", 1, 3)); // map 3 à 4
-        mapTransitions.put(new Point(20, 3), new MapTransition("/maps/maps1.txt", "/maps_spawn/maps1.txt", 1, 2)); // map 4 à 1
+        setMapTransitions(new HashMap<>());
+        getMapTransitions().put(new Point(20, 6), new MapTransition("/maps/maps2.txt", "/maps_spawn/maps2.txt", 1, 0)); // map 1 à 2
+        getMapTransitions().put(new Point(0, 1), new MapTransition("/maps/maps1.txt", "/maps_spawn/maps1.txt", 20, 6)); // map 2 à 1
+        getMapTransitions().put(new Point(20, 7), new MapTransition("/maps/map3.txt", "/maps_spawn/map3.txt", 1, 7)); // map 2 à 3
+        getMapTransitions().put(new Point(0, 7), new MapTransition("/maps/maps2.txt", "/maps_spawn/maps2.txt", 19, 7)); // map 3 à 2
+        getMapTransitions().put(new Point(19, 1), new MapTransition("/maps/maps4.txt", "/maps_spawn/maps4.txt", 1, 3)); // map 3 à 4
+        getMapTransitions().put(new Point(20, 3), new MapTransition("/maps/maps1.txt", "/maps_spawn/maps1.txt", 1, 2)); // map 4 à 1
     }
 
     private void initGenMap() {
@@ -109,6 +113,10 @@ public class Tiles_manger {
         Gen_Map.put("t", Pistolet.class);
         Gen_Map.put("v", Apple.class);
         Gen_Map.put("l", Item1.class);
+        Gen_Map.put("n", Item2.class);
+        Gen_Map.put("D", Item5.class);
+        Gen_Map.put("r", Item4.class);
+        
         
      
         //PNJ
@@ -161,8 +169,8 @@ public class Tiles_manger {
         Point playerTile = new Point(playerTileX, playerTileY);
 
         // Vérifie si une transition est disponible pour cette position
-        if (mapTransitions.containsKey(playerTile)) {
-            MapTransition transition = mapTransitions.get(playerTile);
+        if (getMapTransitions().containsKey(playerTile)) {
+            MapTransition transition = getMapTransitions().get(playerTile);
             changeMap(transition.getMapPath(), transition.getSpawnMapPath(), transition.startX, transition.startY);
         }
     }
@@ -221,16 +229,21 @@ public class Tiles_manger {
     }
 
     //Gestion du changement de map
-    private void changeMap(String mapPath, String spawnMapPath, int startX, int startY) {
+    public void changeMap(String mapPath, String spawnMapPath, int startX, int startY) {
         System.out.println("Changement de carte à " + mapPath);
         loadMap(mapPath);
         loadSpawnMap(spawnMapPath);
+        this.setmapAct(mapPath);
         gp.getPlayer().setScreenX(startX * gp.tileSize);
         gp.getPlayer().setScreenY(startY * gp.tileSize);
         System.out.println("La carte a été changée avec succès à: " + mapPath);
     }
 
-    // Pour appeler la map + lire le fichier txt et le translater 
+    private void setmapAct(String mapPath) {
+		this.mapAct=mapPath;
+	}
+
+	// Pour appeler la map + lire le fichier txt et le translater 
     public void loadMap(String filePath) {
         try {
             System.out.println("Loading map: " + filePath);
@@ -460,4 +473,46 @@ public class Tiles_manger {
         }
         return false;
     }
+
+    public List<Point> getVisibleCastelTilePositions() {
+        List<Point> positions = new ArrayList<>();
+        int tileSize = gp.tileSize;
+        int maxCols = gp.screenWidth / tileSize;
+        int maxRows = gp.screenHeight / tileSize;
+
+        try {
+            InputStream is = getClass().getResourceAsStream(mapAct);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line;
+            int row = 0;
+            while ((line = br.readLine()) != null && row < maxRows) {
+                String[] characters = line.split(" ");
+                int col = 0;
+                for (String character : characters) {
+                    char tileChar = character.charAt(0);
+                    if (tileChar == 'q') {
+                        int worldX = col * tileSize;
+                        int worldY = row * tileSize;
+                        positions.add(new Point(worldX, worldY));
+                    }
+                    col++;
+                    if (col >= maxCols) break;
+                }
+                row++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return positions;
+    }
+
+
+	public Map<Point, MapTransition> getMapTransitions() {
+		return mapTransitions;
+	}
+
+	public void setMapTransitions(Map<Point, MapTransition> mapTransitions) {
+		this.mapTransitions = mapTransitions;
+	}
 }

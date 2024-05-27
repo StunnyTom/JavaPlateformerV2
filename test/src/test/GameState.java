@@ -23,7 +23,7 @@ public class GameState {
 
     public void afficheVictory() {
         isVictory = true;
-        JOptionPane.showMessageDialog(null, "Félicitations ! tu as collecté toutes les clés et terminé le jeu.");
+        JOptionPane.showMessageDialog(null, "Félicitations ! ");
     }
 
     public void retryGame() {
@@ -59,7 +59,7 @@ public class GameState {
         g2.drawString(text, x, y);
 
         g2.setFont(new Font("Arial", Font.PLAIN, 20));
-        String retryText = "Appuyez sur 'Entrée' pour recommencer";
+        String retryText = "";
         x = getXForCenteredText(retryText, g2);
         y += gp.tileSize * 2;
         g2.setColor(Color.white);

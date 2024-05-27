@@ -22,6 +22,7 @@ public class Item1 extends gameObject implements Usable{
 	        for (PNJ pnj : player.getLastPNJs()) {
 	            ((PNJ1) pnj).selectItemFromInventory();
 	        }
+	        player.removeInv(this);
 	    }
 
 	@Override

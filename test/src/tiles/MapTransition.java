@@ -3,7 +3,8 @@ package tiles;
 public class MapTransition {
 	// Classe auxiliaire pour gérer les transitions de carte
 	    private String mapPath;
-	    int startX, startY;
+	    public int startX;
+		public int startY;
 		private String spawnMapPath;
 
 	    public MapTransition(String mapPath, String spawnMapPath, int startX, int startY) {

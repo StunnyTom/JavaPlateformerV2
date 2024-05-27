@@ -10,6 +10,10 @@ import javax.imageio.ImageIO;
 import generation.Generateur;
 import objects.Apple;
 import objects.Item1;
+import objects.Item2;
+import objects.Item3;
+import objects.Item4;
+import objects.Item5;
 import objects.Key;
 import objects.Potion;
 import objects.Usable;
@@ -70,6 +74,10 @@ public class Player extends Entity {
         speed = 2;
         setInv(new ArrayList<gameObject>());
         this.addInv(new Item1(gp));
+        this.addInv(new Item2(gp));
+        this.addInv(new Item3(gp));
+        this.addInv(new Item4(gp));
+        this.addInv(new Item5(gp));
         
         /* POUR DIRECT AVOIR LES 7 CLé
         for (int i = 0; i < 7; i++) {
