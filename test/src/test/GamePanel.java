@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.HashMap;
 import javax.swing.*;
 import entity.Monster;
+import entity.PNJ;
 import entity.Player;
 import objects.InventoryDisplay;
 import objects.gameObject;
@@ -230,4 +231,6 @@ public class GamePanel extends JPanel implements Runnable{
 		        }
 		    }
 		}
+
+
 }

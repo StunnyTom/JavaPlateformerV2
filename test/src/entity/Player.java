@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
 import generation.Generateur;
 import objects.Aimant;
 import objects.Apple;
@@ -36,6 +38,9 @@ public class Player extends Entity {
 	private boolean collisionEnabled = true; //pour gerer la collison avec l'item 
 	private Set<String> collectedKeys = new HashSet<>();  // Ensemble pour stocker les IDs des clés collectées
 	
+	 private boolean isCollisionWithPNJ = false;
+	  
+	    
 	// Dessiner les cœurs en haut à gauche de l'écran
     private int lives = 3; // Nombre de vies du joueur
     private  final int maxLives = 3;
@@ -133,6 +138,15 @@ public class Player extends Entity {
         }
     } 
   
+
+    public boolean isCollisionWithPNJ() {
+        return isCollisionWithPNJ;
+    }
+
+    public void setCollisionWithPNJ(boolean collisionWithPNJ) {
+        isCollisionWithPNJ = collisionWithPNJ;
+    }
+    
     // Méthode pour réduire le nombre de vies
     public void loseLife() {
         if (lives > 0) {
@@ -189,6 +203,8 @@ public class Player extends Entity {
    
     //Pour utiliser l'item
     public void useItem(String itemId) {
+    	
+    	
         for (int i = 0; i < inv.size(); i++) {
             gameObject item = inv.get(i);
             System.out.println(item.getID() + " = " + itemId + "\nUsable ? "+ (item instanceof Usable));
@@ -204,6 +220,8 @@ public class Player extends Entity {
             }
         }
     }
+    
+    
     
     //l'impact de la potion sur le joueur
     public void setPotionEffect(boolean hasPotionEffect, long potionStartTime) {

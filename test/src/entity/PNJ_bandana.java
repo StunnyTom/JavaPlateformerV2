@@ -10,20 +10,20 @@ import test.GamePanel;
 
 public class PNJ_bandana extends PNJ {
     protected Timer dialogueTimer;
-    
+
     public PNJ_bandana(GamePanel gp) {
-        super(gp,"/img_npj/npj1_neutre.png", 15);
+        super(gp, "/img_npj/npj1_neutre.png", 15);
         initializePosition('b'); // 'p' pour le point de spawn de Test_Bandana
         dialogueTimer = new Timer(900, e -> isCollisionWithPlayer = false);
         dialogueTimer.setRepeats(false); // Le timer ne se répète pas
-    
-    
-     // Initialisation de l'objet à donner avec la classe Epee existante
+
+        // Initialisation de l'objet à donner avec la classe Epee existante
         itemToGive = new Epee(gp); // Utilisation de la classe Epee déjà définie
-}
+    }
+
     // Gère la boîte de dialogue propre à chaque PNJ
     public void drawDialogue(Graphics2D g2) {
-    	showInventory(); // Affiche l'inventaire lors de l'interaction
+        showInventory(); // Affiche l'inventaire lors de l'interaction
         String text = "Bonjour, je suis Bandana ! Je te donne cette épée pour vaincre le monstre.";
         int boxWidth = 220;
         int boxHeight = 50;
@@ -69,13 +69,12 @@ public class PNJ_bandana extends PNJ {
             drawDialogue(g2); // Dessine la boîte de dialogue en cas de collision avec le joueur
         }
     }
- // Appeler cette méthode quand il y a une collision
+
+    // Appeler cette méthode quand il y a une collision
     public void triggerDialog() {
         isCollisionWithPlayer = true;
         dialogueTimer.restart(); // Redémarrez le timer chaque fois qu'il y a une collision
         this.AddItemToPlayer(gp.getPlayer());
+        gp.getPlayer().setCollisionWithPNJ(true); // Met à jour le statut de collision du joueur
     }
 }
-
-
-        
