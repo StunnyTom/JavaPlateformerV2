@@ -11,6 +11,7 @@ import generation.Generateur;
 import objects.Aimant;
 import objects.Apple;
 import objects.Dead;
+import objects.Etoile;
 import objects.Fantome_Collision;
 import objects.Key;
 import objects.Potion;
@@ -73,7 +74,7 @@ public class Player extends Entity {
         setInv(new ArrayList<gameObject>());
         
         this.inv.add(new Potion(gp));
-        this.inv.add(new Fantome_Collision(gp));
+        this.inv.add(new Etoile(gp));
         this.inv.add(new Dead(gp));
         this.inv.add(new Apple(gp));
         this.inv.add(new Aimant(gp));
@@ -233,7 +234,34 @@ public class Player extends Entity {
         return this.isAttacking;
     }
 
+    /*
+     * 
+     * 
+     * 
+     * 
     
+
+    // Vérification des collisions avec les différentes entités
+    Generateur collOb = gp.verif.checkCollisionGen(newX, newY, l, L, getSolidAir());
+    if (collOb != null && collOb instanceof gameObject) {
+        gameObject obj = (gameObject) collOb;
+        
+        if (inv.size() < NUM_SQUARES) { // Assurez-vous que NUM_SQUARES est défini comme la taille maximale de l'inventaire
+            addInv(obj);
+            String key = collOb.getID();
+            gp.genMap.remove(key);
+            gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
+        } else {
+            System.out.println("Inventaire plein, impossible de ramasser : " + obj.getID());
+            // Ne retirez pas l'objet du jeu
+        }
+    } else if (collOb instanceof PNJ) {
+        // Gérer la collision avec PNJ ici ...
+    } 
+    // Code pour gérer d'autres types de collisions ...
+}
+
+     */
     public void update() {
     	 if (gp.gameState.isGameOver()) {
     	        return; // Ne rien faire si le jeu est terminé
@@ -290,9 +318,21 @@ public class Player extends Entity {
             System.out.println("Tu n'es plus invincible.");
         }
         
-        // Vérification des collisions avec les différentes entités (en comprenant les objets)
+        // Vérification des collisions avec les différentes entités
         Generateur collOb = gp.verif.checkCollisionGen(newX, newY, l, L, getSolidAir());
-        if (collOb!=null && (collOb instanceof gameObject)) {
+        if (collOb != null && collOb instanceof gameObject) {
+            gameObject obj = (gameObject) collOb;
+            
+            if (inv.size() < NUM_SQUARES) { // Assurez-vous que NUM_SQUARES est défini comme la taille maximale de l'inventaire
+                addInv(obj);
+                String key = collOb.getID();
+                gp.genMap.remove(key);
+                gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
+            } else {
+                System.out.println("Inventaire plein, impossible de ramasser : " + obj.getID());
+                // Ne retirez pas l'objet du jeu
+            }
+            
         	if (collOb instanceof Key) {
         		 ((Usable) collOb).use(this);  // Utiliser la clé qui appelle addKey
         	}else if (collOb.getID().equals("d")) {

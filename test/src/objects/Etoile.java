@@ -10,13 +10,12 @@ public class Etoile extends gameObject implements Usable {
 	
     
     public Etoile(GamePanel gp) {
-        super(gp, "Invincible", "i", "/objects/etoile_mario.png", true);
+        super(gp, "Victoire", "i", "/objects/etoile_mario.png", true);
     }
 
     
     public void use(Player player) {
-        player.setInvincible(true);
-        player.setInvincibilityStartTime(System.currentTimeMillis());
+    	 gp.gameState.afficheVictory();
     }
 
     
