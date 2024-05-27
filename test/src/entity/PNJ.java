@@ -55,6 +55,9 @@ public abstract class PNJ extends Entity {
         this.inv.add(new Dead(gp));
     }
     
+    public ArrayList<gameObject> getInventory() {
+        return pnjInventory;
+    }
     public gameObject getStolenItem() {
         if (itemToGive != null) {
             gameObject temp = itemToGive;

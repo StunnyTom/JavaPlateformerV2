@@ -16,6 +16,7 @@ import objects.Dead;
 import objects.Etoile;
 import objects.Fantome_Collision;
 import objects.Key;
+import objects.Pistolet;
 import objects.Potion;
 import objects.Rencontre;
 import objects.Usable;
@@ -39,8 +40,9 @@ public class Player extends Entity {
 	private Set<String> collectedKeys = new HashSet<>();  // Ensemble pour stocker les IDs des clés collectées
 	
 	 private boolean isCollisionWithPNJ = false;
+	 private PNJ lastInteractedPnj; // Attribut pour suivre le dernier PNJ avec lequel le joueur a interagi
 	  
-	    
+	
 	// Dessiner les cœurs en haut à gauche de l'écran
     private int lives = 3; // Nombre de vies du joueur
     private  final int maxLives = 3;
@@ -56,8 +58,9 @@ public class Player extends Entity {
 	private static final int NUM_SQUARES = 5;
 
     private boolean isAttacking = false; // Nouvel état pour gérer l'attaque
-    
     private Set<String> pnjInteractions = new HashSet<>();
+    
+    
     //on dessine le joueur
     public Player(GamePanel gp) {
     	super(gp);
@@ -73,6 +76,21 @@ public class Player extends Entity {
     	this.keyH = keyH;
     }
 
+    
+    public PNJ getLastInteractedPnj() {
+        return lastInteractedPnj;
+    }
+
+    public void setLastInteractedPnj(PNJ pnj) {
+        this.lastInteractedPnj = pnj;
+    }
+
+    public void interactWithPNJ(PNJ pnj) {
+        setCollisionWithPNJ(true);
+        setLastInteractedPnj(pnj);
+        addPnjInteraction(pnj.getID());
+    }
+ 
     //Méthode qui met des valeurs par défaut au joueur
     private void setDefaultValues() {
         l = 20;
@@ -83,7 +101,7 @@ public class Player extends Entity {
         this.inv.add(new Rencontre(gp));
         this.inv.add(new Etoile(gp));
         this.inv.add(new Dead(gp));
-        this.inv.add(new Apple(gp));
+        this.inv.add(new Pistolet(gp));
         this.inv.add(new Aimant(gp));
         
     }
@@ -295,32 +313,30 @@ public class Player extends Entity {
 
      */
     public void update() {
-    	 if (gp.gameState.isGameOver()) {
-    	        return; // Ne rien faire si le jeu est terminé
-    	    }
+        if (gp.gameState.isGameOver()) {
+            return;
+        }
         int newX = getScreenX(), newY = getScreenY();
-        ySpeed += GRAVITY; // Appliquer la gravité
+        ySpeed += GRAVITY;
         newY += ySpeed;
-        boolean onGround = gp.verif.checkCollision(getScreenX(), getScreenY() + 1, l, L, getSolidAir()); // Vérifier les collisions avec le sol
-        
-        if (keyH.upPressed && onGround) {   // Sauter seulement si le personnage est au sol
-            ySpeed = -3; // Valeur de saut
+        boolean onGround = gp.verif.checkCollision(getScreenX(), getScreenY() + 1, l, L, getSolidAir());
+
+        if (keyH.upPressed && onGround) {
+            ySpeed = -3;
         }
 
-        // Collision check pour l'axe Y
         if (!gp.verif.checkCollision(getScreenX(), newY, l, L, getSolidAir())) {
             setScreenY(newY);
         } else {
-            ySpeed = 0; // Arrêter le mouvement si collision
-        }
-        
-        if (!collisionEnabled || !gp.verif.checkCollision(newX, newY, l, L, getSolidAir())) {
-            setScreenY(newY);  // Se déplacer librement en Y
-        } else {
-            ySpeed = 0;  // Arrêter le mouvement si collision et collisions activées
+            ySpeed = 0;
         }
 
-        // Mouvement sur l'axe X
+        if (!collisionEnabled || !gp.verif.checkCollision(newX, newY, l, L, getSolidAir())) {
+            setScreenY(newY);
+        } else {
+            ySpeed = 0;
+        }
+
         if (keyH.leftPressed) {
             newX -= speed;
         }
@@ -329,83 +345,74 @@ public class Player extends Entity {
         }
 
         if (!collisionEnabled || !gp.verif.checkCollision(newX, getScreenY(), l, L, getSolidAir())) {
-            setScreenX(newX);  // Se déplacer librement en X
+            setScreenX(newX);
         }
 
         if (keyH.isUpPressed() && onGround) {
             if (hasPotionEffect) {
-                ySpeed = Potion.getBoostedJumpSpeed(); // Boosted jump speed
+                ySpeed = Potion.getBoostedJumpSpeed();
             } else {
-                ySpeed = -3; // 
+                ySpeed = -3;
             }
         }
         
-        //utilisation de la potion sur le joueur
         if (hasPotionEffect && (System.currentTimeMillis() - potionStartTime > Potion.getPotionEffectDuration())) {
-           hasPotionEffect = false; // Reset potion effect after duration
-       }
+            hasPotionEffect = false;
+        }
         
         if (isInvincible && System.currentTimeMillis() - invincibilityStartTime > INVINCIBILITY_DURATION) {
             isInvincible = false;
             System.out.println("Tu n'es plus invincible.");
         }
         
-        // Vérification des collisions avec les différentes entités
         Generateur collOb = gp.verif.checkCollisionGen(newX, newY, l, L, getSolidAir());
         if (collOb != null && collOb instanceof gameObject) {
             gameObject obj = (gameObject) collOb;
             
-            if (inv.size() < NUM_SQUARES) { // Assurez-vous que NUM_SQUARES est défini comme la taille maximale de l'inventaire
+            if (inv.size() < NUM_SQUARES) {
                 addInv(obj);
                 String key = collOb.getID();
                 gp.genMap.remove(key);
                 gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
             } else {
                 System.out.println("Inventaire plein, impossible de ramasser : " + obj.getID());
-                // Ne retirez pas l'objet du jeu
             }
             
-        	if (collOb instanceof Key) {
-        		 ((Usable) collOb).use(this);  // Utiliser la clé qui appelle addKey
-        	}else if (collOb.getID().equals("d")) {
-            	loseLife();
-            }else {
-            	addInv((gameObject) collOb);
+            if (collOb instanceof Key) {
+                ((Usable) collOb).use(this);
+            } else if (collOb.getID().equals("d")) {
+                loseLife();
+            } else {
+                addInv((gameObject) collOb);
             }
-        	String key = collOb.getID();
+            String key = collOb.getID();
             gp.genMap.remove(key);
-            System.out.println(gp.Genlist);
-            gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
-            //gp.Genlist.remove(Character.getNumericValue(key.charAt(key.length()-1))-1);
-        } 
-        
-        else if (collOb instanceof PNJ) {
-        	PNJ pnj = (PNJ) collOb;
-        	pnj.setCollisionWithPlayer(true);
-        	pnj.triggerDialog();
-        	 moveBackwards(5);  // Fait reculer le joueur de 5 "pas"
-        } 
-        
-        else if (collOb instanceof Monster) {
-        	if (!gp.getPlayer().isInvincible()) {
-        	Monster mon = (Monster) collOb;
-        	mon.checkPlayerInteraction();
-        	 moveBackwards(5);  // Fait reculer le joueur de 5 "pas"
-        }
-        	
+            gp.Genlist.set(Character.getNumericValue(key.charAt(key.length() - 1)), new Generateur(gp));
+        } else if (collOb instanceof PNJ) {
+            PNJ pnj = (PNJ) collOb;
+            pnj.setCollisionWithPlayer(true);
+            pnj.triggerDialog();
+            setCollisionWithPNJ(true); // Ajoutez cette ligne pour indiquer qu'il y a eu une interaction avec un PNJ
+            moveBackwards(5);
+        } else if (collOb instanceof Monster) {
+            if (!gp.getPlayer().isInvincible()) {
+                Monster mon = (Monster) collOb;
+                mon.checkPlayerInteraction();
+                moveBackwards(5);
+            }
+
             if (collOb != null && (collOb instanceof gameObject)) {
                 gameObject obj = (gameObject) collOb;
-                if (inv.size() < NUM_SQUARES) {  // Assurez-vous de définir MAX_INVENTORY_SIZE quelque part
+                if (inv.size() < NUM_SQUARES) {
                     addInv(obj);
                     String key = collOb.getID();
                     gp.genMap.remove(key);
-                    gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
+                    gp.Genlist.set(Character.getNumericValue(key.charAt(key.length() - 1)), new Generateur(gp));
                 } else {
                     System.out.println("Inventaire plein, impossible de ramasser : " + obj.getID());
                 }
+            }
         }
-        }
-    
  // Réinitialiser justPickedUpKey si aucune clé n'est touchée dans cette mise à jour
     if (!justPickedUpKey || Math.abs(newX - getScreenX()) > gp.tileSize || Math.abs(newY - getScreenY()) > gp.tileSize) {
         justPickedUpKey = false;}      

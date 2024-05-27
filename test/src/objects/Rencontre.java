@@ -1,6 +1,7 @@
 package objects;
 
 import entity.Player;
+import entity.PNJ;
 import test.GamePanel;
 
 public class Rencontre extends gameObject implements Usable {
@@ -10,22 +11,19 @@ public class Rencontre extends gameObject implements Usable {
 
     @Override
     public void use(Player player) {
-        // Vérifier si le joueur a eu des interactions avec des PNJ
-        if (!player.hasPnjInteractions()) {
-            System.out.println("Pas utilisable");
-            return;
-        }
-
-        // Vérifier si l'inventaire du joueur est vide
-        if (player.getInv().isEmpty()) {
-            System.out.println("Pas d'interaction");
+        // Vérifier si le joueur a eu une collision avec un PNJ
+        if (player.isCollisionWithPNJ()) {
+            PNJ pnj = player.getLastInteractedPnj();
+            if (pnj != null) {
+                System.out.println("Inventaire du PNJ:");
+                pnj.getInventory().forEach(item -> {
+                    System.out.println(item.getNom() + " - " + item.getID());
+                });
+            } else {
+                System.out.println("Aucun PNJ n'a été rencontré récemment.");
+            }
         } else {
-            // Afficher le contenu de l'inventaire
-            System.out.println("Contenu de l'inventaire:");
-            player.getInv().forEach(item -> {
-                // Afficher les détails de chaque objet
-                System.out.println(item.getNom() + " - rencontré");
-            });
+            System.out.println("Pas utilisable");
         }
     }
 
