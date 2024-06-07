@@ -8,11 +8,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 import generation.Generateur;
-import objects.Aimant;
 import objects.Apple;
-import objects.Dead;
-import objects.Etoile;
-import objects.Fantome_Collision;
 import objects.Key;
 import objects.Potion;
 import objects.Usable;
@@ -47,9 +43,9 @@ public class Player extends Entity {
     private long invincibilityStartTime;
     private static final long INVINCIBILITY_DURATION = 3000; // 3 secondes
 
-	private static final int NUM_SQUARES = 5;
-
     private boolean isAttacking = false; // Nouvel état pour gérer l'attaque
+    
+    public ArrayList<PNJ> lastPNJs=new ArrayList<>();
     
     //on dessine le joueur
     public Player(GamePanel gp) {
@@ -72,24 +68,14 @@ public class Player extends Entity {
         L = 25;
         speed = 2;
         setInv(new ArrayList<gameObject>());
+  
         
-        this.inv.add(new Potion(gp));
-        this.inv.add(new Etoile(gp));
-        this.inv.add(new Dead(gp));
-        this.inv.add(new Apple(gp));
-        this.inv.add(new Aimant(gp));
-        
-    }
-       /*
-            this.inv.add(new Apple(gp));
-            this.inv.add(new Fantome_Collision(gp));
-            this.inv.add(new Dead(gp));
         /* POUR DIRECT AVOIR LES 7 CLé
         for (int i = 0; i < 7; i++) {
             collectedKeys.add("Key" + i);  // Ajouter des identifiants de clés fictifs
         }
         */
-   
+    }
     
     // Charger l'image du cœur
     private void loadHeartImage() {
@@ -107,6 +93,10 @@ public class Player extends Entity {
 
     public int getMaxLives() {
         return maxLives;
+    }
+    
+    public ArrayList<PNJ> getLastPNJs() {
+    	return this.lastPNJs;
     }
     
     // Méthode pour gagner une vie
@@ -234,35 +224,13 @@ public class Player extends Entity {
         return this.isAttacking;
     }
 
-    /*
-     * 
-     * 
-     * 
-     * 
     
-
-    // Vérification des collisions avec les différentes entités
-    Generateur collOb = gp.verif.checkCollisionGen(newX, newY, l, L, getSolidAir());
-    if (collOb != null && collOb instanceof gameObject) {
-        gameObject obj = (gameObject) collOb;
-        
-        if (inv.size() < NUM_SQUARES) { // Assurez-vous que NUM_SQUARES est défini comme la taille maximale de l'inventaire
-            addInv(obj);
-            String key = collOb.getID();
-            gp.genMap.remove(key);
-            gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
-        } else {
-            System.out.println("Inventaire plein, impossible de ramasser : " + obj.getID());
-            // Ne retirez pas l'objet du jeu
-        }
-    } else if (collOb instanceof PNJ) {
-        // Gérer la collision avec PNJ ici ...
-    } 
-    // Code pour gérer d'autres types de collisions ...
-}
-
-     */
     public void update() {
+    	if (gp.getGenlist().size()==1) {
+    		//System.out.println("oui");
+    		//gp.getTileM().loadSpawnMap(gp.currentMap);
+    	}
+    	
     	 if (gp.gameState.isGameOver()) {
     	        return; // Ne rien faire si le jeu est terminé
     	    }
@@ -318,21 +286,9 @@ public class Player extends Entity {
             System.out.println("Tu n'es plus invincible.");
         }
         
-        // Vérification des collisions avec les différentes entités
+        // Vérification des collisions avec les différentes entités (en comprenant les objets)
         Generateur collOb = gp.verif.checkCollisionGen(newX, newY, l, L, getSolidAir());
-        if (collOb != null && collOb instanceof gameObject) {
-            gameObject obj = (gameObject) collOb;
-            
-            if (inv.size() < NUM_SQUARES) { // Assurez-vous que NUM_SQUARES est défini comme la taille maximale de l'inventaire
-                addInv(obj);
-                String key = collOb.getID();
-                gp.genMap.remove(key);
-                gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
-            } else {
-                System.out.println("Inventaire plein, impossible de ramasser : " + obj.getID());
-                // Ne retirez pas l'objet du jeu
-            }
-            
+        if (collOb!=null && (collOb instanceof gameObject)) {
         	if (collOb instanceof Key) {
         		 ((Usable) collOb).use(this);  // Utiliser la clé qui appelle addKey
         	}else if (collOb.getID().equals("d")) {
@@ -351,7 +307,9 @@ public class Player extends Entity {
         	PNJ pnj = (PNJ) collOb;
         	pnj.setCollisionWithPlayer(true);
         	pnj.triggerDialog();
-        	 moveBackwards(5);  // Fait reculer le joueur de 5 "pas"
+        	if(!this.getLastPNJs().contains(pnj))
+        		this.getLastPNJs().add(pnj);
+        	 //moveBackwards(5);  // Fait reculer le joueur de 5 "pas"
         } 
         
         else if (collOb instanceof Monster) {
@@ -359,18 +317,6 @@ public class Player extends Entity {
         	Monster mon = (Monster) collOb;
         	mon.checkPlayerInteraction();
         	 moveBackwards(5);  // Fait reculer le joueur de 5 "pas"
-        }
-        	
-            if (collOb != null && (collOb instanceof gameObject)) {
-                gameObject obj = (gameObject) collOb;
-                if (inv.size() < NUM_SQUARES) {  // Assurez-vous de définir MAX_INVENTORY_SIZE quelque part
-                    addInv(obj);
-                    String key = collOb.getID();
-                    gp.genMap.remove(key);
-                    gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
-                } else {
-                    System.out.println("Inventaire plein, impossible de ramasser : " + obj.getID());
-                }
         }
         }
     
