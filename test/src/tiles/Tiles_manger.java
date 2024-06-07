@@ -25,6 +25,7 @@ import objects.Etoile;
 import objects.Fantome_Collision;
 import objects.ItemA;
 import objects.ItemC;
+import objects.ItemE;
 import objects.Potion;
 import objects.gameObject;
 import entity.Monster_Attaque;
@@ -107,6 +108,7 @@ public class Tiles_manger {
         //nouveau item créer
         Gen_Map.put("c", ItemA.class);
         Gen_Map.put("T", ItemC.class);
+        Gen_Map.put("E", ItemE.class);
      
         //PNJ
         Gen_Map.put("b", PNJ_bandana.class);

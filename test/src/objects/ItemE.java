@@ -4,14 +4,19 @@ import entity.Player;
 import test.GamePanel;
 import java.awt.Graphics2D;
 
-public class ItemC extends gameObject implements Usable {
-    public ItemC(GamePanel gp) {
-        super(gp, "ItemA", "T", "/objects/Potion.png", true);
+
+/*permet de voler un objet au pnj */
+
+public class ItemE extends gameObject implements Usable {
+    public ItemE(GamePanel gp) {
+        super(gp, "ItemE", "E", "/objects/etoile_mario.png", true);
     }
 
+    //Méthode commune aux objets
     @Override
     public void use(Player player) {
-        player.teleportToInitialPosition();
+    	gp.gameState.afficheVictory(); 
+        
     }
 
     @Override

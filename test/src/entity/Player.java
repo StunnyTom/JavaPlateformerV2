@@ -11,6 +11,7 @@ import generation.Generateur;
 
 import objects.Apple;
 import objects.ItemA;
+import objects.ItemE;
 import objects.Key;
 import objects.Potion;
 import objects.Usable;
@@ -47,8 +48,8 @@ public class Player extends Entity {
     private boolean isInvincible = false;
     private long invincibilityStartTime;
     private static final long INVINCIBILITY_DURATION = 3000; // 3 secondes
-
     private boolean isAttacking = false; // Nouvel état pour gérer l'attaque
+    
     
     public ArrayList<PNJ> lastPNJs=new ArrayList<>();
     
@@ -71,14 +72,6 @@ public class Player extends Entity {
     public void setkeyH(KeyHandler keyH) {
     	this.keyH = keyH;
     }
-    
-    //fonction pour teleporter le joueur 
-    public void teleportToInitialPosition() {
-        setScreenX(initialX * gp.tileSize);
-        setScreenY(initialY * gp.tileSize);
-        System.out.println("Téléportation");
-    }
-
 
     //Méthode qui met des valeurs par défaut au joueur
     private void setDefaultValues() {
@@ -89,6 +82,7 @@ public class Player extends Entity {
         
         //remplir l'inventaire
         this.addInv(new ItemA(gp));
+        this.addInv(new ItemE(gp));
   
         
         /* POUR DIRECT AVOIR LES 7 CLé
@@ -120,6 +114,14 @@ public class Player extends Entity {
     	return this.lastPNJs;
     }
     
+    
+    //fonction pour teleporter le joueur 
+    public void teleportToInitialPosition() {
+        setScreenX(initialX * gp.tileSize);
+        setScreenY(initialY * gp.tileSize);
+        System.out.println("Téléportation");
+    }
+
     // Méthode pour gagner une vie
     public void gainLife() {
         if (lives < maxLives) {
