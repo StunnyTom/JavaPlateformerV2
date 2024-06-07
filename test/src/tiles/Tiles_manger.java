@@ -23,6 +23,8 @@ import objects.Dead;
 import objects.Epee;
 import objects.Etoile;
 import objects.Fantome_Collision;
+import objects.ItemA;
+import objects.ItemC;
 import objects.Potion;
 import objects.gameObject;
 import entity.Monster_Attaque;
@@ -66,7 +68,7 @@ public class Tiles_manger {
         try {
             mapOrigin = findFileWithCharacterZ("/maps_spawn/");
             mapAct = mapOrigin;
-            System.out.println(mapOrigin);
+            //System.out.println(mapOrigin);
             loadMap("/maps/" + mapOrigin);  // Charge la première carte au démarrage
             loadSpawnMap("/maps_spawn/" + mapOrigin);
         } catch (Exception e) {
@@ -92,7 +94,7 @@ public class Tiles_manger {
         Gen_Map.put("z", Player.class); //perso 
         
     	//object 
-    	Gen_Map.put("c", Aimant.class);
+    	Gen_Map.put(" ", Aimant.class);
     	Gen_Map.put("d", Dead.class);
     	Gen_Map.put("e", Epee.class);
     	Gen_Map.put("f", Fantome_Collision.class);
@@ -101,6 +103,10 @@ public class Tiles_manger {
         Gen_Map.put("p", Potion.class);
         Gen_Map.put("t", Pistolet.class);
         Gen_Map.put("v", Apple.class);
+        
+        //nouveau item créer
+        Gen_Map.put("c", ItemA.class);
+        Gen_Map.put("T", ItemC.class);
      
         //PNJ
         Gen_Map.put("b", PNJ_bandana.class);
@@ -211,18 +217,18 @@ public class Tiles_manger {
 
     //Gestion du changement de map
     private void changeMap(String mapPath, String spawnMapPath, int startX, int startY) {
-        System.out.println("Changement de carte à " + mapPath);
+       // System.out.println("Changement de carte à " + mapPath);
         loadMap(mapPath);
         loadSpawnMap(spawnMapPath);
         gp.getPlayer().setScreenX(startX * gp.tileSize);
         gp.getPlayer().setScreenY(startY * gp.tileSize);
-        System.out.println("La carte a été changée avec succès à: " + mapPath);
+        //System.out.println("La carte a été changée avec succès à: " + mapPath);
     }
 
     // Pour appeler la map + lire le fichier txt et le translater 
     public void loadMap(String filePath) {
         try {
-            System.out.println("Loading map: " + filePath);
+           // System.out.println("Loading map: " + filePath);
             gp.currentMap = filePath;
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -240,10 +246,10 @@ public class Tiles_manger {
                 }
                 row++;
             }
-            System.out.println("Map loaded successfully.");
+           // System.out.println("Map loaded successfully.");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error loading map: " + filePath);
+           // System.out.println("Error loading map: " + filePath);
         }
     }
 
@@ -278,7 +284,7 @@ public class Tiles_manger {
                         if (!gp.Genlist.isEmpty() && gp.Genlist.size() > 1) {
                             gp.genMap.put(uniqueKeyId, gp.Genlist.get(gp.Genlist.size() - 1));
                             gp.Genlist.get(gp.Genlist.size() - 1).setID(uniqueKeyId);
-                            System.out.println(uniqueKeyId);
+                           // System.out.println(uniqueKeyId);
                         }
                     }
                     col++;

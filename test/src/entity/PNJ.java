@@ -50,7 +50,7 @@ public abstract class PNJ extends Entity {
     public abstract void triggerDialog();
     
     //inventaire par default
-    private void initializeInventory() {
+    protected void initializeInventory() {
         this.inv.add(new Apple(gp));
         this.inv.add(new Fantome_Collision(gp));
         this.inv.add(new Dead(gp));

@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 public class Aimant extends gameObject implements Usable {
     public Aimant(GamePanel gp) {
-        super(gp, "Aimant", "c", "/objects/aimant.png", true);
+        super(gp, "Aimant", " ", "/objects/aimant.png", true);
     }
 
     //Méthode commune aux objets

@@ -97,21 +97,34 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	
 	//gestion des entités
-	
-	public void addGen(Generateur g) {
-		this.Genlist.add(g);
-	}
+
+	// Lors de l'ajout à Genlist
+			public void addGen(Generateur g) {
+			    synchronized (Genlist) {
+			        Genlist.add(g);
+			    }
+			}
+
+			// Lors de la suppression dans Genlist
+			public void elaguerGen() {
+			    synchronized (Genlist) {
+			        if (Genlist.size() != 0) {
+			            Genlist.subList(1, Genlist.size()).clear();
+			        }
+			    }
+			}
+
 	
 	public ArrayList<Generateur> getGenlist() {
 	    return Genlist;
 	}
+	
+	public Tiles_manger getTileM(){
+		return this.tileM;
+	}
 
 	
-	public void elaguerGen() {
-		if(Genlist.size() != 0) {
-			Genlist.subList(1, Genlist.size()).clear();
-		}
-	}
+
 
 	public ArrayList<gameObject> getStockInv() {
 		return this.StockInventory;
@@ -184,23 +197,28 @@ public class GamePanel extends JPanel implements Runnable{
 
 	//Gère les apparitions à l'écran
 	public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			Graphics2D g2 = (Graphics2D)g;
-			
-			 if (!gameState.isGameOver()) {
-			        // Dessiner le décor, le personnage, les monstres, etc.
-			        tileM.draw(g2);  // Dessiner les tuiles du décor
-			        for (Generateur generateur : Genlist) {
-			            generateur.draw(g2); // Dessiner les générateurs (objets, ennemis)
-			        }
-			        getPlayer().draw(g2);  // Dessiner le joueur
-			        displayInv.paint(g2);  // Dessiner l'inventaire
-			    } else {
-			        // Dessiner seulement l'écran de game over
-			        gameState.drawGameOverScreen(g2);
-			    }
-			    g2.dispose();
+	    super.paintComponent(g);
+	    Graphics2D g2 = (Graphics2D) g;
+
+	    if (!gameState.isGameOver()) {
+	        // Dessiner le décor, le personnage, les monstres, etc.
+	        tileM.draw(g2);  // Dessiner les tuiles du décor
+
+	        synchronized (Genlist) {  // Synchronisation pour éviter les modifications concurrentes
+	            for (Generateur generateur : Genlist) {
+	                generateur.draw(g2); // Dessiner les générateurs (objets, ennemis)
+	            }
+	        }
+
+	        getPlayer().draw(g2);  // Dessiner le joueur
+	        displayInv.paint(g2);  // Dessiner l'inventaire
+	    } else {
+	        // Dessiner seulement l'écran de game over
+	        gameState.drawGameOverScreen(g2);
+	    }
+	    g2.dispose();
 	}
+
 
 	//genere automatiquement cette classe, permet de faire bouger le joueur
 	@Override

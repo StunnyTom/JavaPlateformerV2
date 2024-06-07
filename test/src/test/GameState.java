@@ -57,12 +57,5 @@ public class GameState {
         int y = gp.tileSize * 4;
         g2.setColor(Color.red);
         g2.drawString(text, x, y);
-
-        g2.setFont(new Font("Arial", Font.PLAIN, 20));
-        String retryText = "Appuyez sur 'Entrée' pour recommencer";
-        x = getXForCenteredText(retryText, g2);
-        y += gp.tileSize * 2;
-        g2.setColor(Color.white);
-        g2.drawString(retryText, x, y);
     }
 }

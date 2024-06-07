@@ -3,8 +3,10 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Random;
+
+import objects.Potion;
+//import java.util.ArrayList;
+//import java.util.Random;
 import objects.gameObject;
 import test.GamePanel;
 
@@ -15,6 +17,8 @@ public class PNJ_Inv extends PNJ {
     public PNJ_Inv(GamePanel gp) {
         super(gp, "/img_npj/pnj_inv.png", 30);
         initializePosition('I');
+        
+       
         // Configuration du timer pour désactiver la collision pendant 15 secondes (15000 ms)
         collisionTimer = new Timer(15000, new ActionListener() {
             @Override
@@ -28,12 +32,19 @@ public class PNJ_Inv extends PNJ {
     }
 
     @Override
+    protected void initializeInventory() {
+        super.initializeInventory();  // Appelle la méthode de la classe de base pour ajouter les objets par défaut.
+
+        // Ajouter des objets supplémentaires spécifiques à PNJ_Inv
+        this.inv.add(new Potion(gp));  // Ajoutez une potion avec le constructeur approprié.
+    }
+    @Override
     public void triggerDialog() {
         // System.out.println("collision");
     }
     @Override
     public void setCollisionWithPlayer(boolean isCollisionWithPlayer) {
-    	 System.out.println("setCollisionWithPlayer called with: " + isCollisionWithPlayer);
+    	// System.out.println("setCollisionWithPlayer called with: " + isCollisionWithPlayer);
         // On verifie si la collision est activée ou désactivée
         if (isCollisionWithPlayer) {
             if (!this.isCollisionWithPlayer() && !popupShown) {
@@ -49,6 +60,52 @@ public class PNJ_Inv extends PNJ {
         }
     }
 
+    //PERMET DE VOIR UNIQUEMENT L INVENTAIRE DU PNJ 
+    private void showInventoryPopup() {
+    	 if (inv.isEmpty()) {
+    	        JOptionPane.showMessageDialog(null, "Je n'ai rien à te montrer.", "Inventaire du PNJ vide", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("Inventaire vide");
+        } else {
+            JDialog dialog = new JDialog();
+            dialog.setTitle("Inventaire du PNJ");
+            dialog.setModal(true);
+
+            // Contenu principal
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.add(new JLabel("<html><h1>Inventaire du PNJ :</h1><br/>"), BorderLayout.NORTH);
+
+            // Ajout des items de l'inventaire dans le dialogue
+            StringBuilder itemList = new StringBuilder("<html>");
+            for (gameObject item : inv) {
+                itemList.append(item.getClass().getSimpleName()).append("<br/>");
+            }
+            itemList.append("</html>");
+            panel.add(new JLabel(itemList.toString()), BorderLayout.CENTER);
+
+            // Bouton de fermeture
+            JButton closeButton = new JButton("Fermer");
+            closeButton.addActionListener(e -> dialog.dispose());
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.add(closeButton);
+
+            dialog.getContentPane().add(panel, BorderLayout.CENTER);
+            dialog.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+
+            dialog.pack();
+            dialog.setLocationRelativeTo(null);
+            dialog.setVisible(true);
+        }
+    }
+
+    @SuppressWarnings("unused")
+	private Player getPlayer() {
+        return gp.getPlayer();
+    }
+    
+    
+    /*FONCTION QUI PERMET D ECHANGER UN ITEM AVEC LE JOUEUR EN SELECTIONNANT L ITEM DU PNJ
+     * MAIS CHOIX ALEATOIRE POUR MOI 
+     
     private void exchangeItems() {
         // Obtenir l'inventaire du joueur
         ArrayList<gameObject> playerInventory = getPlayer().getInv();
@@ -117,8 +174,6 @@ public class PNJ_Inv extends PNJ {
             dialog.setVisible(true);  // Rend la boîte de dialogue visible
         }
     }
-
-    private Player getPlayer() {
-        return gp.getPlayer();
-    }
+*/
+    
 }

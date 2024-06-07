@@ -8,7 +8,9 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 import generation.Generateur;
+
 import objects.Apple;
+import objects.ItemA;
 import objects.Key;
 import objects.Potion;
 import objects.Usable;
@@ -21,6 +23,9 @@ public class Player extends Entity {
 	
 	//Attribut pour la gestion de touches
     KeyHandler keyH;
+    
+    private int initialX, initialY; // Coordonnées initiales pour la téléportation
+
     
     //Attributs liés aux objets
     private int keyCount = 0;  // Nombre de clés
@@ -55,12 +60,25 @@ public class Player extends Entity {
         getPlayerImage();
         loadHeartImage();  // Charger l'image du cœur
         
+        initialX = 1;  // Position initiale X - Adaptez selon votre grille de jeu
+        initialY = 0;  // Position initiale Y - Adaptez selon votre grille de jeu
+        setScreenX(initialX * gp.tileSize);  // Convertit la position de grille en pixels
+        setScreenY(initialY * gp.tileSize);  // Convertit la position de grille en pixels
+        
         setSolidAir(new Rectangle(16, -10, gp.tileSize, gp.tileSize));        
     }
     
     public void setkeyH(KeyHandler keyH) {
     	this.keyH = keyH;
     }
+    
+    //fonction pour teleporter le joueur 
+    public void teleportToInitialPosition() {
+        setScreenX(initialX * gp.tileSize);
+        setScreenY(initialY * gp.tileSize);
+        System.out.println("Téléportation");
+    }
+
 
     //Méthode qui met des valeurs par défaut au joueur
     private void setDefaultValues() {
@@ -68,6 +86,9 @@ public class Player extends Entity {
         L = 25;
         speed = 2;
         setInv(new ArrayList<gameObject>());
+        
+        //remplir l'inventaire
+        this.addInv(new ItemA(gp));
   
         
         /* POUR DIRECT AVOIR LES 7 CLé
@@ -167,7 +188,7 @@ public class Player extends Entity {
     public void useItem(String itemId) {
         for (int i = 0; i < inv.size(); i++) {
             gameObject item = inv.get(i);
-            System.out.println(item.getID() + " = " + itemId + "\nUsable ? "+ (item instanceof Usable));
+          //  System.out.println(item.getID() + " = " + itemId + "\nUsable ? "+ (item instanceof Usable));
             if (item.getID().equals(itemId) && item instanceof Usable) {
                 System.out.println("Utilisation de l'objet avec ID: " + itemId);
                 Usable usableItem = (Usable) item;

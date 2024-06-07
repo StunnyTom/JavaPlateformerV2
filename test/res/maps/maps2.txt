@@ -6,5 +6,5 @@ a a a a b e e h a a a a a a b e e e e f c
 a a a a a a a a a a a a a a a a a a a f c  
 a a a a a a a a a a b e h a a a a a b f c 
 a a a a a a a a a a a a a a a a a a a a q   
-e h a a a b e e h a a a a a a b e e e e e   
-c i a a a f c c i a a a a a a f c c c c c 
+e h e e e b e e h a a a a a a b e e e e e   
+c a a a a f c c i a a a a a a f c c c c c 

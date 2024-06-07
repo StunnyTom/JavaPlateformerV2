@@ -46,8 +46,8 @@ public class Generateur {
 			setScreenX((int) (gp.tileSize * x.getY()));
 	        setScreenY((int) (gp.tileSize * x.getX()));
 	
-	        System.out.println(getScreenX());
-	        System.out.println(getScreenY());
+	        //System.out.println(getScreenX());
+	        //System.out.println(getScreenY());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
