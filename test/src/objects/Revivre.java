@@ -3,6 +3,7 @@ package objects;
 import entity.Player;
 import test.GamePanel;
 
+//si le joueur possede cet item, et qu'il perd toute ses vies, il peut revivre 
 public class Revivre extends gameObject implements Usable {
     // Constructeur pour l'item "Revivre"
     public Revivre(GamePanel gp) {
