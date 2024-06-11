@@ -12,7 +12,7 @@ public class Monster_Max extends Monster {
     private Player player;  
 
     public Monster_Max(GamePanel gp) {
-        super(gp, "/img_monster/monstre_4.png", 5, 50);
+        super(gp, "/img_monster/monstre_4.png", 5, 50,2);
         initializePosition('D'); 
         this.player = gp.getPlayer(); // Initialisation de player
         

@@ -47,6 +47,7 @@ public class GamePanel extends JPanel implements Runnable{
 	//Attributs pour gérer les générateurs
 	public ArrayList<Generateur> Genlist = new ArrayList<>();
  	public Map<String, Generateur> genMap;
+
  	public String[][] mapGenNum;
 	
  	//Gère les maps
@@ -67,6 +68,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//Inventaire pour le stockage des objets dans les coffres
 	public ArrayList<gameObject> StockInventory = new ArrayList<gameObject>();
+	
 	
 	//constructeur de panel 
 	public GamePanel() {

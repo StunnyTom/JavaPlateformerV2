@@ -10,7 +10,7 @@ public class Monster_Bomb extends Monster {
     private static final long COLLISION_PAUSE = 4000; // Pause de 4 secondes entre les collisions
 
     public Monster_Bomb(GamePanel gp) {
-        super(gp, "/img_monster/bomb.png", 5, 50);
+        super(gp, "/img_monster/bomb.png", 5, 0,1);
         initializePosition('L');
     }
 

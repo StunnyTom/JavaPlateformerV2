@@ -32,7 +32,7 @@ public class CollisionVerif {
     //verif si le perso est en dehors des limites
     boolean tileCollision(int col, int row) {
         if (col < 0 || row < 0 || col >= gp.maxWorldCol || row >= gp.maxWorldRow) {
-        	System.out.println("Position de tuile hors limites: col=" + col + ", row=" + row);
+        	//System.out.println("Position de tuile hors limites: col=" + col + ", row=" + row);
             gp.gameState.afficheGameOver();
             return false;
         }

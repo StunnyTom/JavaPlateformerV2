@@ -18,7 +18,13 @@ public class GameState {
     }
 
     public void afficheGameOver() {
-        isGameOver = true;
+        if (!gp.getPlayer().hasItem("r")) {
+            isGameOver = true;
+           // JOptionPane.showMessageDialog(null, "Game Over! Vous avez perdu toutes vos vies.");
+        } else {
+            gp.getPlayer().checkAndUseRevivre(); // Utiliser Revivre si disponible
+            isGameOver = false; // Réinitialiser l'état du game over
+        }
     }
 
     public void afficheVictory() {
@@ -37,10 +43,14 @@ public class GameState {
     }
     
     public void setGameOver(boolean gameOver) {
-        this.isGameOver = gameOver;
         if (gameOver) {
-        	//System.out.println("Le jeu est terminé.");
-            JOptionPane.showMessageDialog(null, "Game Over! Vous avez perdu toutes vos vies.");
+            if (gp.getPlayer().hasItem("r")) {
+                gp.getPlayer().checkAndUseRevivre(); // Utiliser Revivre si disponible
+                isGameOver = false; // Empêcher le game over
+            } else {
+                this.isGameOver = true;
+                JOptionPane.showMessageDialog(null, "Game Over! Vous avez perdu toutes vos vies.");
+            }
         }
     }
 

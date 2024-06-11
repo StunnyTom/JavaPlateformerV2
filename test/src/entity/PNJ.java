@@ -21,7 +21,7 @@ public abstract class PNJ extends Entity {
     protected ArrayList<gameObject> pnjInventory;
     protected boolean isCollisionWithPlayer = false; // Flag de collision avec le joueur
     @SuppressWarnings("unused")
-	private boolean isVisible = true; // Contrôle la visibilité du PNJ
+	protected boolean isVisible = true; // Contrôle la visibilité du PNJ
     @SuppressWarnings("unused")
 	private boolean isCollidable = true; // Default collidability
 
@@ -46,11 +46,16 @@ public abstract class PNJ extends Entity {
         initializeInventory(); 
     }
     
+    
+    
     //Méthode commune d'interaction avec les PNJ
     public abstract void triggerDialog();
     
     //inventaire par default
     protected void initializeInventory() {
+        if (this.inv == null) {
+            this.inv = new ArrayList<>();  // Assurez-vous que `inv` n'est jamais null
+        }
         this.inv.add(new Apple(gp));
         this.inv.add(new Fantome_Collision(gp));
         this.inv.add(new Dead(gp));
@@ -92,7 +97,7 @@ public abstract class PNJ extends Entity {
         if (inv.isEmpty()) {
             System.out.println("L'inventaire de " + this.getClass().getSimpleName() + " est vide.");
         } else {
-            System.out.println("Inventaire de " + this.getClass().getSimpleName() + ":");
+           // System.out.println("Inventaire de " + this.getClass().getSimpleName() + ":");
             for (gameObject item : inv) {
                 System.out.println(item.getClass().getSimpleName() + " - ID: " + item.getID());
             }

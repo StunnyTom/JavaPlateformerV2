@@ -15,7 +15,7 @@ import java.util.Random;
 		    private static final long COLLISION_COOLDOWN = 5000; // 5 secondes entre les collisions
 
 		    public Monster_Volant(GamePanel gp) {
-		        super(gp, "/img_monster/monstre_volant.png", 5, 500);
+		        super(gp, "/img_monster/monstre_volant.png", 5, 500,5);
 		        initializePosition('V');
 		        
 		        

@@ -24,15 +24,20 @@ import objects.Epee;
 import objects.Etoile;
 import objects.Fantome_Collision;
 import objects.ItemA;
+import objects.ItemB;
 import objects.ItemC;
+import objects.ItemD;
 import objects.ItemE;
 import objects.Potion;
+import objects.Revivre;
 import objects.gameObject;
+import entity.Coffre;
 import entity.Monster_Attaque;
 import entity.Monster_Bomb;
 import entity.Monster_Max;
 import entity.Monster_Nuage;
 import entity.Monster_Volant;
+import entity.PNJ_A;
 import entity.PNJ_Coffre;
 import entity.PNJ_Inv;
 import entity.PNJ_Magalor;
@@ -107,20 +112,27 @@ public class Tiles_manger {
         
         //nouveau item créer
         Gen_Map.put("c", ItemA.class);
+        Gen_Map.put("B", ItemB.class);
         Gen_Map.put("T", ItemC.class);
+        Gen_Map.put("D", ItemD.class);
         Gen_Map.put("E", ItemE.class);
+        Gen_Map.put("f", Revivre.class);
+        
+        
      
         //PNJ
+        Gen_Map.put("S", PNJ_A.class);
         Gen_Map.put("b", PNJ_bandana.class);
-        Gen_Map.put("C", PNJ_Coffre.class);
+        Gen_Map.put(" ", PNJ_Coffre.class);
+        Gen_Map.put("C", Coffre.class);
         Gen_Map.put("I", PNJ_Inv.class);
         Gen_Map.put("M", PNJ_Magalor.class);
-        Gen_Map.put("S", PNJ_Susie.class);
+        //Gen_Map.put("S", PNJ_Susie.class);
         Gen_Map.put("W", PNJ_Marchand.class);
         
         //Monstre
         Gen_Map.put("A",  Monster_Attaque.class);
-        Gen_Map.put("D", Monster_Max.class);
+        Gen_Map.put(" ", Monster_Max.class);
         Gen_Map.put("L", Monster_Bomb.class);
         Gen_Map.put("N", Monster_Nuage.class);
         Gen_Map.put("V", Monster_Volant.class);

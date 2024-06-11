@@ -10,7 +10,7 @@ public class Monster_Attaque extends Monster {
 
     //Constructeur qui initialise le monstre et sa position
     public Monster_Attaque(GamePanel gp) {
-        super(gp, "/img_monster/Monstre_attaque.png", 10, 0);
+        super(gp, "/img_monster/Monstre_attaque.png", 10, 0, 3);
         initializePosition('A');
     }
 

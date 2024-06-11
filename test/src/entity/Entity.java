@@ -28,17 +28,13 @@ public class Entity extends Generateur {
 	protected static final double GRAVITY = 0.06; // Constante de gravit�
 	protected double ySpeed = 0; // Vitesse verticale
 	
-	//fait une animation 
-	//protected int spriteCounter = 0;
-	//protected int spriteNum = 1;
-	
 	protected int padding;
 	
 	//pour les collision 
 	protected Rectangle solidAir; //stocker un rectangle invisible ou abstrait avec x,y, largeur, hauteur
 	protected boolean collisionOn = false;
 	
-	private final int taille_inv = 10;
+	private final int taille_inv = 8;
 	
 	
 	//Ajout d'objet à l'inventaire
@@ -84,7 +80,6 @@ public class Entity extends Generateur {
 	 
 	 
 	//Getters et Setters de plusieurs attributs
-
 	public ArrayList<gameObject> getInv() {
 		return inv;
 	}

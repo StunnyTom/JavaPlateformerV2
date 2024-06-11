@@ -17,7 +17,7 @@ import java.awt.Graphics2D;
 public class InventoryDisplay extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    protected static final int NUM_SQUARES = 5;
+    protected static final int NUM_SQUARES = 8;
     protected static final int SQUARE_SIZE = 40;
 
     private Entity entity; // Référence à l'entité pour obtenir l'inventaire

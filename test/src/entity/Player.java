@@ -7,13 +7,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import generation.Generateur;
-
-import objects.Apple;
 import objects.ItemA;
+import objects.ItemB;
 import objects.ItemE;
 import objects.Key;
 import objects.Potion;
+import objects.Revivre;
 import objects.Usable;
 import objects.gameObject;
 import test.GamePanel;
@@ -52,6 +53,8 @@ public class Player extends Entity {
     
     
     public ArrayList<PNJ> lastPNJs=new ArrayList<>();
+    // Nouveau champ pour suivre si "Revivre" a déjà été utilisé
+    private boolean revivreUsed = false;
     
     //on dessine le joueur
     public Player(GamePanel gp) {
@@ -61,6 +64,7 @@ public class Player extends Entity {
         getPlayerImage();
         loadHeartImage();  // Charger l'image du cœur
         
+    
         initialX = 1;  // Position initiale X - Adaptez selon votre grille de jeu
         initialY = 0;  // Position initiale Y - Adaptez selon votre grille de jeu
         setScreenX(initialX * gp.tileSize);  // Convertit la position de grille en pixels
@@ -83,7 +87,8 @@ public class Player extends Entity {
         //remplir l'inventaire
         this.addInv(new ItemA(gp));
         this.addInv(new ItemE(gp));
-  
+        this.addInv(new ItemB(gp));
+        this.addInv(new Revivre(gp));
         
         /* POUR DIRECT AVOIR LES 7 CLé
         for (int i = 0; i < 7; i++) {
@@ -91,6 +96,39 @@ public class Player extends Entity {
         }
         */
     }
+    //inventaire 
+    public boolean hasItem(String itemID) {
+        for (gameObject item : inv) {
+            if (item.getID().equals(itemID)) {
+                //System.out.println("Item trouvé: " + itemID);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void checkAndUseRevivre() {
+        // Ensure that we're checking and removing the correct item ID
+        if (hasItem("r") && !revivreUsed) {  // Check if the item is present and not already used
+            System.out.println("Utilisation de Revivre pour éviter le game over.");
+            setLives(maxLives); // Restore lives to maximum
+            removeInv("r"); // Remove the item with the correct ID from inventory
+            JOptionPane.showMessageDialog(null, "Revivre utilisé! Vous continuez avec " + maxLives + " vies.");
+            revivreUsed = true; // Mark Revivre as used to prevent further use
+        }
+    }
+
+
+
+    public void removeInv(String itemID) {
+        for (int i = 0; i < inv.size(); i++) {
+            if (inv.get(i).getID().equals(itemID)) {
+                inv.remove(i);
+                break;
+            }
+        }
+    }
+
     
     // Charger l'image du cœur
     private void loadHeartImage() {
@@ -134,23 +172,36 @@ public class Player extends Entity {
   
     // Méthode pour réduire le nombre de vies
     public void loseLife() {
-        if (lives > 0) {
-            lives--;
+        lives--;
+        if (lives <= 0) {
+            gp.gameState.setGameOver(true);  // Déclencher la vérification de game over dans GameState
+        } else {
             System.out.println("Vies restantes : " + lives);
-            if (lives == 0) {
-                gp.gameState.afficheGameOver();  // Terminer le jeu si le joueur n'a plus de vies
-            }
         }
     }
+
    
  // Méthode pour gagner ou perdre de la vie
     public void setLives(int newLives) {
         this.lives = newLives;
         System.out.println("Vies ajustées à : " + lives);
+        // Dessine à nouveau les cœurs sur l'interface utilisateur
+        redrawHearts();
         if (lives == 0) {
             this.getGamePanel().gameState.afficheGameOver();  // Gérer la fin du jeu ici
         }
     }
+    
+ // Méthode pour redessiner les cœurs sur l'interface utilisateur
+    public void redrawHearts() {
+        Graphics2D g2 = (Graphics2D) this.getGamePanel().getGraphics(); // Obtenez les graphiques du panel de jeu
+        g2.setColor(Color.BLACK); // Choisissez une couleur pour effacer les vieux cœurs
+        g2.fillRect(heartX, heartY, heartSpacing * maxLives, gp.tileSize); // Efface l'ancienne ligne de cœurs
+        for (int i = 0; i < lives; i++) {
+            g2.drawImage(heartImage, heartX + (i * heartSpacing), heartY, gp.tileSize, gp.tileSize, null); // Redessiner les cœurs
+        }
+    }
+
     
     public GamePanel getGamePanel() {
         return gp;
@@ -182,7 +233,7 @@ public class Player extends Entity {
         if (!gp.verif.checkCollision(newX, getScreenY(), l, L, getSolidAir())) {
             setScreenX(newX);  // Appliquer la nouvelle position si elle ne cause pas de collision
         } else {
-            System.out.println("Mouvement en arrière bloqué par une collision");
+            //System.out.println("Mouvement en arrière bloqué par une collision");
         }
     }
    
@@ -190,16 +241,13 @@ public class Player extends Entity {
     public void useItem(String itemId) {
         for (int i = 0; i < inv.size(); i++) {
             gameObject item = inv.get(i);
-          //  System.out.println(item.getID() + " = " + itemId + "\nUsable ? "+ (item instanceof Usable));
             if (item.getID().equals(itemId) && item instanceof Usable) {
-                System.out.println("Utilisation de l'objet avec ID: " + itemId);
                 Usable usableItem = (Usable) item;
                 usableItem.use(this);
-
-                if (usableItem.isConsumable() && (item instanceof Apple) && (getLives() < getMaxLives())) {
-                    inv.remove(i);
+                if (usableItem.isConsumable()) {
+                    inv.remove(i); // Retirer l'item de l'inventaire après usage
+                    break;
                 }
-                break;
             }
         }
     }
@@ -321,7 +369,7 @@ public class Player extends Entity {
             }
         	String key = collOb.getID();
             gp.genMap.remove(key);
-            System.out.println(gp.Genlist);
+            //System.out.println(gp.Genlist);
             gp.Genlist.set(Character.getNumericValue(key.charAt(key.length()-1)), new Generateur(gp));
             //gp.Genlist.remove(Character.getNumericValue(key.charAt(key.length()-1))-1);
         } 
@@ -362,4 +410,6 @@ public class Player extends Entity {
 	        g2.drawImage(heartImage, heartX + (i * heartSpacing), heartY, gp.tileSize, gp.tileSize, null);
 	    }
 	}
+
+
 }

@@ -17,11 +17,14 @@ public abstract class Monster extends Entity {
     protected int stepsCount = 0; // Compteur de pas commun
     protected int maxSteps;   // Maximum de pas avant de changer de direction
     protected boolean movingRight = true; // Direction initiale
+    
+    protected int health;  // Points de vie du monstre
 
-    public Monster(GamePanel gp, String imagePath, int padding, int maxSteps) {
+    public Monster(GamePanel gp, String imagePath, int padding, int maxSteps, int health) {
         super(gp);
         this.padding = padding;
         this.maxSteps = maxSteps;
+        this.health = health;  // Initialiser les points de vie
      
         try {
             InputStream is = getClass().getResourceAsStream(imagePath);
@@ -57,6 +60,22 @@ public abstract class Monster extends Entity {
             }
         }
         updateSolidArea();
+    }
+     
+    public void inflictDamage(int damage) {
+        health -= damage;  // Réduit la santé de 1
+        if (health <= 0) {
+            die();  // Gère la mort du monstre si la santé atteint 0 ou passe en dessous
+        }
+    }
+
+    public int getHealth() {
+        return health;  // Return the current health of the monster
+    }
+
+
+    public void die() {
+        setVisible(false);  // Rendre le monstre invisible ou le supprimer de la scène
     }
 
     protected void updateSolidArea() {
